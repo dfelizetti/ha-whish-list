@@ -961,13 +961,11 @@ export class WishlistManagerPanel extends LitElement {
     this._error = null;
     const fd = new FormData();
     fd.append("file", file);
+    // HA's fetchWithAuth concatenates auth.data.hassUrl + path. Passing an
+    // absolute URL (e.g. from hass.hassUrl) would double the origin and break fetch.
     const uploadPath = "/api/wishlist_manager/upload_image";
-    const uploadUrl =
-      typeof this.hass.hassUrl === "function"
-        ? this.hass.hassUrl(uploadPath)
-        : uploadPath;
     try {
-      const res = await fetchWithAuth(uploadUrl, {
+      const res = await fetchWithAuth(uploadPath, {
         method: "POST",
         body: fd,
       });

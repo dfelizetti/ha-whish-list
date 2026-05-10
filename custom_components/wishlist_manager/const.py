@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Final
 
 DOMAIN: Final = "wishlist_manager"
-INTEGRATION_VERSION: Final = "1.3.4"
+INTEGRATION_VERSION: Final = "1.3.5"
 STORAGE_KEY: Final = f"{DOMAIN}"
 STORAGE_VERSION: Final = 1
 

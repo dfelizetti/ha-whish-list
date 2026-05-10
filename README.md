@@ -1,6 +1,6 @@
 # Wishlist Manager for Home Assistant
 
-**Current version: 1.3.4** (see `manifest.json` and `INTEGRATION_VERSION` in `const.py`).
+**Current version: 1.3.5** (see `manifest.json` and `INTEGRATION_VERSION` in `const.py`).
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/hacs/integration)
 
