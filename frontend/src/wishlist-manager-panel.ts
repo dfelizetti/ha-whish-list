@@ -898,8 +898,11 @@ export class WishlistManagerPanel extends LitElement {
       input.value = "";
       return;
     }
-    const auth = this.hass.auth;
-    if (!auth?.fetchWithAuth) {
+    const fetchWithAuth =
+      typeof this.hass.fetchWithAuth === "function"
+        ? this.hass.fetchWithAuth.bind(this.hass)
+        : undefined;
+    if (!fetchWithAuth) {
       this._error = this._t(
         "upload_no_auth",
         "Upload requires Home Assistant sign-in (admin)."
@@ -910,14 +913,16 @@ export class WishlistManagerPanel extends LitElement {
     this._error = null;
     const fd = new FormData();
     fd.append("file", file);
+    const uploadPath = "/api/wishlist_manager/upload_image";
+    const uploadUrl =
+      typeof this.hass.hassUrl === "function"
+        ? this.hass.hassUrl(uploadPath)
+        : uploadPath;
     try {
-      const res = await auth.fetchWithAuth(
-        "/api/wishlist_manager/upload_image",
-        {
-          method: "POST",
-          body: fd,
-        }
-      );
+      const res = await fetchWithAuth(uploadUrl, {
+        method: "POST",
+        body: fd,
+      });
       const data = (await res.json()) as { image_url?: string; error?: string };
       if (!res.ok) {
         throw new Error(data.error || res.statusText);

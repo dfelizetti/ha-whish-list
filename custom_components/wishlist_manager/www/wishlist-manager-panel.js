@@ -95,8 +95,8 @@ let U = class extends HTMLElement {
       this[e] = o;
     } };
     return { get: r, set(o) {
-      const n = r == null ? void 0 : r.call(this);
-      a == null || a.call(this, o), this.requestUpdate(t, n, s);
+      const l = r == null ? void 0 : r.call(this);
+      a == null || a.call(this, o), this.requestUpdate(t, l, s);
     }, configurable: !0, enumerable: !0 };
   }
   static getPropertyOptions(t) {
@@ -192,17 +192,17 @@ let U = class extends HTMLElement {
     var a, o;
     const s = this.constructor, r = s._$Eh.get(t);
     if (r !== void 0 && this._$Em !== r) {
-      const n = s.getPropertyOptions(r), l = typeof n.converter == "function" ? { fromAttribute: n.converter } : ((a = n.converter) == null ? void 0 : a.fromAttribute) !== void 0 ? n.converter : F;
+      const l = s.getPropertyOptions(r), n = typeof l.converter == "function" ? { fromAttribute: l.converter } : ((a = l.converter) == null ? void 0 : a.fromAttribute) !== void 0 ? l.converter : F;
       this._$Em = r;
-      const c = l.fromAttribute(e, n.type);
-      this[r] = c ?? ((o = this._$Ej) == null ? void 0 : o.get(r)) ?? c, this._$Em = null;
+      const d = n.fromAttribute(e, l.type);
+      this[r] = d ?? ((o = this._$Ej) == null ? void 0 : o.get(r)) ?? d, this._$Em = null;
     }
   }
   requestUpdate(t, e, s, r = !1, a) {
     var o;
     if (t !== void 0) {
-      const n = this.constructor;
-      if (r === !1 && (a = this[t]), s ?? (s = n.getPropertyOptions(t)), !((s.hasChanged ?? tt)(a, e) || s.useDefault && s.reflect && a === ((o = this._$Ej) == null ? void 0 : o.get(t)) && !this.hasAttribute(n._$Eu(t, s)))) return;
+      const l = this.constructor;
+      if (r === !1 && (a = this[t]), s ?? (s = l.getPropertyOptions(t)), !((s.hasChanged ?? tt)(a, e) || s.useDefault && s.reflect && a === ((o = this._$Ej) == null ? void 0 : o.get(t)) && !this.hasAttribute(l._$Eu(t, s)))) return;
       this.C(t, e, s);
     }
     this.isUpdatePending === !1 && (this._$ES = this._$EP());
@@ -233,8 +233,8 @@ let U = class extends HTMLElement {
       }
       const r = this.constructor.elementProperties;
       if (r.size > 0) for (const [a, o] of r) {
-        const { wrapped: n } = o, l = this[a];
-        n !== !0 || this._$AL.has(a) || l === void 0 || this.C(a, void 0, o, l);
+        const { wrapped: l } = o, n = this[a];
+        l !== !0 || this._$AL.has(a) || n === void 0 || this.C(a, void 0, o, n);
       }
     }
     let t = !1;
@@ -286,7 +286,7 @@ U.elementStyles = [], U.shadowRootOptions = { mode: "open" }, U[M("elementProper
  */
 const R = globalThis, ht = (i) => i, V = R.trustedTypes, dt = V ? V.createPolicy("lit-html", { createHTML: (i) => i }) : void 0, yt = "$lit$", E = `lit$${Math.random().toFixed(9).slice(2)}$`, wt = "?" + E, Dt = `<${wt}>`, T = document, z = () => T.createComment(""), H = (i) => i === null || typeof i != "object" && typeof i != "function", et = Array.isArray, Mt = (i) => et(i) || typeof (i == null ? void 0 : i[Symbol.iterator]) == "function", Z = `[ 	
 \f\r]`, D = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, ct = /-->/g, pt = />/g, I = RegExp(`>|${Z}(?:([^\\s"'>=/]+)(${Z}*=${Z}*(?:[^ 	
-\f\r"'\`<>=]|("|')|))|$)`, "g"), ut = /'/g, _t = /"/g, xt = /^(?:script|style|textarea|title)$/i, Rt = (i) => (t, ...e) => ({ _$litType$: i, strings: t, values: e }), p = Rt(1), O = Symbol.for("lit-noChange"), d = Symbol.for("lit-nothing"), mt = /* @__PURE__ */ new WeakMap(), C = T.createTreeWalker(T, 129);
+\f\r"'\`<>=]|("|')|))|$)`, "g"), ut = /'/g, _t = /"/g, xt = /^(?:script|style|textarea|title)$/i, Rt = (i) => (t, ...e) => ({ _$litType$: i, strings: t, values: e }), u = Rt(1), O = Symbol.for("lit-noChange"), c = Symbol.for("lit-nothing"), mt = /* @__PURE__ */ new WeakMap(), C = T.createTreeWalker(T, 129);
 function Et(i, t) {
   if (!et(i) || !i.hasOwnProperty("raw")) throw Error("invalid template strings array");
   return dt !== void 0 ? dt.createHTML(t) : t;
@@ -294,12 +294,12 @@ function Et(i, t) {
 const Nt = (i, t) => {
   const e = i.length - 1, s = [];
   let r, a = t === 2 ? "<svg>" : t === 3 ? "<math>" : "", o = D;
-  for (let n = 0; n < e; n++) {
-    const l = i[n];
-    let c, _, u = -1, b = 0;
-    for (; b < l.length && (o.lastIndex = b, _ = o.exec(l), _ !== null); ) b = o.lastIndex, o === D ? _[1] === "!--" ? o = ct : _[1] !== void 0 ? o = pt : _[2] !== void 0 ? (xt.test(_[2]) && (r = RegExp("</" + _[2], "g")), o = I) : _[3] !== void 0 && (o = I) : o === I ? _[0] === ">" ? (o = r ?? D, u = -1) : _[1] === void 0 ? u = -2 : (u = o.lastIndex - _[2].length, c = _[1], o = _[3] === void 0 ? I : _[3] === '"' ? _t : ut) : o === _t || o === ut ? o = I : o === ct || o === pt ? o = D : (o = I, r = void 0);
-    const w = o === I && i[n + 1].startsWith("/>") ? " " : "";
-    a += o === D ? l + Dt : u >= 0 ? (s.push(c), l.slice(0, u) + yt + l.slice(u) + E + w) : l + E + (u === -2 ? n : w);
+  for (let l = 0; l < e; l++) {
+    const n = i[l];
+    let d, _, p = -1, b = 0;
+    for (; b < n.length && (o.lastIndex = b, _ = o.exec(n), _ !== null); ) b = o.lastIndex, o === D ? _[1] === "!--" ? o = ct : _[1] !== void 0 ? o = pt : _[2] !== void 0 ? (xt.test(_[2]) && (r = RegExp("</" + _[2], "g")), o = I) : _[3] !== void 0 && (o = I) : o === I ? _[0] === ">" ? (o = r ?? D, p = -1) : _[1] === void 0 ? p = -2 : (p = o.lastIndex - _[2].length, d = _[1], o = _[3] === void 0 ? I : _[3] === '"' ? _t : ut) : o === _t || o === ut ? o = I : o === ct || o === pt ? o = D : (o = I, r = void 0);
+    const w = o === I && i[l + 1].startsWith("/>") ? " " : "";
+    a += o === D ? n + Dt : p >= 0 ? (s.push(d), n.slice(0, p) + yt + n.slice(p) + E + w) : n + E + (p === -2 ? l : w);
   }
   return [Et(i, a + (i[e] || "<?>") + (t === 2 ? "</svg>" : t === 3 ? "</math>" : "")), s];
 };
@@ -308,29 +308,29 @@ class L {
     let r;
     this.parts = [];
     let a = 0, o = 0;
-    const n = t.length - 1, l = this.parts, [c, _] = Nt(t, e);
-    if (this.el = L.createElement(c, s), C.currentNode = this.el.content, e === 2 || e === 3) {
-      const u = this.el.content.firstChild;
-      u.replaceWith(...u.childNodes);
+    const l = t.length - 1, n = this.parts, [d, _] = Nt(t, e);
+    if (this.el = L.createElement(d, s), C.currentNode = this.el.content, e === 2 || e === 3) {
+      const p = this.el.content.firstChild;
+      p.replaceWith(...p.childNodes);
     }
-    for (; (r = C.nextNode()) !== null && l.length < n; ) {
+    for (; (r = C.nextNode()) !== null && n.length < l; ) {
       if (r.nodeType === 1) {
-        if (r.hasAttributes()) for (const u of r.getAttributeNames()) if (u.endsWith(yt)) {
-          const b = _[o++], w = r.getAttribute(u).split(E), S = /([.?@])?(.*)/.exec(b);
-          l.push({ type: 1, index: a, name: S[2], strings: w, ctor: S[1] === "." ? Ht : S[1] === "?" ? Lt : S[1] === "@" ? jt : G }), r.removeAttribute(u);
-        } else u.startsWith(E) && (l.push({ type: 6, index: a }), r.removeAttribute(u));
+        if (r.hasAttributes()) for (const p of r.getAttributeNames()) if (p.endsWith(yt)) {
+          const b = _[o++], w = r.getAttribute(p).split(E), S = /([.?@])?(.*)/.exec(b);
+          n.push({ type: 1, index: a, name: S[2], strings: w, ctor: S[1] === "." ? Ht : S[1] === "?" ? Lt : S[1] === "@" ? jt : G }), r.removeAttribute(p);
+        } else p.startsWith(E) && (n.push({ type: 6, index: a }), r.removeAttribute(p));
         if (xt.test(r.tagName)) {
-          const u = r.textContent.split(E), b = u.length - 1;
+          const p = r.textContent.split(E), b = p.length - 1;
           if (b > 0) {
             r.textContent = V ? V.emptyScript : "";
-            for (let w = 0; w < b; w++) r.append(u[w], z()), C.nextNode(), l.push({ type: 2, index: ++a });
-            r.append(u[b], z());
+            for (let w = 0; w < b; w++) r.append(p[w], z()), C.nextNode(), n.push({ type: 2, index: ++a });
+            r.append(p[b], z());
           }
         }
-      } else if (r.nodeType === 8) if (r.data === wt) l.push({ type: 2, index: a });
+      } else if (r.nodeType === 8) if (r.data === wt) n.push({ type: 2, index: a });
       else {
-        let u = -1;
-        for (; (u = r.data.indexOf(E, u + 1)) !== -1; ) l.push({ type: 7, index: a }), u += E.length - 1;
+        let p = -1;
+        for (; (p = r.data.indexOf(E, p + 1)) !== -1; ) n.push({ type: 7, index: a }), p += E.length - 1;
       }
       a++;
     }
@@ -341,11 +341,11 @@ class L {
   }
 }
 function W(i, t, e = i, s) {
-  var o, n;
+  var o, l;
   if (t === O) return t;
   let r = s !== void 0 ? (o = e._$Co) == null ? void 0 : o[s] : e._$Cl;
   const a = H(t) ? void 0 : t._$litDirective$;
-  return (r == null ? void 0 : r.constructor) !== a && ((n = r == null ? void 0 : r._$AO) == null || n.call(r, !1), a === void 0 ? r = void 0 : (r = new a(i), r._$AT(i, e, s)), s !== void 0 ? (e._$Co ?? (e._$Co = []))[s] = r : e._$Cl = r), r !== void 0 && (t = W(i, r._$AS(i, t.values), r, s)), t;
+  return (r == null ? void 0 : r.constructor) !== a && ((l = r == null ? void 0 : r._$AO) == null || l.call(r, !1), a === void 0 ? r = void 0 : (r = new a(i), r._$AT(i, e, s)), s !== void 0 ? (e._$Co ?? (e._$Co = []))[s] = r : e._$Cl = r), r !== void 0 && (t = W(i, r._$AS(i, t.values), r, s)), t;
 }
 class zt {
   constructor(t, e) {
@@ -360,13 +360,13 @@ class zt {
   u(t) {
     const { el: { content: e }, parts: s } = this._$AD, r = ((t == null ? void 0 : t.creationScope) ?? T).importNode(e, !0);
     C.currentNode = r;
-    let a = C.nextNode(), o = 0, n = 0, l = s[0];
-    for (; l !== void 0; ) {
-      if (o === l.index) {
-        let c;
-        l.type === 2 ? c = new j(a, a.nextSibling, this, t) : l.type === 1 ? c = new l.ctor(a, l.name, l.strings, this, t) : l.type === 6 && (c = new qt(a, this, t)), this._$AV.push(c), l = s[++n];
+    let a = C.nextNode(), o = 0, l = 0, n = s[0];
+    for (; n !== void 0; ) {
+      if (o === n.index) {
+        let d;
+        n.type === 2 ? d = new j(a, a.nextSibling, this, t) : n.type === 1 ? d = new n.ctor(a, n.name, n.strings, this, t) : n.type === 6 && (d = new qt(a, this, t)), this._$AV.push(d), n = s[++l];
       }
-      o !== (l == null ? void 0 : l.index) && (a = C.nextNode(), o++);
+      o !== (n == null ? void 0 : n.index) && (a = C.nextNode(), o++);
     }
     return C.currentNode = T, r;
   }
@@ -381,7 +381,7 @@ class j {
     return ((t = this._$AM) == null ? void 0 : t._$AU) ?? this._$Cv;
   }
   constructor(t, e, s, r) {
-    this.type = 2, this._$AH = d, this._$AN = void 0, this._$AA = t, this._$AB = e, this._$AM = s, this.options = r, this._$Cv = (r == null ? void 0 : r.isConnected) ?? !0;
+    this.type = 2, this._$AH = c, this._$AN = void 0, this._$AA = t, this._$AB = e, this._$AM = s, this.options = r, this._$Cv = (r == null ? void 0 : r.isConnected) ?? !0;
   }
   get parentNode() {
     let t = this._$AA.parentNode;
@@ -395,7 +395,7 @@ class j {
     return this._$AB;
   }
   _$AI(t, e = this) {
-    t = W(this, t, e), H(t) ? t === d || t == null || t === "" ? (this._$AH !== d && this._$AR(), this._$AH = d) : t !== this._$AH && t !== O && this._(t) : t._$litType$ !== void 0 ? this.$(t) : t.nodeType !== void 0 ? this.T(t) : Mt(t) ? this.k(t) : this._(t);
+    t = W(this, t, e), H(t) ? t === c || t == null || t === "" ? (this._$AH !== c && this._$AR(), this._$AH = c) : t !== this._$AH && t !== O && this._(t) : t._$litType$ !== void 0 ? this.$(t) : t.nodeType !== void 0 ? this.T(t) : Mt(t) ? this.k(t) : this._(t);
   }
   O(t) {
     return this._$AA.parentNode.insertBefore(t, this._$AB);
@@ -404,15 +404,15 @@ class j {
     this._$AH !== t && (this._$AR(), this._$AH = this.O(t));
   }
   _(t) {
-    this._$AH !== d && H(this._$AH) ? this._$AA.nextSibling.data = t : this.T(T.createTextNode(t)), this._$AH = t;
+    this._$AH !== c && H(this._$AH) ? this._$AA.nextSibling.data = t : this.T(T.createTextNode(t)), this._$AH = t;
   }
   $(t) {
     var a;
     const { values: e, _$litType$: s } = t, r = typeof s == "number" ? this._$AC(t) : (s.el === void 0 && (s.el = L.createElement(Et(s.h, s.h[0]), this.options)), s);
     if (((a = this._$AH) == null ? void 0 : a._$AD) === r) this._$AH.p(e);
     else {
-      const o = new zt(r, this), n = o.u(this.options);
-      o.p(e), this.T(n), this._$AH = o;
+      const o = new zt(r, this), l = o.u(this.options);
+      o.p(e), this.T(l), this._$AH = o;
     }
   }
   _$AC(t) {
@@ -446,21 +446,21 @@ class G {
     return this._$AM._$AU;
   }
   constructor(t, e, s, r, a) {
-    this.type = 1, this._$AH = d, this._$AN = void 0, this.element = t, this.name = e, this._$AM = r, this.options = a, s.length > 2 || s[0] !== "" || s[1] !== "" ? (this._$AH = Array(s.length - 1).fill(new String()), this.strings = s) : this._$AH = d;
+    this.type = 1, this._$AH = c, this._$AN = void 0, this.element = t, this.name = e, this._$AM = r, this.options = a, s.length > 2 || s[0] !== "" || s[1] !== "" ? (this._$AH = Array(s.length - 1).fill(new String()), this.strings = s) : this._$AH = c;
   }
   _$AI(t, e = this, s, r) {
     const a = this.strings;
     let o = !1;
     if (a === void 0) t = W(this, t, e, 0), o = !H(t) || t !== this._$AH && t !== O, o && (this._$AH = t);
     else {
-      const n = t;
-      let l, c;
-      for (t = a[0], l = 0; l < a.length - 1; l++) c = W(this, n[s + l], e, l), c === O && (c = this._$AH[l]), o || (o = !H(c) || c !== this._$AH[l]), c === d ? t = d : t !== d && (t += (c ?? "") + a[l + 1]), this._$AH[l] = c;
+      const l = t;
+      let n, d;
+      for (t = a[0], n = 0; n < a.length - 1; n++) d = W(this, l[s + n], e, n), d === O && (d = this._$AH[n]), o || (o = !H(d) || d !== this._$AH[n]), d === c ? t = c : t !== c && (t += (d ?? "") + a[n + 1]), this._$AH[n] = d;
     }
     o && !r && this.j(t);
   }
   j(t) {
-    t === d ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, t ?? "");
+    t === c ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, t ?? "");
   }
 }
 class Ht extends G {
@@ -468,7 +468,7 @@ class Ht extends G {
     super(...arguments), this.type = 3;
   }
   j(t) {
-    this.element[this.name] = t === d ? void 0 : t;
+    this.element[this.name] = t === c ? void 0 : t;
   }
 }
 class Lt extends G {
@@ -476,7 +476,7 @@ class Lt extends G {
     super(...arguments), this.type = 4;
   }
   j(t) {
-    this.element.toggleAttribute(this.name, !!t && t !== d);
+    this.element.toggleAttribute(this.name, !!t && t !== c);
   }
 }
 class jt extends G {
@@ -484,8 +484,8 @@ class jt extends G {
     super(t, e, s, r, a), this.type = 5;
   }
   _$AI(t, e = this) {
-    if ((t = W(this, t, e, 0) ?? d) === O) return;
-    const s = this._$AH, r = t === d && s !== d || t.capture !== s.capture || t.once !== s.once || t.passive !== s.passive, a = t !== d && (s === d || r);
+    if ((t = W(this, t, e, 0) ?? c) === O) return;
+    const s = this._$AH, r = t === c && s !== c || t.capture !== s.capture || t.once !== s.once || t.passive !== s.passive, a = t !== c && (s === c || r);
     r && this.element.removeEventListener(this.name, this, s), a && this.element.addEventListener(this.name, this, t), this._$AH = t;
   }
   handleEvent(t) {
@@ -571,18 +571,18 @@ const Vt = { attribute: !0, type: String, converter: F, reflect: !1, hasChanged:
   let a = globalThis.litPropertyMetadata.get(r);
   if (a === void 0 && globalThis.litPropertyMetadata.set(r, a = /* @__PURE__ */ new Map()), s === "setter" && ((i = Object.create(i)).wrapped = !0), a.set(e.name, i), s === "accessor") {
     const { name: o } = e;
-    return { set(n) {
-      const l = t.get.call(this);
-      t.set.call(this, n), this.requestUpdate(o, l, i, !0, n);
-    }, init(n) {
-      return n !== void 0 && this.C(o, void 0, i, n), n;
+    return { set(l) {
+      const n = t.get.call(this);
+      t.set.call(this, l), this.requestUpdate(o, n, i, !0, l);
+    }, init(l) {
+      return l !== void 0 && this.C(o, void 0, i, l), l;
     } };
   }
   if (s === "setter") {
     const { name: o } = e;
-    return function(n) {
-      const l = this[o];
-      t.call(this, n), this.requestUpdate(o, l, i, !0, n);
+    return function(l) {
+      const n = this[o];
+      t.call(this, l), this.requestUpdate(o, n, i, !0, l);
     };
   }
   throw Error("Unsupported decorator location: " + s);
@@ -706,18 +706,18 @@ let m = class extends N {
     if (!this._snapshot) return [];
     const i = this._search.trim().toLowerCase();
     let t = this._selectedWishlistId === "all" ? this._snapshot.wishlists : this._snapshot.wishlists.filter(
-      (n) => n.id === this._selectedWishlistId
+      (l) => l.id === this._selectedWishlistId
     ), e = [];
-    for (const n of t)
-      for (const l of n.items) {
+    for (const l of t)
+      for (const n of l.items) {
         if (this._filterStatus === "archived") {
-          if (!l.archived) continue;
-        } else if (l.archived)
+          if (!n.archived) continue;
+        } else if (n.archived)
           continue;
-        this._filterStatus !== "all" && this._filterStatus !== "archived" && l.status !== this._filterStatus || i && !`${l.title} ${l.description} ${l.notes} ${l.tags.join(" ")}`.toLowerCase().includes(i) || e.push({ wl: n, item: l });
+        this._filterStatus !== "all" && this._filterStatus !== "archived" && n.status !== this._filterStatus || i && !`${n.title} ${n.description} ${n.notes} ${n.tags.join(" ")}`.toLowerCase().includes(i) || e.push({ wl: l, item: n });
       }
-    const s = (n, l) => n.title.localeCompare(l.title), r = (n, l) => l.created_at.localeCompare(n.created_at), a = (n, l) => n.created_at.localeCompare(l.created_at), o = (n, l) => bt(n.status) - bt(l.status) || n.title.localeCompare(l.title);
-    return e.sort((n, l) => this._sort === "alpha" ? s(n.item, l.item) : this._sort === "oldest" ? a(n.item, l.item) : this._sort === "status" ? o(n.item, l.item) : r(n.item, l.item)), e.map((n) => n.item);
+    const s = (l, n) => l.title.localeCompare(n.title), r = (l, n) => n.created_at.localeCompare(l.created_at), a = (l, n) => l.created_at.localeCompare(n.created_at), o = (l, n) => bt(l.status) - bt(n.status) || l.title.localeCompare(n.title);
+    return e.sort((l, n) => this._sort === "alpha" ? s(l.item, n.item) : this._sort === "oldest" ? a(l.item, n.item) : this._sort === "status" ? o(l.item, n.item) : r(l.item, n.item)), e.map((l) => l.item);
   }
   _contextForItem(i) {
     if (!this._snapshot) return null;
@@ -848,20 +848,20 @@ let m = class extends N {
     i.preventDefault();
     const e = (o = i.dataTransfer) == null ? void 0 : o.getData("text/wishlist-id");
     if (!e || e === t || !this.hass || !this._snapshot) return;
-    const s = this._wishlistsSorted().map((n) => n.id), r = s.indexOf(e), a = s.indexOf(t);
+    const s = this._wishlistsSorted().map((l) => l.id), r = s.indexOf(e), a = s.indexOf(t);
     r < 0 || a < 0 || (s.splice(r, 1), s.splice(a, 0, e), await this._mutate(
       () => v(this.hass, { type: $.REORDER_WL, wishlist_ids: s })
     ));
   }
   async _onDropItem(i, t, e) {
-    var l, c;
+    var n, d;
     i.preventDefault();
-    const s = (l = i.dataTransfer) == null ? void 0 : l.getData("text/item-id");
+    const s = (n = i.dataTransfer) == null ? void 0 : n.getData("text/item-id");
     if (!s || s === e || !this.hass) return;
-    const r = (c = this._snapshot) == null ? void 0 : c.wishlists.find((_) => _.id === t);
+    const r = (d = this._snapshot) == null ? void 0 : d.wishlists.find((_) => _.id === t);
     if (!r) return;
-    const a = [...r.items].sort((_, u) => _.sort_order - u.sort_order).map((_) => _.id), o = a.indexOf(s), n = a.indexOf(e);
-    o < 0 || n < 0 || (a.splice(o, 1), a.splice(n, 0, s), await this._mutate(
+    const a = [...r.items].sort((_, p) => _.sort_order - p.sort_order).map((_) => _.id), o = a.indexOf(s), l = a.indexOf(e);
+    o < 0 || l < 0 || (a.splice(o, 1), a.splice(l, 0, s), await this._mutate(
       () => v(this.hass, {
         type: $.REORDER_ITEMS,
         wishlist_id: t,
@@ -870,14 +870,14 @@ let m = class extends N {
     ));
   }
   async _uploadItemImage(i) {
-    var a, o;
-    const t = i.target, e = (a = t.files) == null ? void 0 : a[0];
+    var l, n;
+    const t = i.target, e = (l = t.files) == null ? void 0 : l[0];
     if (!e || !this.hass) {
       t.value = "";
       return;
     }
-    const s = this.hass.auth;
-    if (!(s != null && s.fetchWithAuth)) {
+    const s = typeof this.hass.fetchWithAuth == "function" ? this.hass.fetchWithAuth.bind(this.hass) : void 0;
+    if (!s) {
       this._error = this._t(
         "upload_no_auth",
         "Upload requires Home Assistant sign-in (admin)."
@@ -887,22 +887,20 @@ let m = class extends N {
     this._error = null;
     const r = new FormData();
     r.append("file", e);
+    const a = "/api/wishlist_manager/upload_image", o = typeof this.hass.hassUrl == "function" ? this.hass.hassUrl(a) : a;
     try {
-      const n = await s.fetchWithAuth(
-        "/api/wishlist_manager/upload_image",
-        {
-          method: "POST",
-          body: r
-        }
-      ), l = await n.json();
-      if (!n.ok)
-        throw new Error(l.error || n.statusText);
-      const c = (o = this.shadowRoot) == null ? void 0 : o.querySelector(
+      const d = await s(o, {
+        method: "POST",
+        body: r
+      }), _ = await d.json();
+      if (!d.ok)
+        throw new Error(_.error || d.statusText);
+      const p = (n = this.shadowRoot) == null ? void 0 : n.querySelector(
         "form#editor-form"
-      ), _ = c == null ? void 0 : c.querySelector('[name="image_url"]');
-      _ && l.image_url && (_.value = l.image_url), this.requestUpdate();
-    } catch (n) {
-      this._error = n instanceof Error ? n.message : String(n);
+      ), b = p == null ? void 0 : p.querySelector('[name="image_url"]');
+      b && _.image_url && (b.value = _.image_url), this.requestUpdate();
+    } catch (d) {
+      this._error = d instanceof Error ? d.message : String(d);
     } finally {
       t.value = "";
     }
@@ -923,10 +921,10 @@ let m = class extends N {
         url: t
       });
       if (!i) return;
-      const a = i.querySelector('[name="title"]'), o = i.querySelector('[name="image_url"]'), n = i.querySelector(
+      const a = i.querySelector('[name="title"]'), o = i.querySelector('[name="image_url"]'), l = i.querySelector(
         '[name="description"]'
       );
-      r.title && a && !a.value && (a.value = r.title), r.image && o && !o.value && (o.value = r.image), r.description && n && !n.value && (n.value = r.description), this.requestUpdate();
+      r.title && a && !a.value && (a.value = r.title), r.image && o && !o.value && (o.value = r.image), r.description && l && !l.value && (l.value = r.description), this.requestUpdate();
     } catch (r) {
       this._error = r instanceof Error ? r.message : String(r);
     }
@@ -947,18 +945,18 @@ let m = class extends N {
     this._shareUrl && navigator.clipboard.writeText(this._shareUrl);
   }
   render() {
-    var e, s, r, a, o, n, l, c, _, u, b, w, S;
+    var e, s, r, a, o, l, n, d, _, p, b, w, S;
     if (!this.hass)
-      return p`<div class="empty">
+      return u`<div class="empty">
         ${this._t("waiting_ha", "Waiting for Home Assistant…")}
       </div>`;
     if (this._loading && !this._snapshot)
-      return p`<div class="empty">${this._t("loading", "Loading wishlists…")}</div>`;
+      return u`<div class="empty">${this._t("loading", "Loading wishlists…")}</div>`;
     const i = (e = this._snapshot) == null ? void 0 : e.stats, t = gt(this.hass);
-    return p`
-      ${this._error ? p`<div class="error">${this._error}</div>` : d}
+    return u`
+      ${this._error ? u`<div class="error">${this._error}</div>` : c}
 
-      ${this.narrow ? p`
+      ${this.narrow ? u`
             <div class="mobile-topbar">
               <button
                 type="button"
@@ -979,7 +977,7 @@ let m = class extends N {
                 ${this._t("back", "Back")}
               </button>
             </div>
-          ` : d}
+          ` : c}
 
       <div class="toolbar">
         <input
@@ -1029,7 +1027,7 @@ let m = class extends N {
             ${this._t("filter_all_lists", "All wishlists")}
           </option>
           ${this._wishlistsSorted().map(
-      (h) => p`
+      (h) => u`
               <option value=${h.id} ?selected=${this._selectedWishlistId === h.id}>
                 ${h.name}
               </option>
@@ -1054,15 +1052,15 @@ let m = class extends N {
             ${this._t("sort_status", "Status")}
           </option>
         </select>
-        ${t ? p`<button class="btn btn-primary" @click=${this._createWishlist}>
+        ${t ? u`<button class="btn btn-primary" @click=${this._createWishlist}>
               ${this._t("new_wishlist", "New wishlist")}
-            </button>` : d}
+            </button>` : c}
         <button class="btn btn-ghost" @click=${() => this._refresh()}>
           ${this._t("refresh", "Refresh")}
         </button>
       </div>
 
-      ${!this.narrow && i ? p`
+      ${!this.narrow && i ? u`
             <div class="stats">
               <div class="stat-card" style="animation-delay:0ms">
                 <b>${i.total_items}</b
@@ -1081,15 +1079,15 @@ let m = class extends N {
                 ><span>${this._t("stat_wishlists", "Wishlists")}</span>
               </div>
             </div>
-          ` : d}
+          ` : c}
 
-      ${this.narrow ? d : p`
+      ${this.narrow ? c : u`
             <div class="section-title">
               ${this._t("recently_added", "Recently added")}
             </div>
             <div class="recent">
               ${this._recentItems().map(
-      (h) => p`
+      (h) => u`
                   <div
                     class="recent-card"
                     @click=${() => {
@@ -1097,7 +1095,7 @@ let m = class extends N {
         f && this._openEditItem(f.wishlist.id, f.item);
       }}
                   >
-                    ${h.image_url ? p`<img src=${h.image_url} alt="" loading="lazy" />` : p`<div
+                    ${h.image_url ? u`<img src=${h.image_url} alt="" loading="lazy" />` : u`<div
                           style="height:120px;background:var(--divider-color)"
                         ></div>`}
                     <div class="meta">
@@ -1117,7 +1115,7 @@ let m = class extends N {
       </div>
       <div class="wishlists-row">
         ${this._wishlistsSorted().map(
-      (h) => p`
+      (h) => u`
             <div
               class="chip ${this._selectedWishlistId === h.id ? "active" : ""}"
               draggable="true"
@@ -1132,7 +1130,7 @@ let m = class extends N {
       }}
             >
               <span>${h.name}</span>
-              ${t ? p`
+              ${t ? u`
                     <button
                       class="btn btn-ghost"
                       style="padding:2px 8px;font-size:0.7rem"
@@ -1160,13 +1158,13 @@ let m = class extends N {
                     >
                       ${this._t("share_link", "Share link")}
                     </button>
-                  ` : d}
+                  ` : c}
             </div>
           `
     )}
       </div>
 
-      ${this._shareUrl ? p`
+      ${this._shareUrl ? u`
             <div class="field">
               <label>${this._t("share_public_label", "Public link (read-only)")}</label>
               <div class="row">
@@ -1189,16 +1187,16 @@ let m = class extends N {
                 </button>
               </div>
             </div>
-          ` : d}
+          ` : c}
 
       <div class="section-title">${this._t("section_items", "Items")}</div>
       <div class="grid">
         ${this._filteredItems().map((h) => {
       var it, st;
       const f = this._contextForItem(h.id);
-      if (!f) return d;
+      if (!f) return c;
       const { wishlist: x } = f;
-      return p`
+      return u`
             <div
               class="item-card"
               draggable="true"
@@ -1210,29 +1208,29 @@ let m = class extends N {
               @drop=${(k) => this._onDropItem(k, x.id, h.id)}
             >
               <div class="hero">
-                ${h.image_url ? p`<img src=${h.image_url} alt="" loading="lazy" />` : d}
+                ${h.image_url ? u`<img src=${h.image_url} alt="" loading="lazy" />` : c}
                 <span class="badge ${h.status}"
                   >${this._statusLabel(h.status)}</span
                 >
               </div>
               <div class="item-body">
                 <div class="item-title">
-                  ${h.favorite ? p`<span class="fav">★</span> ` : d}${h.title}
+                  ${h.favorite ? u`<span class="fav">★</span> ` : c}${h.title}
                 </div>
                 <div class="item-desc">
                   ${h.description || this._t("dash", "—")}
                 </div>
-                ${h.price != null ? p`<div style="font-weight:600">
+                ${h.price != null ? u`<div style="font-weight:600">
                       ${(st = (it = this.hass) == null ? void 0 : it.locale) != null && st.language ? new Intl.NumberFormat(this.hass.locale.language, {
         style: "currency",
         currency: "USD"
       }).format(h.price) : h.price}
-                    </div>` : d}
+                    </div>` : c}
                 <div class="item-meta">
-                  ${h.tags.map((k) => p`<span class="tag">${k}</span>`)}
+                  ${h.tags.map((k) => u`<span class="tag">${k}</span>`)}
                 </div>
                 <div class="actions">
-                  ${t ? p`
+                  ${t ? u`
                         <button
                           class="btn"
                           @click=${() => this._openEditItem(x.id, h)}
@@ -1257,7 +1255,7 @@ let m = class extends N {
                         >
                           ${this._t("action_got_it", "Got it")}
                         </button>
-                      ` : p`<button
+                      ` : u`<button
                         class="btn"
                         @click=${() => this._openEditItem(x.id, h)}
                       >
@@ -1270,11 +1268,11 @@ let m = class extends N {
     })}
       </div>
 
-      ${this._filteredItems().length === 0 ? p`<div class="empty">
+      ${this._filteredItems().length === 0 ? u`<div class="empty">
             ${this._t("no_items_filter", "No items match your filters.")}
-          </div>` : d}
+          </div>` : c}
 
-      ${t && this._selectedWishlistId !== "all" ? p`
+      ${t && this._selectedWishlistId !== "all" ? u`
             <div style="margin-top:20px">
               <button
                 class="btn btn-primary"
@@ -1283,16 +1281,16 @@ let m = class extends N {
                 ${this._t("add_item_this_list", "Add item to this list")}
               </button>
             </div>
-          ` : t ? p`
+          ` : t ? u`
               <div class="empty">
                 ${this._t(
       "pick_wishlist_hint",
       "Select a specific wishlist to add items, or use the wishlist chips above."
     )}
               </div>
-            ` : d}
+            ` : c}
 
-      ${this._editorOpen ? p`
+      ${this._editorOpen ? u`
             <div
               class="modal-backdrop"
               @click=${(h) => {
@@ -1326,7 +1324,7 @@ ${((r = this._editingItem) == null ? void 0 : r.description) ?? ""}</textarea>
                       .value=${((a = this._editingItem) == null ? void 0 : a.image_url) ?? ""}
                     />
                   </div>
-                  ${t ? p`
+                  ${t ? u`
                         <div class="field">
                           <label
                             >${this._t(
@@ -1348,7 +1346,7 @@ ${((r = this._editingItem) == null ? void 0 : r.description) ?? ""}</textarea>
     )}
                           </div>
                         </div>
-                      ` : d}
+                      ` : c}
                   <div class="field">
                     <label>${this._t("label_external_link", "External link")}</label>
                     <input
@@ -1358,7 +1356,7 @@ ${((r = this._editingItem) == null ? void 0 : r.description) ?? ""}</textarea>
                     />
                   </div>
                   <div class="row">
-                    ${t ? p`
+                    ${t ? u`
                           <button
                             type="button"
                             class="btn btn-ghost"
@@ -1366,25 +1364,25 @@ ${((r = this._editingItem) == null ? void 0 : r.description) ?? ""}</textarea>
                           >
                             ${this._t("fill_from_link", "Fill from link")}
                           </button>
-                        ` : d}
+                        ` : c}
                   </div>
                   <div class="field">
                     <label>${this._t("label_notes", "Notes")}</label>
                     <textarea name="notes" ?disabled=${!t}>
-${((n = this._editingItem) == null ? void 0 : n.notes) ?? ""}</textarea>
+${((l = this._editingItem) == null ? void 0 : l.notes) ?? ""}</textarea>
                   </div>
                   <div class="field">
                     <label>${this._t("label_status", "Status")}</label>
                     <select name="status" ?disabled=${!t}>
                       <option
                         value="desired"
-                        ?selected=${(((l = this._editingItem) == null ? void 0 : l.status) ?? "desired") === "desired"}
+                        ?selected=${(((n = this._editingItem) == null ? void 0 : n.status) ?? "desired") === "desired"}
                       >
                         ${this._t("filter_desired", "Desired")}
                       </option>
                       <option
                         value="maybe"
-                        ?selected=${((c = this._editingItem) == null ? void 0 : c.status) === "maybe"}
+                        ?selected=${((d = this._editingItem) == null ? void 0 : d.status) === "maybe"}
                       >
                         ${this._t("filter_maybe", "Maybe")}
                       </option>
@@ -1403,7 +1401,7 @@ ${((n = this._editingItem) == null ? void 0 : n.notes) ?? ""}</textarea>
                       type="number"
                       step="0.01"
                       ?disabled=${!t}
-                      .value=${((u = this._editingItem) == null ? void 0 : u.price) != null ? String(this._editingItem.price) : ""}
+                      .value=${((p = this._editingItem) == null ? void 0 : p.price) != null ? String(this._editingItem.price) : ""}
                     />
                   </div>
                   <div class="field">
@@ -1435,11 +1433,11 @@ ${((n = this._editingItem) == null ? void 0 : n.notes) ?? ""}</textarea>
                     >
                   </div>
                   <div class="row" style="margin-top:16px">
-                    ${t ? p`
+                    ${t ? u`
                           <button class="btn btn-primary" type="submit">
                             ${this._t("save", "Save")}
                           </button>
-                        ` : d}
+                        ` : c}
                     <button
                       type="button"
                       class="btn btn-ghost"
@@ -1447,7 +1445,7 @@ ${((n = this._editingItem) == null ? void 0 : n.notes) ?? ""}</textarea>
                     >
                       ${t ? this._t("cancel", "Cancel") : this._t("close", "Close")}
                     </button>
-                    ${t && !this._isNewItem ? p`
+                    ${t && !this._isNewItem ? u`
                           <button
                             type="button"
                             class="btn"
@@ -1456,12 +1454,12 @@ ${((n = this._editingItem) == null ? void 0 : n.notes) ?? ""}</textarea>
                           >
                             ${this._t("delete", "Delete")}
                           </button>
-                        ` : d}
+                        ` : c}
                   </div>
                 </form>
               </div>
             </div>
-          ` : d}
+          ` : c}
     `;
   }
 };
