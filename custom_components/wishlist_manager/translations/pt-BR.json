@@ -25,6 +25,9 @@
     }
   },
   "panel": {
+    "open_sidebar": "Abrir menu",
+    "back": "Voltar",
+    "mobile_header_title": "Listas de desejos",
     "waiting_ha": "Aguardando o Home Assistant…",
     "loading": "Carregando listas…",
     "search_placeholder": "Buscar título, notas, tags…",

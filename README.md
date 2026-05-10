@@ -1,8 +1,10 @@
 # Wishlist Manager for Home Assistant
 
-**Current version: 1.3.1** (see `manifest.json` and `INTEGRATION_VERSION` in `const.py`).
+**Current version: 1.3.2** (see `manifest.json` and `INTEGRATION_VERSION` in `const.py`).
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/hacs/integration)
+
+![Wishlist Manager icon](icon.png)
 
 Production-oriented custom integration and sidebar panel to manage **multiple wishlists** with rich items (title, description, image URL or **uploaded image**, external link, notes, status, price, tags, favorites, archive), **drag-and-drop** ordering, **REST + WebSocket APIs**, **automations** (sensors, services, events), and optional **public share links**.
 
@@ -15,6 +17,10 @@ Production-oriented custom integration and sidebar panel to manage **multiple wi
 - **UI** (Lit + Home Assistant theme variables): responsive grid, filters (status, list, search), sorting (newest, oldest, A–Z, status), recent strip, modal editor, “fill from link” metadata scrape.
 - **Backend**: Config flow, `.storage` persistence, WebSocket commands, REST routes, typed Python models.
 - **Home Assistant**: statistic sensors, documented services, bus events for automations.
+
+## Mobile layout (narrow)
+
+On phones, Home Assistant often **hides the global hamburger** while a custom sidebar panel is open. The panel shows a **top bar** (☰ **Open menu**, title, **Back**) where ☰ dispatches the same **`hass-toggle-menu`** event as the native HA menu button. **Totals** and **Recently added** are hidden when `narrow` is true to save vertical space.
 
 ## Mobile app (Companion) — blank labels
 
@@ -34,6 +40,14 @@ Home Assistant picks strings from the signed-in **user profile language** (Setti
 ## Requirements
 
 - Home Assistant **2024.6** or newer (uses `StaticPathConfig`, `SupportsResponse`, modern HTTP stack).
+
+## Icon & branding (HACS / Home Assistant UI)
+
+- **`icon.png`** (repo root) — store preview / README.
+- **`custom_components/wishlist_manager/brand/`** — **`icon.png`** (256×256) and **`icon@2x.png`** (512×512) for **Home Assistant 2026.3+** local brand images (integration settings, device list, etc.).
+- **`brands/custom_integrations/wishlist_manager/`** — same files if you open a PR to **[home-assistant/brands](https://github.com/home-assistant/brands)** so `wishlist_manager` resolves on the global CDN for older cores and for **[HACS default listings](https://hacs.dev/docs/publish/integration#home-assistant-brands)**.
+
+HACS’s own UI may still show a generic tile for **custom repositories** until the domain exists on the brands CDN; shipping the `brand/` folder fixes icons **inside Home Assistant** on supported versions.
 
 ## Installation (HACS)
 

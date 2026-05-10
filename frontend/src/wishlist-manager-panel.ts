@@ -52,6 +52,11 @@ export class WishlistManagerPanel extends LitElement {
 
   @property({ type: Boolean, reflect: true }) narrow = false;
 
+  /** Set by Home Assistant shell (unused but required for panel protocol). */
+  @property({ attribute: false }) route?: unknown;
+
+  @property({ attribute: false }) panel?: unknown;
+
   @state() private _snapshot: StoreSnapshot | null = null;
 
   @state() private _loading = true;
@@ -484,6 +489,52 @@ export class WishlistManagerPanel extends LitElement {
     .fav {
       color: #ffc107;
     }
+
+    .mobile-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 6;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: -16px -16px 14px -16px;
+      padding: 10px 16px;
+      background: var(--app-header-background-color, var(--wm-card-bg));
+      color: var(--app-header-text-color, var(--primary-text-color));
+      border-bottom: 1px solid var(--wm-border);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    .mobile-topbar .btn-icon {
+      min-width: 44px;
+      min-height: 44px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      line-height: 1;
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--wm-accent) 15%, transparent);
+      color: inherit;
+      border: 1px solid var(--wm-border);
+      cursor: pointer;
+    }
+
+    .mobile-topbar .mobile-title {
+      flex: 1;
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mobile-topbar .btn-back {
+      padding: 8px 12px;
+      font-size: 0.88rem;
+    }
   `;
 
   private _t(
@@ -498,6 +549,24 @@ export class WishlistManagerPanel extends LitElement {
     if (s === "purchased") return this._t("status_purchased", "Purchased");
     if (s === "maybe") return this._t("status_maybe", "Maybe");
     return this._t("status_desired", "Desired");
+  }
+
+  /**
+   * HA hides the default hamburger on some custom-panel routes on mobile.
+   * `ha-menu-button` uses the same event to open the drawer.
+   */
+  private _toggleHaSidebar(): void {
+    this.dispatchEvent(
+      new Event("hass-toggle-menu", { bubbles: true, composed: true })
+    );
+  }
+
+  private _mobileBack(): void {
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    window.location.assign("/");
   }
 
   connectedCallback(): void {
@@ -939,6 +1008,31 @@ export class WishlistManagerPanel extends LitElement {
     return html`
       ${this._error ? html`<div class="error">${this._error}</div>` : nothing}
 
+      ${this.narrow
+        ? html`
+            <div class="mobile-topbar">
+              <button
+                type="button"
+                class="btn-icon"
+                aria-label=${this._t("open_sidebar", "Open menu")}
+                @click=${this._toggleHaSidebar}
+              >
+                ☰
+              </button>
+              <span class="mobile-title">
+                ${this._t("mobile_header_title", "Wishlist Manager")}
+              </span>
+              <button
+                type="button"
+                class="btn btn-ghost btn-back"
+                @click=${this._mobileBack}
+              >
+                ${this._t("back", "Back")}
+              </button>
+            </div>
+          `
+        : nothing}
+
       <div class="toolbar">
         <input
           type="search"
@@ -1024,7 +1118,7 @@ export class WishlistManagerPanel extends LitElement {
         </button>
       </div>
 
-      ${stats
+      ${!this.narrow && stats
         ? html`
             <div class="stats">
               <div class="stat-card" style="animation-delay:0ms">
@@ -1047,34 +1141,38 @@ export class WishlistManagerPanel extends LitElement {
           `
         : nothing}
 
-      <div class="section-title">
-        ${this._t("recently_added", "Recently added")}
-      </div>
-      <div class="recent">
-        ${this._recentItems().map(
-          (it) => html`
-            <div
-              class="recent-card"
-              @click=${() => {
-                const ctx = this._contextForItem(it.id);
-                if (ctx) this._openEditItem(ctx.wishlist.id, ctx.item);
-              }}
-            >
-              ${it.image_url
-                ? html`<img src=${it.image_url} alt="" loading="lazy" />`
-                : html`<div
-                    style="height:120px;background:var(--divider-color)"
-                  ></div>`}
-              <div class="meta">
-                <strong>${it.title}</strong>
-                <div style="font-size:0.8rem;color:var(--wm-muted)">
-                  ${this._statusLabel(it.status)}
-                </div>
-              </div>
+      ${!this.narrow
+        ? html`
+            <div class="section-title">
+              ${this._t("recently_added", "Recently added")}
+            </div>
+            <div class="recent">
+              ${this._recentItems().map(
+                (it) => html`
+                  <div
+                    class="recent-card"
+                    @click=${() => {
+                      const ctx = this._contextForItem(it.id);
+                      if (ctx) this._openEditItem(ctx.wishlist.id, ctx.item);
+                    }}
+                  >
+                    ${it.image_url
+                      ? html`<img src=${it.image_url} alt="" loading="lazy" />`
+                      : html`<div
+                          style="height:120px;background:var(--divider-color)"
+                        ></div>`}
+                    <div class="meta">
+                      <strong>${it.title}</strong>
+                      <div style="font-size:0.8rem;color:var(--wm-muted)">
+                        ${this._statusLabel(it.status)}
+                      </div>
+                    </div>
+                  </div>
+                `
+              )}
             </div>
           `
-        )}
-      </div>
+        : nothing}
 
       <div class="section-title">
         ${this._t("section_wishlists", "Wishlists")}

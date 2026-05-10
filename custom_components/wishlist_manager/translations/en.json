@@ -111,6 +111,9 @@
     }
   },
   "panel": {
+    "open_sidebar": "Open menu",
+    "back": "Back",
+    "mobile_header_title": "Wishlist Manager",
     "waiting_ha": "Waiting for Home Assistant…",
     "loading": "Loading wishlists…",
     "search_placeholder": "Search title, notes, tags…",

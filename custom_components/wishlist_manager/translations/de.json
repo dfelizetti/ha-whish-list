@@ -25,6 +25,9 @@
     }
   },
   "panel": {
+    "open_sidebar": "Menü öffnen",
+    "back": "Zurück",
+    "mobile_header_title": "Wunschlisten-Verwaltung",
     "waiting_ha": "Warte auf Home Assistant…",
     "loading": "Wunschlisten werden geladen…",
     "search_placeholder": "Titel, Notizen, Tags durchsuchen…",
