@@ -6,6 +6,8 @@ export interface HassConnection {
 
 export interface HomeAssistant {
   connection: HassConnection;
+  /** Home Assistant UI translations (user profile language). */
+  localize?(key: string, ...args: unknown[]): string;
   themes?: Record<
     string,
     { dark?: boolean; modes?: { dark?: Record<string, string> } }

@@ -1,5 +1,6 @@
 import { LitElement, html, css, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
+import { wmLoc } from "./i18n.js";
 import type {
   HomeAssistant,
   ItemStatus,
@@ -39,12 +40,6 @@ function isAdmin(hass: HomeAssistant): boolean {
   return Boolean(u?.is_admin);
 }
 
-function statusLabel(s: string): string {
-  if (s === "purchased") return "Purchased";
-  if (s === "maybe") return "Maybe";
-  return "Desired";
-}
-
 function statusOrder(s: string): number {
   if (s === "desired") return 0;
   if (s === "maybe") return 1;
@@ -80,10 +75,6 @@ export class WishlistManagerPanel extends LitElement {
   @state() private _isNewItem = false;
 
   @state() private _shareUrl: string | null = null;
-
-  @state() private _dragWishId: string | null = null;
-
-  @state() private _dragItemId: string | null = null;
 
   static styles = css`
     :host {
@@ -495,6 +486,20 @@ export class WishlistManagerPanel extends LitElement {
     }
   `;
 
+  private _t(
+    subkey: string,
+    fallback: string,
+    params?: Record<string, string | number>
+  ): string {
+    return wmLoc(this.hass, subkey, fallback, params);
+  }
+
+  private _statusLabel(s: string): string {
+    if (s === "purchased") return this._t("status_purchased", "Purchased");
+    if (s === "maybe") return this._t("status_maybe", "Maybe");
+    return this._t("status_desired", "Desired");
+  }
+
   connectedCallback(): void {
     super.connectedCallback();
     void this._refresh();
@@ -692,7 +697,8 @@ export class WishlistManagerPanel extends LitElement {
       this._isNewItem
     )
       return;
-    if (!confirm("Delete this item permanently?")) return;
+    if (!confirm(this._t("confirm_delete_item", "Delete this item permanently?")))
+      return;
     await this._mutate(() =>
       callWs(this.hass, {
         type: WS.DELETE_ITEM,
@@ -720,7 +726,10 @@ export class WishlistManagerPanel extends LitElement {
   }
 
   private async _createWishlist(): Promise<void> {
-    const name = prompt("Wishlist name?", "New wishlist");
+    const name = prompt(
+      this._t("prompt_wishlist_name", "Wishlist name?"),
+      this._t("default_new_wishlist", "New wishlist")
+    );
     if (!name || !this.hass) return;
     await this._mutate(() =>
       callWs(this.hass, {
@@ -732,7 +741,7 @@ export class WishlistManagerPanel extends LitElement {
   }
 
   private async _renameWishlist(wl: WishlistData): Promise<void> {
-    const name = prompt("Rename wishlist", wl.name);
+    const name = prompt(this._t("prompt_rename_wishlist", "Rename wishlist"), wl.name);
     if (!name || !this.hass) return;
     await this._mutate(() =>
       callWs(this.hass, {
@@ -744,7 +753,16 @@ export class WishlistManagerPanel extends LitElement {
   }
 
   private async _deleteWishlist(wl: WishlistData): Promise<void> {
-    if (!confirm(`Delete wishlist “${wl.name}” and all items?`)) return;
+    if (
+      !confirm(
+        this._t(
+          "confirm_delete_wishlist",
+          'Delete wishlist "{name}" and all items?',
+          { name: wl.name }
+        )
+      )
+    )
+      return;
     if (!this.hass) return;
     await this._mutate(() =>
       callWs(this.hass, {
@@ -804,7 +822,7 @@ export class WishlistManagerPanel extends LitElement {
     ) as HTMLFormElement | null;
     const url = String(form?.querySelector<HTMLInputElement>('[name="external_url"]')?.value || "").trim();
     if (!url) {
-      this._error = "Add a link first.";
+      this._error = this._t("error_add_link_first", "Add a link first.");
       return;
     }
     try {
@@ -854,10 +872,12 @@ export class WishlistManagerPanel extends LitElement {
 
   render() {
     if (!this.hass) {
-      return html`<div class="empty">Waiting for Home Assistant…</div>`;
+      return html`<div class="empty">
+        ${this._t("waiting_ha", "Waiting for Home Assistant…")}
+      </div>`;
     }
     if (this._loading && !this._snapshot) {
-      return html`<div class="empty">Loading wishlists…</div>`;
+      return html`<div class="empty">${this._t("loading", "Loading wishlists…")}</div>`;
     }
 
     const stats = this._snapshot?.stats;
@@ -869,7 +889,10 @@ export class WishlistManagerPanel extends LitElement {
       <div class="toolbar">
         <input
           type="search"
-          placeholder="Search title, notes, tags…"
+          placeholder=${this._t(
+            "search_placeholder",
+            "Search title, notes, tags…"
+          )}
           .value=${this._search}
           @input=${(e: Event) => {
             this._search = (e.target as HTMLInputElement).value;
@@ -882,25 +905,25 @@ export class WishlistManagerPanel extends LitElement {
           }}
         >
           <option value="all" ?selected=${this._filterStatus === "all"}>
-            All statuses
+            ${this._t("filter_all_status", "All statuses")}
           </option>
           <option value="desired" ?selected=${this._filterStatus === "desired"}>
-            Desired
+            ${this._t("filter_desired", "Desired")}
           </option>
           <option value="maybe" ?selected=${this._filterStatus === "maybe"}>
-            Maybe
+            ${this._t("filter_maybe", "Maybe")}
           </option>
           <option
             value="purchased"
             ?selected=${this._filterStatus === "purchased"}
           >
-            Purchased
+            ${this._t("filter_purchased", "Purchased")}
           </option>
           <option
             value="archived"
             ?selected=${this._filterStatus === "archived"}
           >
-            Archived only
+            ${this._t("filter_archived_only", "Archived only")}
           </option>
         </select>
         <select
@@ -910,7 +933,7 @@ export class WishlistManagerPanel extends LitElement {
           }}
         >
           <option value="all" ?selected=${this._selectedWishlistId === "all"}>
-            All wishlists
+            ${this._t("filter_all_lists", "All wishlists")}
           </option>
           ${this._wishlistsSorted().map(
             (w) => html`
@@ -926,25 +949,25 @@ export class WishlistManagerPanel extends LitElement {
           }}
         >
           <option value="newest" ?selected=${this._sort === "newest"}>
-            Newest
+            ${this._t("sort_newest", "Newest")}
           </option>
           <option value="oldest" ?selected=${this._sort === "oldest"}>
-            Oldest
+            ${this._t("sort_oldest", "Oldest")}
           </option>
           <option value="alpha" ?selected=${this._sort === "alpha"}>
-            A–Z
+            ${this._t("sort_alpha", "A–Z")}
           </option>
           <option value="status" ?selected=${this._sort === "status"}>
-            Status
+            ${this._t("sort_status", "Status")}
           </option>
         </select>
         ${admin
           ? html`<button class="btn btn-primary" @click=${this._createWishlist}>
-              New wishlist
+              ${this._t("new_wishlist", "New wishlist")}
             </button>`
           : nothing}
         <button class="btn btn-ghost" @click=${() => this._refresh()}>
-          Refresh
+          ${this._t("refresh", "Refresh")}
         </button>
       </div>
 
@@ -952,22 +975,28 @@ export class WishlistManagerPanel extends LitElement {
         ? html`
             <div class="stats">
               <div class="stat-card" style="animation-delay:0ms">
-                <b>${stats.total_items}</b><span>Total items</span>
+                <b>${stats.total_items}</b
+                ><span>${this._t("stat_total", "Total items")}</span>
               </div>
               <div class="stat-card" style="animation-delay:40ms">
-                <b>${stats.purchased_items}</b><span>Purchased</span>
+                <b>${stats.purchased_items}</b
+                ><span>${this._t("stat_purchased", "Purchased")}</span>
               </div>
               <div class="stat-card" style="animation-delay:80ms">
-                <b>${stats.desired_items}</b><span>Desired</span>
+                <b>${stats.desired_items}</b
+                ><span>${this._t("stat_desired", "Desired")}</span>
               </div>
               <div class="stat-card" style="animation-delay:120ms">
-                <b>${stats.wishlist_count}</b><span>Wishlists</span>
+                <b>${stats.wishlist_count}</b
+                ><span>${this._t("stat_wishlists", "Wishlists")}</span>
               </div>
             </div>
           `
         : nothing}
 
-      <div class="section-title">Recently added</div>
+      <div class="section-title">
+        ${this._t("recently_added", "Recently added")}
+      </div>
       <div class="recent">
         ${this._recentItems().map(
           (it) => html`
@@ -986,7 +1015,7 @@ export class WishlistManagerPanel extends LitElement {
               <div class="meta">
                 <strong>${it.title}</strong>
                 <div style="font-size:0.8rem;color:var(--wm-muted)">
-                  ${statusLabel(it.status)}
+                  ${this._statusLabel(it.status)}
                 </div>
               </div>
             </div>
@@ -994,7 +1023,9 @@ export class WishlistManagerPanel extends LitElement {
         )}
       </div>
 
-      <div class="section-title">Wishlists</div>
+      <div class="section-title">
+        ${this._t("section_wishlists", "Wishlists")}
+      </div>
       <div class="wishlists-row">
         ${this._wishlistsSorted().map(
           (wl) => html`
@@ -1021,7 +1052,7 @@ export class WishlistManagerPanel extends LitElement {
                         this._renameWishlist(wl);
                       }}
                     >
-                      Rename
+                      ${this._t("rename", "Rename")}
                     </button>
                     <button
                       class="btn btn-ghost"
@@ -1031,7 +1062,7 @@ export class WishlistManagerPanel extends LitElement {
                         this._deleteWishlist(wl);
                       }}
                     >
-                      Delete
+                      ${this._t("delete", "Delete")}
                     </button>
                     <button
                       class="btn btn-ghost"
@@ -1041,7 +1072,7 @@ export class WishlistManagerPanel extends LitElement {
                         void this._enableShare(wl);
                       }}
                     >
-                      Share link
+                      ${this._t("share_link", "Share link")}
                     </button>
                   `
                 : nothing}
@@ -1053,7 +1084,7 @@ export class WishlistManagerPanel extends LitElement {
       ${this._shareUrl
         ? html`
             <div class="field">
-              <label>Public link (read-only)</label>
+              <label>${this._t("share_public_label", "Public link (read-only)")}</label>
               <div class="row">
                 <input
                   readonly
@@ -1061,7 +1092,7 @@ export class WishlistManagerPanel extends LitElement {
                   .value=${this._shareUrl}
                 />
                 <button type="button" class="btn" @click=${this._copyShare}>
-                  Copy
+                  ${this._t("copy", "Copy")}
                 </button>
                 <button
                   type="button"
@@ -1070,14 +1101,14 @@ export class WishlistManagerPanel extends LitElement {
                     this._shareUrl = null;
                   }}
                 >
-                  Close
+                  ${this._t("close", "Close")}
                 </button>
               </div>
             </div>
           `
         : nothing}
 
-      <div class="section-title">Items</div>
+      <div class="section-title">${this._t("section_items", "Items")}</div>
       <div class="grid">
         ${this._filteredItems().map((it) => {
           const ctx = this._contextForItem(it.id);
@@ -1097,13 +1128,17 @@ export class WishlistManagerPanel extends LitElement {
                 ${it.image_url
                   ? html`<img src=${it.image_url} alt="" loading="lazy" />`
                   : nothing}
-                <span class="badge ${it.status}">${statusLabel(it.status)}</span>
+                <span class="badge ${it.status}"
+                  >${this._statusLabel(it.status)}</span
+                >
               </div>
               <div class="item-body">
                 <div class="item-title">
                   ${it.favorite ? html`<span class="fav">★</span> ` : nothing}${it.title}
                 </div>
-                <div class="item-desc">${it.description || "—"}</div>
+                <div class="item-desc">
+                  ${it.description || this._t("dash", "—")}
+                </div>
                 ${it.price != null
                   ? html`<div style="font-weight:600">
                       ${this.hass?.locale?.language
@@ -1124,34 +1159,34 @@ export class WishlistManagerPanel extends LitElement {
                           class="btn"
                           @click=${() => this._openEditItem(wl.id, it)}
                         >
-                          Edit
+                          ${this._t("edit", "Edit")}
                         </button>
                         <button
                           class="btn btn-ghost"
                           @click=${() =>
                             this._quickSetStatus(wl.id, it, "desired")}
                         >
-                          Desired
+                          ${this._t("action_desired", "Desired")}
                         </button>
                         <button
                           class="btn btn-ghost"
                           @click=${() => this._quickSetStatus(wl.id, it, "maybe")}
                         >
-                          Maybe
+                          ${this._t("action_maybe", "Maybe")}
                         </button>
                         <button
                           class="btn btn-ghost"
                           @click=${() =>
                             this._quickSetStatus(wl.id, it, "purchased")}
                         >
-                          Got it
+                          ${this._t("action_got_it", "Got it")}
                         </button>
                       `
                     : html`<button
                         class="btn"
                         @click=${() => this._openEditItem(wl.id, it)}
                       >
-                        View
+                        ${this._t("view", "View")}
                       </button>`}
                 </div>
               </div>
@@ -1161,7 +1196,9 @@ export class WishlistManagerPanel extends LitElement {
       </div>
 
       ${this._filteredItems().length === 0
-        ? html`<div class="empty">No items match your filters.</div>`
+        ? html`<div class="empty">
+            ${this._t("no_items_filter", "No items match your filters.")}
+          </div>`
         : nothing}
 
       ${admin && this._selectedWishlistId !== "all"
@@ -1172,15 +1209,17 @@ export class WishlistManagerPanel extends LitElement {
                 @click=${() =>
                   this._openCreateItem(this._selectedWishlistId as string)}
               >
-                Add item to this list
+                ${this._t("add_item_this_list", "Add item to this list")}
               </button>
             </div>
           `
         : admin
           ? html`
               <div class="empty">
-                Select a specific wishlist to add items, or use the wishlist
-                chips above.
+                ${this._t(
+                  "pick_wishlist_hint",
+                  "Select a specific wishlist to add items, or use the wishlist chips above."
+                )}
               </div>
             `
           : nothing}
@@ -1194,10 +1233,14 @@ export class WishlistManagerPanel extends LitElement {
               }}
             >
               <div class="modal" @click=${(e: Event) => e.stopPropagation()}>
-                <h2>${this._isNewItem ? "New item" : "Edit item"}</h2>
+                <h2>
+                  ${this._isNewItem
+                    ? this._t("editor_new", "New item")
+                    : this._t("editor_edit", "Edit item")}
+                </h2>
                 <form id="editor-form" @submit=${this._saveEditor}>
                   <div class="field">
-                    <label>Title</label>
+                    <label>${this._t("label_title", "Title")}</label>
                     <input
                       name="title"
                       required
@@ -1206,12 +1249,12 @@ export class WishlistManagerPanel extends LitElement {
                     />
                   </div>
                   <div class="field">
-                    <label>Description</label>
+                    <label>${this._t("label_description", "Description")}</label>
                     <textarea name="description" ?disabled=${!admin}>
 ${this._editingItem?.description ?? ""}</textarea>
                   </div>
                   <div class="field">
-                    <label>Image URL</label>
+                    <label>${this._t("label_image_url", "Image URL")}</label>
                     <input
                       name="image_url"
                       ?disabled=${!admin}
@@ -1219,7 +1262,7 @@ ${this._editingItem?.description ?? ""}</textarea>
                     />
                   </div>
                   <div class="field">
-                    <label>External link</label>
+                    <label>${this._t("label_external_link", "External link")}</label>
                     <input
                       name="external_url"
                       ?disabled=${!admin}
@@ -1234,42 +1277,42 @@ ${this._editingItem?.description ?? ""}</textarea>
                             class="btn btn-ghost"
                             @click=${() => this._fetchMetadata()}
                           >
-                            Fill from link
+                            ${this._t("fill_from_link", "Fill from link")}
                           </button>
                         `
                       : nothing}
                   </div>
                   <div class="field">
-                    <label>Notes</label>
+                    <label>${this._t("label_notes", "Notes")}</label>
                     <textarea name="notes" ?disabled=${!admin}>
 ${this._editingItem?.notes ?? ""}</textarea>
                   </div>
                   <div class="field">
-                    <label>Status</label>
+                    <label>${this._t("label_status", "Status")}</label>
                     <select name="status" ?disabled=${!admin}>
                       <option
                         value="desired"
                         ?selected=${(this._editingItem?.status ?? "desired") ===
                         "desired"}
                       >
-                        Desired
+                        ${this._t("filter_desired", "Desired")}
                       </option>
                       <option
                         value="maybe"
                         ?selected=${this._editingItem?.status === "maybe"}
                       >
-                        Maybe
+                        ${this._t("filter_maybe", "Maybe")}
                       </option>
                       <option
                         value="purchased"
                         ?selected=${this._editingItem?.status === "purchased"}
                       >
-                        Purchased
+                        ${this._t("filter_purchased", "Purchased")}
                       </option>
                     </select>
                   </div>
                   <div class="field">
-                    <label>Price (optional)</label>
+                    <label>${this._t("label_price", "Price (optional)")}</label>
                     <input
                       name="price"
                       type="number"
@@ -1281,7 +1324,7 @@ ${this._editingItem?.notes ?? ""}</textarea>
                     />
                   </div>
                   <div class="field">
-                    <label>Tags (comma separated)</label>
+                    <label>${this._t("label_tags", "Tags (comma separated)")}</label>
                     <input
                       name="tags"
                       ?disabled=${!admin}
@@ -1296,7 +1339,7 @@ ${this._editingItem?.notes ?? ""}</textarea>
                         ?disabled=${!admin}
                         ?checked=${this._editingItem?.favorite}
                       />
-                      Favorite</label
+                      ${this._t("favorite", "Favorite")}</label
                     >
                     <label
                       ><input
@@ -1305,14 +1348,14 @@ ${this._editingItem?.notes ?? ""}</textarea>
                         ?disabled=${!admin}
                         ?checked=${this._editingItem?.archived}
                       />
-                      Archived</label
+                      ${this._t("archived", "Archived")}</label
                     >
                   </div>
                   <div class="row" style="margin-top:16px">
                     ${admin
                       ? html`
                           <button class="btn btn-primary" type="submit">
-                            Save
+                            ${this._t("save", "Save")}
                           </button>
                         `
                       : nothing}
@@ -1321,7 +1364,9 @@ ${this._editingItem?.notes ?? ""}</textarea>
                       class="btn btn-ghost"
                       @click=${this._closeEditor}
                     >
-                      ${admin ? "Cancel" : "Close"}
+                      ${admin
+                        ? this._t("cancel", "Cancel")
+                        : this._t("close", "Close")}
                     </button>
                     ${admin && !this._isNewItem
                       ? html`
@@ -1331,7 +1376,7 @@ ${this._editingItem?.notes ?? ""}</textarea>
                             style="margin-left:auto;color:var(--error-color)"
                             @click=${() => this._deleteCurrentItem()}
                           >
-                            Delete
+                            ${this._t("delete", "Delete")}
                           </button>
                         `
                       : nothing}

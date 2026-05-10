@@ -3,8 +3,8 @@
  * Copyright 2019 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const q = globalThis, K = q.ShadowRoot && (q.ShadyCSS === void 0 || q.ShadyCSS.nativeShadow) && "adoptedStyleSheets" in Document.prototype && "replace" in CSSStyleSheet.prototype, Q = Symbol(), at = /* @__PURE__ */ new WeakMap();
-let $t = class {
+const q = globalThis, J = q.ShadowRoot && (q.ShadyCSS === void 0 || q.ShadyCSS.nativeShadow) && "adoptedStyleSheets" in Document.prototype && "replace" in CSSStyleSheet.prototype, Q = Symbol(), at = /* @__PURE__ */ new WeakMap();
+let vt = class {
   constructor(t, e, i) {
     if (this._$cssResult$ = !0, i !== Q) throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");
     this.cssText = t, this.t = e;
@@ -12,7 +12,7 @@ let $t = class {
   get styleSheet() {
     let t = this.o;
     const e = this.t;
-    if (K && t === void 0) {
+    if (J && t === void 0) {
       const i = e !== void 0 && e.length === 1;
       i && (t = at.get(e)), t === void 0 && ((this.o = t = new CSSStyleSheet()).replaceSync(this.cssText), i && at.set(e, t));
     }
@@ -22,20 +22,20 @@ let $t = class {
     return this.cssText;
   }
 };
-const At = (s) => new $t(typeof s == "string" ? s : s + "", void 0, Q), St = (s, ...t) => {
+const At = (s) => new vt(typeof s == "string" ? s : s + "", void 0, Q), St = (s, ...t) => {
   const e = s.length === 1 ? s[0] : t.reduce((i, r, a) => i + ((o) => {
     if (o._$cssResult$ === !0) return o.cssText;
     if (typeof o == "number") return o;
     throw Error("Value passed to 'css' function must be a 'css' function result: " + o + ". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.");
   })(r) + s[a + 1], s[0]);
-  return new $t(e, s, Q);
+  return new vt(e, s, Q);
 }, It = (s, t) => {
-  if (K) s.adoptedStyleSheets = t.map((e) => e instanceof CSSStyleSheet ? e : e.styleSheet);
+  if (J) s.adoptedStyleSheets = t.map((e) => e instanceof CSSStyleSheet ? e : e.styleSheet);
   else for (const e of t) {
     const i = document.createElement("style"), r = q.litNonce;
     r !== void 0 && i.setAttribute("nonce", r), i.textContent = e.cssText, s.appendChild(i);
   }
-}, ot = K ? (s) => s : (s) => s instanceof CSSStyleSheet ? ((t) => {
+}, ot = J ? (s) => s : (s) => s instanceof CSSStyleSheet ? ((t) => {
   let e = "";
   for (const i of t.cssRules) e += i.cssText;
   return At(e);
@@ -45,10 +45,10 @@ const At = (s) => new $t(typeof s == "string" ? s : s + "", void 0, Q), St = (s,
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const { is: kt, defineProperty: Ct, getOwnPropertyDescriptor: Tt, getOwnPropertyNames: Pt, getOwnPropertySymbols: Ut, getPrototypeOf: Ot } = Object, A = globalThis, nt = A.trustedTypes, Wt = nt ? nt.emptyScript : "", Y = A.reactiveElementPolyfillSupport, R = (s, t) => s, B = { toAttribute(s, t) {
+const { is: kt, defineProperty: Ct, getOwnPropertyDescriptor: Tt, getOwnPropertyNames: Pt, getOwnPropertySymbols: Ut, getPrototypeOf: Ot } = Object, A = globalThis, nt = A.trustedTypes, Dt = nt ? nt.emptyScript : "", Y = A.reactiveElementPolyfillSupport, M = (s, t) => s, B = { toAttribute(s, t) {
   switch (t) {
     case Boolean:
-      s = s ? Wt : null;
+      s = s ? Dt : null;
       break;
     case Object:
     case Array:
@@ -103,13 +103,13 @@ let U = class extends HTMLElement {
     return this.elementProperties.get(t) ?? lt;
   }
   static _$Ei() {
-    if (this.hasOwnProperty(R("elementProperties"))) return;
+    if (this.hasOwnProperty(M("elementProperties"))) return;
     const t = Ot(this);
     t.finalize(), t.l !== void 0 && (this.l = [...t.l]), this.elementProperties = new Map(t.elementProperties);
   }
   static finalize() {
-    if (this.hasOwnProperty(R("finalized"))) return;
-    if (this.finalized = !0, this._$Ei(), this.hasOwnProperty(R("properties"))) {
+    if (this.hasOwnProperty(M("finalized"))) return;
+    if (this.finalized = !0, this._$Ei(), this.hasOwnProperty(M("properties"))) {
       const e = this.properties, i = [...Pt(e), ...Ut(e)];
       for (const r of i) this.createProperty(r, e[r]);
     }
@@ -278,28 +278,28 @@ let U = class extends HTMLElement {
   firstUpdated(t) {
   }
 };
-U.elementStyles = [], U.shadowRootOptions = { mode: "open" }, U[R("elementProperties")] = /* @__PURE__ */ new Map(), U[R("finalized")] = /* @__PURE__ */ new Map(), Y == null || Y({ ReactiveElement: U }), (A.reactiveElementVersions ?? (A.reactiveElementVersions = [])).push("2.1.2");
+U.elementStyles = [], U.shadowRootOptions = { mode: "open" }, U[M("elementProperties")] = /* @__PURE__ */ new Map(), U[M("finalized")] = /* @__PURE__ */ new Map(), Y == null || Y({ ReactiveElement: U }), (A.reactiveElementVersions ?? (A.reactiveElementVersions = [])).push("2.1.2");
 /**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const M = globalThis, dt = (s) => s, F = M.trustedTypes, ht = F ? F.createPolicy("lit-html", { createHTML: (s) => s }) : void 0, yt = "$lit$", E = `lit$${Math.random().toFixed(9).slice(2)}$`, wt = "?" + E, Dt = `<${wt}>`, P = document, H = () => P.createComment(""), z = (s) => s === null || typeof s != "object" && typeof s != "function", tt = Array.isArray, Rt = (s) => tt(s) || typeof (s == null ? void 0 : s[Symbol.iterator]) == "function", Z = `[ 	
-\f\r]`, D = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, ct = /-->/g, pt = />/g, k = RegExp(`>|${Z}(?:([^\\s"'>=/]+)(${Z}*=${Z}*(?:[^ 	
-\f\r"'\`<>=]|("|')|))|$)`, "g"), ut = /'/g, mt = /"/g, xt = /^(?:script|style|textarea|title)$/i, Mt = (s) => (t, ...e) => ({ _$litType$: s, strings: t, values: e }), u = Mt(1), O = Symbol.for("lit-noChange"), h = Symbol.for("lit-nothing"), _t = /* @__PURE__ */ new WeakMap(), C = P.createTreeWalker(P, 129);
+const W = globalThis, ht = (s) => s, F = W.trustedTypes, dt = F ? F.createPolicy("lit-html", { createHTML: (s) => s }) : void 0, yt = "$lit$", E = `lit$${Math.random().toFixed(9).slice(2)}$`, wt = "?" + E, Rt = `<${wt}>`, P = document, H = () => P.createComment(""), z = (s) => s === null || typeof s != "object" && typeof s != "function", tt = Array.isArray, Mt = (s) => tt(s) || typeof (s == null ? void 0 : s[Symbol.iterator]) == "function", Z = `[ 	
+\f\r]`, R = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, ct = /-->/g, pt = />/g, k = RegExp(`>|${Z}(?:([^\\s"'>=/]+)(${Z}*=${Z}*(?:[^ 	
+\f\r"'\`<>=]|("|')|))|$)`, "g"), ut = /'/g, _t = /"/g, xt = /^(?:script|style|textarea|title)$/i, Wt = (s) => (t, ...e) => ({ _$litType$: s, strings: t, values: e }), u = Wt(1), O = Symbol.for("lit-noChange"), d = Symbol.for("lit-nothing"), mt = /* @__PURE__ */ new WeakMap(), C = P.createTreeWalker(P, 129);
 function Et(s, t) {
   if (!tt(s) || !s.hasOwnProperty("raw")) throw Error("invalid template strings array");
-  return ht !== void 0 ? ht.createHTML(t) : t;
+  return dt !== void 0 ? dt.createHTML(t) : t;
 }
 const Nt = (s, t) => {
   const e = s.length - 1, i = [];
-  let r, a = t === 2 ? "<svg>" : t === 3 ? "<math>" : "", o = D;
+  let r, a = t === 2 ? "<svg>" : t === 3 ? "<math>" : "", o = R;
   for (let l = 0; l < e; l++) {
     const n = s[l];
-    let p, m, c = -1, v = 0;
-    for (; v < n.length && (o.lastIndex = v, m = o.exec(n), m !== null); ) v = o.lastIndex, o === D ? m[1] === "!--" ? o = ct : m[1] !== void 0 ? o = pt : m[2] !== void 0 ? (xt.test(m[2]) && (r = RegExp("</" + m[2], "g")), o = k) : m[3] !== void 0 && (o = k) : o === k ? m[0] === ">" ? (o = r ?? D, c = -1) : m[1] === void 0 ? c = -2 : (c = o.lastIndex - m[2].length, p = m[1], o = m[3] === void 0 ? k : m[3] === '"' ? mt : ut) : o === mt || o === ut ? o = k : o === ct || o === pt ? o = D : (o = k, r = void 0);
+    let p, _, c = -1, $ = 0;
+    for (; $ < n.length && (o.lastIndex = $, _ = o.exec(n), _ !== null); ) $ = o.lastIndex, o === R ? _[1] === "!--" ? o = ct : _[1] !== void 0 ? o = pt : _[2] !== void 0 ? (xt.test(_[2]) && (r = RegExp("</" + _[2], "g")), o = k) : _[3] !== void 0 && (o = k) : o === k ? _[0] === ">" ? (o = r ?? R, c = -1) : _[1] === void 0 ? c = -2 : (c = o.lastIndex - _[2].length, p = _[1], o = _[3] === void 0 ? k : _[3] === '"' ? _t : ut) : o === _t || o === ut ? o = k : o === ct || o === pt ? o = R : (o = k, r = void 0);
     const w = o === k && s[l + 1].startsWith("/>") ? " " : "";
-    a += o === D ? n + Dt : c >= 0 ? (i.push(p), n.slice(0, c) + yt + n.slice(c) + E + w) : n + E + (c === -2 ? l : w);
+    a += o === R ? n + Rt : c >= 0 ? (i.push(p), n.slice(0, c) + yt + n.slice(c) + E + w) : n + E + (c === -2 ? l : w);
   }
   return [Et(s, a + (s[e] || "<?>") + (t === 2 ? "</svg>" : t === 3 ? "</math>" : "")), i];
 };
@@ -308,7 +308,7 @@ class L {
     let r;
     this.parts = [];
     let a = 0, o = 0;
-    const l = t.length - 1, n = this.parts, [p, m] = Nt(t, e);
+    const l = t.length - 1, n = this.parts, [p, _] = Nt(t, e);
     if (this.el = L.createElement(p, i), C.currentNode = this.el.content, e === 2 || e === 3) {
       const c = this.el.content.firstChild;
       c.replaceWith(...c.childNodes);
@@ -316,15 +316,15 @@ class L {
     for (; (r = C.nextNode()) !== null && n.length < l; ) {
       if (r.nodeType === 1) {
         if (r.hasAttributes()) for (const c of r.getAttributeNames()) if (c.endsWith(yt)) {
-          const v = m[o++], w = r.getAttribute(c).split(E), S = /([.?@])?(.*)/.exec(v);
+          const $ = _[o++], w = r.getAttribute(c).split(E), S = /([.?@])?(.*)/.exec($);
           n.push({ type: 1, index: a, name: S[2], strings: w, ctor: S[1] === "." ? zt : S[1] === "?" ? Lt : S[1] === "@" ? jt : V }), r.removeAttribute(c);
         } else c.startsWith(E) && (n.push({ type: 6, index: a }), r.removeAttribute(c));
         if (xt.test(r.tagName)) {
-          const c = r.textContent.split(E), v = c.length - 1;
-          if (v > 0) {
+          const c = r.textContent.split(E), $ = c.length - 1;
+          if ($ > 0) {
             r.textContent = F ? F.emptyScript : "";
-            for (let w = 0; w < v; w++) r.append(c[w], H()), C.nextNode(), n.push({ type: 2, index: ++a });
-            r.append(c[v], H());
+            for (let w = 0; w < $; w++) r.append(c[w], H()), C.nextNode(), n.push({ type: 2, index: ++a });
+            r.append(c[$], H());
           }
         }
       } else if (r.nodeType === 8) if (r.data === wt) n.push({ type: 2, index: a });
@@ -340,12 +340,12 @@ class L {
     return i.innerHTML = t, i;
   }
 }
-function W(s, t, e = s, i) {
+function D(s, t, e = s, i) {
   var o, l;
   if (t === O) return t;
   let r = i !== void 0 ? (o = e._$Co) == null ? void 0 : o[i] : e._$Cl;
   const a = z(t) ? void 0 : t._$litDirective$;
-  return (r == null ? void 0 : r.constructor) !== a && ((l = r == null ? void 0 : r._$AO) == null || l.call(r, !1), a === void 0 ? r = void 0 : (r = new a(s), r._$AT(s, e, i)), i !== void 0 ? (e._$Co ?? (e._$Co = []))[i] = r : e._$Cl = r), r !== void 0 && (t = W(s, r._$AS(s, t.values), r, i)), t;
+  return (r == null ? void 0 : r.constructor) !== a && ((l = r == null ? void 0 : r._$AO) == null || l.call(r, !1), a === void 0 ? r = void 0 : (r = new a(s), r._$AT(s, e, i)), i !== void 0 ? (e._$Co ?? (e._$Co = []))[i] = r : e._$Cl = r), r !== void 0 && (t = D(s, r._$AS(s, t.values), r, i)), t;
 }
 class Ht {
   constructor(t, e) {
@@ -381,7 +381,7 @@ class j {
     return ((t = this._$AM) == null ? void 0 : t._$AU) ?? this._$Cv;
   }
   constructor(t, e, i, r) {
-    this.type = 2, this._$AH = h, this._$AN = void 0, this._$AA = t, this._$AB = e, this._$AM = i, this.options = r, this._$Cv = (r == null ? void 0 : r.isConnected) ?? !0;
+    this.type = 2, this._$AH = d, this._$AN = void 0, this._$AA = t, this._$AB = e, this._$AM = i, this.options = r, this._$Cv = (r == null ? void 0 : r.isConnected) ?? !0;
   }
   get parentNode() {
     let t = this._$AA.parentNode;
@@ -395,7 +395,7 @@ class j {
     return this._$AB;
   }
   _$AI(t, e = this) {
-    t = W(this, t, e), z(t) ? t === h || t == null || t === "" ? (this._$AH !== h && this._$AR(), this._$AH = h) : t !== this._$AH && t !== O && this._(t) : t._$litType$ !== void 0 ? this.$(t) : t.nodeType !== void 0 ? this.T(t) : Rt(t) ? this.k(t) : this._(t);
+    t = D(this, t, e), z(t) ? t === d || t == null || t === "" ? (this._$AH !== d && this._$AR(), this._$AH = d) : t !== this._$AH && t !== O && this._(t) : t._$litType$ !== void 0 ? this.$(t) : t.nodeType !== void 0 ? this.T(t) : Mt(t) ? this.k(t) : this._(t);
   }
   O(t) {
     return this._$AA.parentNode.insertBefore(t, this._$AB);
@@ -404,7 +404,7 @@ class j {
     this._$AH !== t && (this._$AR(), this._$AH = this.O(t));
   }
   _(t) {
-    this._$AH !== h && z(this._$AH) ? this._$AA.nextSibling.data = t : this.T(P.createTextNode(t)), this._$AH = t;
+    this._$AH !== d && z(this._$AH) ? this._$AA.nextSibling.data = t : this.T(P.createTextNode(t)), this._$AH = t;
   }
   $(t) {
     var a;
@@ -416,8 +416,8 @@ class j {
     }
   }
   _$AC(t) {
-    let e = _t.get(t.strings);
-    return e === void 0 && _t.set(t.strings, e = new L(t)), e;
+    let e = mt.get(t.strings);
+    return e === void 0 && mt.set(t.strings, e = new L(t)), e;
   }
   k(t) {
     tt(this._$AH) || (this._$AH = [], this._$AR());
@@ -429,8 +429,8 @@ class j {
   _$AR(t = this._$AA.nextSibling, e) {
     var i;
     for ((i = this._$AP) == null ? void 0 : i.call(this, !1, !0, e); t !== this._$AB; ) {
-      const r = dt(t).nextSibling;
-      dt(t).remove(), t = r;
+      const r = ht(t).nextSibling;
+      ht(t).remove(), t = r;
     }
   }
   setConnected(t) {
@@ -446,21 +446,21 @@ class V {
     return this._$AM._$AU;
   }
   constructor(t, e, i, r, a) {
-    this.type = 1, this._$AH = h, this._$AN = void 0, this.element = t, this.name = e, this._$AM = r, this.options = a, i.length > 2 || i[0] !== "" || i[1] !== "" ? (this._$AH = Array(i.length - 1).fill(new String()), this.strings = i) : this._$AH = h;
+    this.type = 1, this._$AH = d, this._$AN = void 0, this.element = t, this.name = e, this._$AM = r, this.options = a, i.length > 2 || i[0] !== "" || i[1] !== "" ? (this._$AH = Array(i.length - 1).fill(new String()), this.strings = i) : this._$AH = d;
   }
   _$AI(t, e = this, i, r) {
     const a = this.strings;
     let o = !1;
-    if (a === void 0) t = W(this, t, e, 0), o = !z(t) || t !== this._$AH && t !== O, o && (this._$AH = t);
+    if (a === void 0) t = D(this, t, e, 0), o = !z(t) || t !== this._$AH && t !== O, o && (this._$AH = t);
     else {
       const l = t;
       let n, p;
-      for (t = a[0], n = 0; n < a.length - 1; n++) p = W(this, l[i + n], e, n), p === O && (p = this._$AH[n]), o || (o = !z(p) || p !== this._$AH[n]), p === h ? t = h : t !== h && (t += (p ?? "") + a[n + 1]), this._$AH[n] = p;
+      for (t = a[0], n = 0; n < a.length - 1; n++) p = D(this, l[i + n], e, n), p === O && (p = this._$AH[n]), o || (o = !z(p) || p !== this._$AH[n]), p === d ? t = d : t !== d && (t += (p ?? "") + a[n + 1]), this._$AH[n] = p;
     }
     o && !r && this.j(t);
   }
   j(t) {
-    t === h ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, t ?? "");
+    t === d ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, t ?? "");
   }
 }
 class zt extends V {
@@ -468,7 +468,7 @@ class zt extends V {
     super(...arguments), this.type = 3;
   }
   j(t) {
-    this.element[this.name] = t === h ? void 0 : t;
+    this.element[this.name] = t === d ? void 0 : t;
   }
 }
 class Lt extends V {
@@ -476,7 +476,7 @@ class Lt extends V {
     super(...arguments), this.type = 4;
   }
   j(t) {
-    this.element.toggleAttribute(this.name, !!t && t !== h);
+    this.element.toggleAttribute(this.name, !!t && t !== d);
   }
 }
 class jt extends V {
@@ -484,8 +484,8 @@ class jt extends V {
     super(t, e, i, r, a), this.type = 5;
   }
   _$AI(t, e = this) {
-    if ((t = W(this, t, e, 0) ?? h) === O) return;
-    const i = this._$AH, r = t === h && i !== h || t.capture !== i.capture || t.once !== i.once || t.passive !== i.passive, a = t !== h && (i === h || r);
+    if ((t = D(this, t, e, 0) ?? d) === O) return;
+    const i = this._$AH, r = t === d && i !== d || t.capture !== i.capture || t.once !== i.once || t.passive !== i.passive, a = t !== d && (i === d || r);
     r && this.element.removeEventListener(this.name, this, i), a && this.element.addEventListener(this.name, this, t), this._$AH = t;
   }
   handleEvent(t) {
@@ -501,11 +501,11 @@ class qt {
     return this._$AM._$AU;
   }
   _$AI(t) {
-    W(this, t);
+    D(this, t);
   }
 }
-const G = M.litHtmlPolyfillSupport;
-G == null || G(L, j), (M.litHtmlVersions ?? (M.litHtmlVersions = [])).push("3.3.2");
+const G = W.litHtmlPolyfillSupport;
+G == null || G(L, j), (W.litHtmlVersions ?? (W.litHtmlVersions = [])).push("3.3.2");
 const Bt = (s, t, e) => {
   const i = (e == null ? void 0 : e.renderBefore) ?? t;
   let r = i._$litPart$;
@@ -546,10 +546,10 @@ class N extends U {
     return O;
   }
 }
-var vt;
-N._$litElement$ = !0, N.finalized = !0, (vt = T.litElementHydrateSupport) == null || vt.call(T, { LitElement: N });
-const J = T.litElementPolyfillSupport;
-J == null || J({ LitElement: N });
+var bt;
+N._$litElement$ = !0, N.finalized = !0, (bt = T.litElementHydrateSupport) == null || bt.call(T, { LitElement: N });
+const K = T.litElementPolyfillSupport;
+K == null || K({ LitElement: N });
 (T.litElementVersions ?? (T.litElementVersions = [])).push("4.2.2");
 /**
  * @license
@@ -598,15 +598,35 @@ function et(s) {
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-function b(s) {
+function y(s) {
   return et({ ...s, state: !0, attribute: !1 });
 }
-var Zt = Object.defineProperty, Gt = Object.getOwnPropertyDescriptor, g = (s, t, e, i) => {
-  for (var r = i > 1 ? void 0 : i ? Gt(t, e) : t, a = s.length - 1, o; a >= 0; a--)
+const Zt = "wishlist_manager";
+function Gt(s, t, e, i) {
+  if (!s) return ft(e, i);
+  const r = `component.${Zt}.panel.${t}`;
+  let a = e;
+  if (typeof s.localize == "function")
+    try {
+      const o = s.localize(r);
+      typeof o == "string" && o !== r && (a = o);
+    } catch {
+    }
+  return ft(a, i);
+}
+function ft(s, t) {
+  if (!t) return s;
+  let e = s;
+  for (const [i, r] of Object.entries(t))
+    e = e.replaceAll(`{${i}}`, String(r));
+  return e;
+}
+var Kt = Object.defineProperty, Jt = Object.getOwnPropertyDescriptor, g = (s, t, e, i) => {
+  for (var r = i > 1 ? void 0 : i ? Jt(t, e) : t, a = s.length - 1, o; a >= 0; a--)
     (o = s[a]) && (r = (i ? o(t, e, r) : o(r)) || r);
-  return i && r && Zt(t, e, r), r;
+  return i && r && Kt(t, e, r), r;
 };
-const $ = {
+const b = {
   LIST: "wishlist_manager/wishlists/list",
   CREATE_WL: "wishlist_manager/wishlists/create",
   UPDATE_WL: "wishlist_manager/wishlists/update",
@@ -620,22 +640,25 @@ const $ = {
   SET_STATUS: "wishlist_manager/items/set_status",
   FETCH_META: "wishlist_manager/metadata/fetch"
 };
-async function y(s, t) {
+async function v(s, t) {
   return typeof s.callWS == "function" ? s.callWS(t) : s.connection.sendMessagePromise(t);
 }
-function ft(s) {
+function gt(s) {
   const t = s.user;
   return !!(t != null && t.is_admin);
 }
-function gt(s) {
-  return s === "purchased" ? "Purchased" : s === "maybe" ? "Maybe" : "Desired";
-}
-function bt(s) {
+function $t(s) {
   return s === "desired" ? 0 : s === "maybe" ? 1 : 2;
 }
-let _ = class extends N {
+let f = class extends N {
   constructor() {
-    super(...arguments), this.narrow = !1, this._snapshot = null, this._loading = !0, this._error = null, this._selectedWishlistId = "all", this._filterStatus = "all", this._search = "", this._sort = "newest", this._editorOpen = !1, this._editingWishlistId = null, this._editingItem = null, this._isNewItem = !1, this._shareUrl = null, this._dragWishId = null, this._dragItemId = null;
+    super(...arguments), this.narrow = !1, this._snapshot = null, this._loading = !0, this._error = null, this._selectedWishlistId = "all", this._filterStatus = "all", this._search = "", this._sort = "newest", this._editorOpen = !1, this._editingWishlistId = null, this._editingItem = null, this._isNewItem = !1, this._shareUrl = null;
+  }
+  _t(s, t, e) {
+    return Gt(this.hass, s, t, e);
+  }
+  _statusLabel(s) {
+    return s === "purchased" ? this._t("status_purchased", "Purchased") : s === "maybe" ? this._t("status_maybe", "Maybe") : this._t("status_desired", "Desired");
   }
   connectedCallback() {
     super.connectedCallback(), this._refresh();
@@ -647,7 +670,7 @@ let _ = class extends N {
     if (this.hass) {
       this._loading = !0, this._error = null;
       try {
-        const s = await y(this.hass, { type: $.LIST });
+        const s = await v(this.hass, { type: b.LIST });
         this._snapshot = s;
       } catch (s) {
         this._error = s instanceof Error ? s.message : String(s);
@@ -675,7 +698,7 @@ let _ = class extends N {
           continue;
         this._filterStatus !== "all" && this._filterStatus !== "archived" && n.status !== this._filterStatus || s && !`${n.title} ${n.description} ${n.notes} ${n.tags.join(" ")}`.toLowerCase().includes(s) || e.push({ wl: l, item: n });
       }
-    const i = (l, n) => l.title.localeCompare(n.title), r = (l, n) => n.created_at.localeCompare(l.created_at), a = (l, n) => l.created_at.localeCompare(n.created_at), o = (l, n) => bt(l.status) - bt(n.status) || l.title.localeCompare(n.title);
+    const i = (l, n) => l.title.localeCompare(n.title), r = (l, n) => n.created_at.localeCompare(l.created_at), a = (l, n) => l.created_at.localeCompare(n.created_at), o = (l, n) => $t(l.status) - $t(n.status) || l.title.localeCompare(n.title);
     return e.sort((l, n) => this._sort === "alpha" ? i(l.item, n.item) : this._sort === "oldest" ? a(l.item, n.item) : this._sort === "status" ? o(l.item, n.item) : r(l.item, n.item)), e.map((l) => l.item);
   }
   _contextForItem(s) {
@@ -711,7 +734,7 @@ let _ = class extends N {
     this._editorOpen = !1, this._editingItem = null, this._editingWishlistId = null;
   }
   async _saveEditor(s) {
-    if (s.preventDefault(), !this.hass || !this._editingWishlistId || !ft(this.hass)) return;
+    if (s.preventDefault(), !this.hass || !this._editingWishlistId || !gt(this.hass)) return;
     const t = s.target, e = new FormData(t), i = String(e.get("title") || "").trim();
     if (!i) return;
     const r = {
@@ -732,14 +755,14 @@ let _ = class extends N {
       archived: e.get("archived") === "on"
     };
     this._isNewItem ? await this._mutate(
-      () => y(this.hass, {
-        type: $.CREATE_ITEM,
+      () => v(this.hass, {
+        type: b.CREATE_ITEM,
         wishlist_id: this._editingWishlistId,
         ...r
       })
     ) : this._editingItem && await this._mutate(
-      () => y(this.hass, {
-        type: $.UPDATE_ITEM,
+      () => v(this.hass, {
+        type: b.UPDATE_ITEM,
         wishlist_id: this._editingWishlistId,
         item_id: this._editingItem.id,
         ...r
@@ -747,9 +770,9 @@ let _ = class extends N {
     ), this._closeEditor();
   }
   async _deleteCurrentItem() {
-    !this.hass || !this._editingWishlistId || !this._editingItem || this._isNewItem || confirm("Delete this item permanently?") && (await this._mutate(
-      () => y(this.hass, {
-        type: $.DELETE_ITEM,
+    !this.hass || !this._editingWishlistId || !this._editingItem || this._isNewItem || confirm(this._t("confirm_delete_item", "Delete this item permanently?")) && (await this._mutate(
+      () => v(this.hass, {
+        type: b.DELETE_ITEM,
         wishlist_id: this._editingWishlistId,
         item_id: this._editingItem.id
       })
@@ -757,8 +780,8 @@ let _ = class extends N {
   }
   async _quickSetStatus(s, t, e) {
     this.hass && await this._mutate(
-      () => y(this.hass, {
-        type: $.SET_STATUS,
+      () => v(this.hass, {
+        type: b.SET_STATUS,
         wishlist_id: s,
         item_id: t.id,
         status: e
@@ -766,29 +789,38 @@ let _ = class extends N {
     );
   }
   async _createWishlist() {
-    const s = prompt("Wishlist name?", "New wishlist");
+    const s = prompt(
+      this._t("prompt_wishlist_name", "Wishlist name?"),
+      this._t("default_new_wishlist", "New wishlist")
+    );
     !s || !this.hass || await this._mutate(
-      () => y(this.hass, {
-        type: $.CREATE_WL,
+      () => v(this.hass, {
+        type: b.CREATE_WL,
         name: s.trim(),
         icon: "mdi:gift-outline"
       })
     );
   }
   async _renameWishlist(s) {
-    const t = prompt("Rename wishlist", s.name);
+    const t = prompt(this._t("prompt_rename_wishlist", "Rename wishlist"), s.name);
     !t || !this.hass || await this._mutate(
-      () => y(this.hass, {
-        type: $.UPDATE_WL,
+      () => v(this.hass, {
+        type: b.UPDATE_WL,
         wishlist_id: s.id,
         name: t.trim()
       })
     );
   }
   async _deleteWishlist(s) {
-    confirm(`Delete wishlist “${s.name}” and all items?`) && this.hass && (await this._mutate(
-      () => y(this.hass, {
-        type: $.DELETE_WL,
+    confirm(
+      this._t(
+        "confirm_delete_wishlist",
+        'Delete wishlist "{name}" and all items?',
+        { name: s.name }
+      )
+    ) && this.hass && (await this._mutate(
+      () => v(this.hass, {
+        type: b.DELETE_WL,
         wishlist_id: s.id
       })
     ), this._selectedWishlistId === s.id && (this._selectedWishlistId = "all"));
@@ -800,7 +832,7 @@ let _ = class extends N {
     if (!e || e === t || !this.hass || !this._snapshot) return;
     const i = this._wishlistsSorted().map((l) => l.id), r = i.indexOf(e), a = i.indexOf(t);
     r < 0 || a < 0 || (i.splice(r, 1), i.splice(a, 0, e), await this._mutate(
-      () => y(this.hass, { type: $.REORDER_WL, wishlist_ids: i })
+      () => v(this.hass, { type: b.REORDER_WL, wishlist_ids: i })
     ));
   }
   async _onDropItem(s, t, e) {
@@ -808,12 +840,12 @@ let _ = class extends N {
     s.preventDefault();
     const i = (n = s.dataTransfer) == null ? void 0 : n.getData("text/item-id");
     if (!i || i === e || !this.hass) return;
-    const r = (p = this._snapshot) == null ? void 0 : p.wishlists.find((m) => m.id === t);
+    const r = (p = this._snapshot) == null ? void 0 : p.wishlists.find((_) => _.id === t);
     if (!r) return;
-    const a = [...r.items].sort((m, c) => m.sort_order - c.sort_order).map((m) => m.id), o = a.indexOf(i), l = a.indexOf(e);
+    const a = [...r.items].sort((_, c) => _.sort_order - c.sort_order).map((_) => _.id), o = a.indexOf(i), l = a.indexOf(e);
     o < 0 || l < 0 || (a.splice(o, 1), a.splice(l, 0, i), await this._mutate(
-      () => y(this.hass, {
-        type: $.REORDER_ITEMS,
+      () => v(this.hass, {
+        type: b.REORDER_ITEMS,
         wishlist_id: t,
         item_ids: a
       })
@@ -826,12 +858,12 @@ let _ = class extends N {
       "form#editor-form"
     ), t = String(((i = s == null ? void 0 : s.querySelector('[name="external_url"]')) == null ? void 0 : i.value) || "").trim();
     if (!t) {
-      this._error = "Add a link first.";
+      this._error = this._t("error_add_link_first", "Add a link first.");
       return;
     }
     try {
-      const r = await y(this.hass, {
-        type: $.FETCH_META,
+      const r = await v(this.hass, {
+        type: b.FETCH_META,
         url: t
       });
       if (!s) return;
@@ -846,8 +878,8 @@ let _ = class extends N {
   async _enableShare(s) {
     if (this.hass)
       try {
-        const t = await y(this.hass, {
-          type: $.REGEN_SHARE,
+        const t = await v(this.hass, {
+          type: b.REGEN_SHARE,
           wishlist_id: s.id
         }), e = window.location.origin;
         this._shareUrl = `${e}/api/wishlist_manager/public/${t.share_token}`, await this._refresh();
@@ -859,128 +891,139 @@ let _ = class extends N {
     this._shareUrl && navigator.clipboard.writeText(this._shareUrl);
   }
   render() {
-    var e, i, r, a, o, l, n, p, m, c, v, w, S;
+    var e, i, r, a, o, l, n, p, _, c, $, w, S;
     if (!this.hass)
-      return u`<div class="empty">Waiting for Home Assistant…</div>`;
+      return u`<div class="empty">
+        ${this._t("waiting_ha", "Waiting for Home Assistant…")}
+      </div>`;
     if (this._loading && !this._snapshot)
-      return u`<div class="empty">Loading wishlists…</div>`;
-    const s = (e = this._snapshot) == null ? void 0 : e.stats, t = ft(this.hass);
+      return u`<div class="empty">${this._t("loading", "Loading wishlists…")}</div>`;
+    const s = (e = this._snapshot) == null ? void 0 : e.stats, t = gt(this.hass);
     return u`
-      ${this._error ? u`<div class="error">${this._error}</div>` : h}
+      ${this._error ? u`<div class="error">${this._error}</div>` : d}
 
       <div class="toolbar">
         <input
           type="search"
-          placeholder="Search title, notes, tags…"
+          placeholder=${this._t(
+      "search_placeholder",
+      "Search title, notes, tags…"
+    )}
           .value=${this._search}
-          @input=${(d) => {
-      this._search = d.target.value;
+          @input=${(h) => {
+      this._search = h.target.value;
     }}
         />
         <select
-          @change=${(d) => {
-      this._filterStatus = d.target.value;
+          @change=${(h) => {
+      this._filterStatus = h.target.value;
     }}
         >
           <option value="all" ?selected=${this._filterStatus === "all"}>
-            All statuses
+            ${this._t("filter_all_status", "All statuses")}
           </option>
           <option value="desired" ?selected=${this._filterStatus === "desired"}>
-            Desired
+            ${this._t("filter_desired", "Desired")}
           </option>
           <option value="maybe" ?selected=${this._filterStatus === "maybe"}>
-            Maybe
+            ${this._t("filter_maybe", "Maybe")}
           </option>
           <option
             value="purchased"
             ?selected=${this._filterStatus === "purchased"}
           >
-            Purchased
+            ${this._t("filter_purchased", "Purchased")}
           </option>
           <option
             value="archived"
             ?selected=${this._filterStatus === "archived"}
           >
-            Archived only
+            ${this._t("filter_archived_only", "Archived only")}
           </option>
         </select>
         <select
-          @change=${(d) => {
-      this._selectedWishlistId = d.target.value;
+          @change=${(h) => {
+      this._selectedWishlistId = h.target.value;
     }}
         >
           <option value="all" ?selected=${this._selectedWishlistId === "all"}>
-            All wishlists
+            ${this._t("filter_all_lists", "All wishlists")}
           </option>
           ${this._wishlistsSorted().map(
-      (d) => u`
-              <option value=${d.id} ?selected=${this._selectedWishlistId === d.id}>
-                ${d.name}
+      (h) => u`
+              <option value=${h.id} ?selected=${this._selectedWishlistId === h.id}>
+                ${h.name}
               </option>
             `
     )}
         </select>
         <select
-          @change=${(d) => {
-      this._sort = d.target.value;
+          @change=${(h) => {
+      this._sort = h.target.value;
     }}
         >
           <option value="newest" ?selected=${this._sort === "newest"}>
-            Newest
+            ${this._t("sort_newest", "Newest")}
           </option>
           <option value="oldest" ?selected=${this._sort === "oldest"}>
-            Oldest
+            ${this._t("sort_oldest", "Oldest")}
           </option>
           <option value="alpha" ?selected=${this._sort === "alpha"}>
-            A–Z
+            ${this._t("sort_alpha", "A–Z")}
           </option>
           <option value="status" ?selected=${this._sort === "status"}>
-            Status
+            ${this._t("sort_status", "Status")}
           </option>
         </select>
         ${t ? u`<button class="btn btn-primary" @click=${this._createWishlist}>
-              New wishlist
-            </button>` : h}
+              ${this._t("new_wishlist", "New wishlist")}
+            </button>` : d}
         <button class="btn btn-ghost" @click=${() => this._refresh()}>
-          Refresh
+          ${this._t("refresh", "Refresh")}
         </button>
       </div>
 
       ${s ? u`
             <div class="stats">
               <div class="stat-card" style="animation-delay:0ms">
-                <b>${s.total_items}</b><span>Total items</span>
+                <b>${s.total_items}</b
+                ><span>${this._t("stat_total", "Total items")}</span>
               </div>
               <div class="stat-card" style="animation-delay:40ms">
-                <b>${s.purchased_items}</b><span>Purchased</span>
+                <b>${s.purchased_items}</b
+                ><span>${this._t("stat_purchased", "Purchased")}</span>
               </div>
               <div class="stat-card" style="animation-delay:80ms">
-                <b>${s.desired_items}</b><span>Desired</span>
+                <b>${s.desired_items}</b
+                ><span>${this._t("stat_desired", "Desired")}</span>
               </div>
               <div class="stat-card" style="animation-delay:120ms">
-                <b>${s.wishlist_count}</b><span>Wishlists</span>
+                <b>${s.wishlist_count}</b
+                ><span>${this._t("stat_wishlists", "Wishlists")}</span>
               </div>
             </div>
-          ` : h}
+          ` : d}
 
-      <div class="section-title">Recently added</div>
+      <div class="section-title">
+        ${this._t("recently_added", "Recently added")}
+      </div>
       <div class="recent">
         ${this._recentItems().map(
-      (d) => u`
+      (h) => u`
             <div
               class="recent-card"
               @click=${() => {
-        const f = this._contextForItem(d.id);
-        f && this._openEditItem(f.wishlist.id, f.item);
+        const m = this._contextForItem(h.id);
+        m && this._openEditItem(m.wishlist.id, m.item);
       }}
             >
-              ${d.image_url ? u`<img src=${d.image_url} alt="" loading="lazy" />` : u`<div
+              ${h.image_url ? u`<img src=${h.image_url} alt="" loading="lazy" />` : u`<div
                     style="height:120px;background:var(--divider-color)"
                   ></div>`}
               <div class="meta">
-                <strong>${d.title}</strong>
+                <strong>${h.title}</strong>
                 <div style="font-size:0.8rem;color:var(--wm-muted)">
-                  ${gt(d.status)}
+                  ${this._statusLabel(h.status)}
                 </div>
               </div>
             </div>
@@ -988,53 +1031,55 @@ let _ = class extends N {
     )}
       </div>
 
-      <div class="section-title">Wishlists</div>
+      <div class="section-title">
+        ${this._t("section_wishlists", "Wishlists")}
+      </div>
       <div class="wishlists-row">
         ${this._wishlistsSorted().map(
-      (d) => u`
+      (h) => u`
             <div
-              class="chip ${this._selectedWishlistId === d.id ? "active" : ""}"
+              class="chip ${this._selectedWishlistId === h.id ? "active" : ""}"
               draggable="true"
-              @dragstart=${(f) => {
+              @dragstart=${(m) => {
         var x;
-        (x = f.dataTransfer) == null || x.setData("text/wishlist-id", d.id);
+        (x = m.dataTransfer) == null || x.setData("text/wishlist-id", h.id);
       }}
-              @dragover=${(f) => f.preventDefault()}
-              @drop=${(f) => this._onDropWishlist(f, d.id)}
+              @dragover=${(m) => m.preventDefault()}
+              @drop=${(m) => this._onDropWishlist(m, h.id)}
               @click=${() => {
-        this._selectedWishlistId = d.id;
+        this._selectedWishlistId = h.id;
       }}
             >
-              <span>${d.name}</span>
+              <span>${h.name}</span>
               ${t ? u`
                     <button
                       class="btn btn-ghost"
                       style="padding:2px 8px;font-size:0.7rem"
-                      @click=${(f) => {
-        f.stopPropagation(), this._renameWishlist(d);
+                      @click=${(m) => {
+        m.stopPropagation(), this._renameWishlist(h);
       }}
                     >
-                      Rename
+                      ${this._t("rename", "Rename")}
                     </button>
                     <button
                       class="btn btn-ghost"
                       style="padding:2px 8px;font-size:0.7rem"
-                      @click=${(f) => {
-        f.stopPropagation(), this._deleteWishlist(d);
+                      @click=${(m) => {
+        m.stopPropagation(), this._deleteWishlist(h);
       }}
                     >
-                      Delete
+                      ${this._t("delete", "Delete")}
                     </button>
                     <button
                       class="btn btn-ghost"
                       style="padding:2px 8px;font-size:0.7rem"
-                      @click=${(f) => {
-        f.stopPropagation(), this._enableShare(d);
+                      @click=${(m) => {
+        m.stopPropagation(), this._enableShare(h);
       }}
                     >
-                      Share link
+                      ${this._t("share_link", "Share link")}
                     </button>
-                  ` : h}
+                  ` : d}
             </div>
           `
     )}
@@ -1042,7 +1087,7 @@ let _ = class extends N {
 
       ${this._shareUrl ? u`
             <div class="field">
-              <label>Public link (read-only)</label>
+              <label>${this._t("share_public_label", "Public link (read-only)")}</label>
               <div class="row">
                 <input
                   readonly
@@ -1050,7 +1095,7 @@ let _ = class extends N {
                   .value=${this._shareUrl}
                 />
                 <button type="button" class="btn" @click=${this._copyShare}>
-                  Copy
+                  ${this._t("copy", "Copy")}
                 </button>
                 <button
                   type="button"
@@ -1059,79 +1104,83 @@ let _ = class extends N {
       this._shareUrl = null;
     }}
                 >
-                  Close
+                  ${this._t("close", "Close")}
                 </button>
               </div>
             </div>
-          ` : h}
+          ` : d}
 
-      <div class="section-title">Items</div>
+      <div class="section-title">${this._t("section_items", "Items")}</div>
       <div class="grid">
-        ${this._filteredItems().map((d) => {
+        ${this._filteredItems().map((h) => {
       var st, it;
-      const f = this._contextForItem(d.id);
-      if (!f) return h;
-      const { wishlist: x } = f;
+      const m = this._contextForItem(h.id);
+      if (!m) return d;
+      const { wishlist: x } = m;
       return u`
             <div
               class="item-card"
               draggable="true"
               @dragstart=${(I) => {
         var rt;
-        (rt = I.dataTransfer) == null || rt.setData("text/item-id", d.id);
+        (rt = I.dataTransfer) == null || rt.setData("text/item-id", h.id);
       }}
               @dragover=${(I) => I.preventDefault()}
-              @drop=${(I) => this._onDropItem(I, x.id, d.id)}
+              @drop=${(I) => this._onDropItem(I, x.id, h.id)}
             >
               <div class="hero">
-                ${d.image_url ? u`<img src=${d.image_url} alt="" loading="lazy" />` : h}
-                <span class="badge ${d.status}">${gt(d.status)}</span>
+                ${h.image_url ? u`<img src=${h.image_url} alt="" loading="lazy" />` : d}
+                <span class="badge ${h.status}"
+                  >${this._statusLabel(h.status)}</span
+                >
               </div>
               <div class="item-body">
                 <div class="item-title">
-                  ${d.favorite ? u`<span class="fav">★</span> ` : h}${d.title}
+                  ${h.favorite ? u`<span class="fav">★</span> ` : d}${h.title}
                 </div>
-                <div class="item-desc">${d.description || "—"}</div>
-                ${d.price != null ? u`<div style="font-weight:600">
+                <div class="item-desc">
+                  ${h.description || this._t("dash", "—")}
+                </div>
+                ${h.price != null ? u`<div style="font-weight:600">
                       ${(it = (st = this.hass) == null ? void 0 : st.locale) != null && it.language ? new Intl.NumberFormat(this.hass.locale.language, {
         style: "currency",
         currency: "USD"
-      }).format(d.price) : d.price}
-                    </div>` : h}
+      }).format(h.price) : h.price}
+                    </div>` : d}
                 <div class="item-meta">
-                  ${d.tags.map((I) => u`<span class="tag">${I}</span>`)}
+                  ${h.tags.map((I) => u`<span class="tag">${I}</span>`)}
                 </div>
                 <div class="actions">
                   ${t ? u`
                         <button
                           class="btn"
-                          @click=${() => this._openEditItem(x.id, d)}
+                          @click=${() => this._openEditItem(x.id, h)}
                         >
-                          Edit
+                          ${this._t("edit", "Edit")}
                         </button>
                         <button
                           class="btn btn-ghost"
-                          @click=${() => this._quickSetStatus(x.id, d, "desired")}
+                          @click=${() => this._quickSetStatus(x.id, h, "desired")}
                         >
-                          Desired
+                          ${this._t("action_desired", "Desired")}
                         </button>
                         <button
                           class="btn btn-ghost"
-                          @click=${() => this._quickSetStatus(x.id, d, "maybe")}
+                          @click=${() => this._quickSetStatus(x.id, h, "maybe")}
                         >
-                          Maybe
+                          ${this._t("action_maybe", "Maybe")}
                         </button>
                         <button
                           class="btn btn-ghost"
-                          @click=${() => this._quickSetStatus(x.id, d, "purchased")}
+                          @click=${() => this._quickSetStatus(x.id, h, "purchased")}
                         >
-                          Got it
+                          ${this._t("action_got_it", "Got it")}
                         </button>
                       ` : u`<button
                         class="btn"
-                        @click=${() => this._openEditItem(x.id, d)}
+                        @click=${() => this._openEditItem(x.id, h)}
                       >
-                        View
+                        ${this._t("view", "View")}
                       </button>`}
                 </div>
               </div>
@@ -1140,7 +1189,9 @@ let _ = class extends N {
     })}
       </div>
 
-      ${this._filteredItems().length === 0 ? u`<div class="empty">No items match your filters.</div>` : h}
+      ${this._filteredItems().length === 0 ? u`<div class="empty">
+            ${this._t("no_items_filter", "No items match your filters.")}
+          </div>` : d}
 
       ${t && this._selectedWishlistId !== "all" ? u`
             <div style="margin-top:20px">
@@ -1148,28 +1199,32 @@ let _ = class extends N {
                 class="btn btn-primary"
                 @click=${() => this._openCreateItem(this._selectedWishlistId)}
               >
-                Add item to this list
+                ${this._t("add_item_this_list", "Add item to this list")}
               </button>
             </div>
           ` : t ? u`
               <div class="empty">
-                Select a specific wishlist to add items, or use the wishlist
-                chips above.
+                ${this._t(
+      "pick_wishlist_hint",
+      "Select a specific wishlist to add items, or use the wishlist chips above."
+    )}
               </div>
-            ` : h}
+            ` : d}
 
       ${this._editorOpen ? u`
             <div
               class="modal-backdrop"
-              @click=${(d) => {
-      d.target === d.currentTarget && this._closeEditor();
+              @click=${(h) => {
+      h.target === h.currentTarget && this._closeEditor();
     }}
             >
-              <div class="modal" @click=${(d) => d.stopPropagation()}>
-                <h2>${this._isNewItem ? "New item" : "Edit item"}</h2>
+              <div class="modal" @click=${(h) => h.stopPropagation()}>
+                <h2>
+                  ${this._isNewItem ? this._t("editor_new", "New item") : this._t("editor_edit", "Edit item")}
+                </h2>
                 <form id="editor-form" @submit=${this._saveEditor}>
                   <div class="field">
-                    <label>Title</label>
+                    <label>${this._t("label_title", "Title")}</label>
                     <input
                       name="title"
                       required
@@ -1178,12 +1233,12 @@ let _ = class extends N {
                     />
                   </div>
                   <div class="field">
-                    <label>Description</label>
+                    <label>${this._t("label_description", "Description")}</label>
                     <textarea name="description" ?disabled=${!t}>
 ${((r = this._editingItem) == null ? void 0 : r.description) ?? ""}</textarea>
                   </div>
                   <div class="field">
-                    <label>Image URL</label>
+                    <label>${this._t("label_image_url", "Image URL")}</label>
                     <input
                       name="image_url"
                       ?disabled=${!t}
@@ -1191,7 +1246,7 @@ ${((r = this._editingItem) == null ? void 0 : r.description) ?? ""}</textarea>
                     />
                   </div>
                   <div class="field">
-                    <label>External link</label>
+                    <label>${this._t("label_external_link", "External link")}</label>
                     <input
                       name="external_url"
                       ?disabled=${!t}
@@ -1205,40 +1260,40 @@ ${((r = this._editingItem) == null ? void 0 : r.description) ?? ""}</textarea>
                             class="btn btn-ghost"
                             @click=${() => this._fetchMetadata()}
                           >
-                            Fill from link
+                            ${this._t("fill_from_link", "Fill from link")}
                           </button>
-                        ` : h}
+                        ` : d}
                   </div>
                   <div class="field">
-                    <label>Notes</label>
+                    <label>${this._t("label_notes", "Notes")}</label>
                     <textarea name="notes" ?disabled=${!t}>
 ${((l = this._editingItem) == null ? void 0 : l.notes) ?? ""}</textarea>
                   </div>
                   <div class="field">
-                    <label>Status</label>
+                    <label>${this._t("label_status", "Status")}</label>
                     <select name="status" ?disabled=${!t}>
                       <option
                         value="desired"
                         ?selected=${(((n = this._editingItem) == null ? void 0 : n.status) ?? "desired") === "desired"}
                       >
-                        Desired
+                        ${this._t("filter_desired", "Desired")}
                       </option>
                       <option
                         value="maybe"
                         ?selected=${((p = this._editingItem) == null ? void 0 : p.status) === "maybe"}
                       >
-                        Maybe
+                        ${this._t("filter_maybe", "Maybe")}
                       </option>
                       <option
                         value="purchased"
-                        ?selected=${((m = this._editingItem) == null ? void 0 : m.status) === "purchased"}
+                        ?selected=${((_ = this._editingItem) == null ? void 0 : _.status) === "purchased"}
                       >
-                        Purchased
+                        ${this._t("filter_purchased", "Purchased")}
                       </option>
                     </select>
                   </div>
                   <div class="field">
-                    <label>Price (optional)</label>
+                    <label>${this._t("label_price", "Price (optional)")}</label>
                     <input
                       name="price"
                       type="number"
@@ -1248,11 +1303,11 @@ ${((l = this._editingItem) == null ? void 0 : l.notes) ?? ""}</textarea>
                     />
                   </div>
                   <div class="field">
-                    <label>Tags (comma separated)</label>
+                    <label>${this._t("label_tags", "Tags (comma separated)")}</label>
                     <input
                       name="tags"
                       ?disabled=${!t}
-                      .value=${(((v = this._editingItem) == null ? void 0 : v.tags) ?? []).join(", ")}
+                      .value=${((($ = this._editingItem) == null ? void 0 : $.tags) ?? []).join(", ")}
                     />
                   </div>
                   <div class="row">
@@ -1263,7 +1318,7 @@ ${((l = this._editingItem) == null ? void 0 : l.notes) ?? ""}</textarea>
                         ?disabled=${!t}
                         ?checked=${(w = this._editingItem) == null ? void 0 : w.favorite}
                       />
-                      Favorite</label
+                      ${this._t("favorite", "Favorite")}</label
                     >
                     <label
                       ><input
@@ -1272,21 +1327,21 @@ ${((l = this._editingItem) == null ? void 0 : l.notes) ?? ""}</textarea>
                         ?disabled=${!t}
                         ?checked=${(S = this._editingItem) == null ? void 0 : S.archived}
                       />
-                      Archived</label
+                      ${this._t("archived", "Archived")}</label
                     >
                   </div>
                   <div class="row" style="margin-top:16px">
                     ${t ? u`
                           <button class="btn btn-primary" type="submit">
-                            Save
+                            ${this._t("save", "Save")}
                           </button>
-                        ` : h}
+                        ` : d}
                     <button
                       type="button"
                       class="btn btn-ghost"
                       @click=${this._closeEditor}
                     >
-                      ${t ? "Cancel" : "Close"}
+                      ${t ? this._t("cancel", "Cancel") : this._t("close", "Close")}
                     </button>
                     ${t && !this._isNewItem ? u`
                           <button
@@ -1295,18 +1350,18 @@ ${((l = this._editingItem) == null ? void 0 : l.notes) ?? ""}</textarea>
                             style="margin-left:auto;color:var(--error-color)"
                             @click=${() => this._deleteCurrentItem()}
                           >
-                            Delete
+                            ${this._t("delete", "Delete")}
                           </button>
-                        ` : h}
+                        ` : d}
                   </div>
                 </form>
               </div>
             </div>
-          ` : h}
+          ` : d}
     `;
   }
 };
-_.styles = St`
+f.styles = St`
     :host {
       display: block;
       min-height: 100%;
@@ -1717,55 +1772,49 @@ _.styles = St`
   `;
 g([
   et({ attribute: !1 })
-], _.prototype, "hass", 2);
+], f.prototype, "hass", 2);
 g([
   et({ type: Boolean, reflect: !0 })
-], _.prototype, "narrow", 2);
+], f.prototype, "narrow", 2);
 g([
-  b()
-], _.prototype, "_snapshot", 2);
+  y()
+], f.prototype, "_snapshot", 2);
 g([
-  b()
-], _.prototype, "_loading", 2);
+  y()
+], f.prototype, "_loading", 2);
 g([
-  b()
-], _.prototype, "_error", 2);
+  y()
+], f.prototype, "_error", 2);
 g([
-  b()
-], _.prototype, "_selectedWishlistId", 2);
+  y()
+], f.prototype, "_selectedWishlistId", 2);
 g([
-  b()
-], _.prototype, "_filterStatus", 2);
+  y()
+], f.prototype, "_filterStatus", 2);
 g([
-  b()
-], _.prototype, "_search", 2);
+  y()
+], f.prototype, "_search", 2);
 g([
-  b()
-], _.prototype, "_sort", 2);
+  y()
+], f.prototype, "_sort", 2);
 g([
-  b()
-], _.prototype, "_editorOpen", 2);
+  y()
+], f.prototype, "_editorOpen", 2);
 g([
-  b()
-], _.prototype, "_editingWishlistId", 2);
+  y()
+], f.prototype, "_editingWishlistId", 2);
 g([
-  b()
-], _.prototype, "_editingItem", 2);
+  y()
+], f.prototype, "_editingItem", 2);
 g([
-  b()
-], _.prototype, "_isNewItem", 2);
+  y()
+], f.prototype, "_isNewItem", 2);
 g([
-  b()
-], _.prototype, "_shareUrl", 2);
-g([
-  b()
-], _.prototype, "_dragWishId", 2);
-g([
-  b()
-], _.prototype, "_dragItemId", 2);
-_ = g([
+  y()
+], f.prototype, "_shareUrl", 2);
+f = g([
   Ft("wishlist-manager-panel")
-], _);
+], f);
 export {
-  _ as WishlistManagerPanel
+  f as WishlistManagerPanel
 };

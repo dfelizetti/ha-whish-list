@@ -1,0 +1,90 @@
+{
+  "title": "Wunschlisten-Verwaltung",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Wunschlisten-Verwaltung",
+        "description": "Organisieren Sie Geschenkideen und Einkäufe mit mehreren Listen, detaillierten Einträgen und Automatisierungen.",
+        "data": {
+          "title": "Name der Integration"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Bereits konfiguriert. Nur eine Instanz wird unterstützt."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "total_items": { "name": "Einträge gesamt" },
+      "purchased_items": { "name": "Gekauft" },
+      "desired_items": { "name": "Gewünscht" },
+      "maybe_items": { "name": "Vielleicht" },
+      "wishlist_count": { "name": "Anzahl Listen" },
+      "favorite_items": { "name": "Favoriten" }
+    }
+  },
+  "panel": {
+    "waiting_ha": "Warte auf Home Assistant…",
+    "loading": "Wunschlisten werden geladen…",
+    "search_placeholder": "Titel, Notizen, Tags durchsuchen…",
+    "filter_all_status": "Alle Stati",
+    "filter_desired": "Gewünscht",
+    "filter_maybe": "Vielleicht",
+    "filter_purchased": "Gekauft",
+    "filter_archived_only": "Nur archiviert",
+    "filter_all_lists": "Alle Wunschlisten",
+    "sort_newest": "Neueste",
+    "sort_oldest": "Älteste",
+    "sort_alpha": "A–Z",
+    "sort_status": "Status",
+    "new_wishlist": "Neue Liste",
+    "refresh": "Aktualisieren",
+    "stat_total": "Einträge gesamt",
+    "stat_purchased": "Gekauft",
+    "stat_desired": "Gewünscht",
+    "stat_wishlists": "Wunschlisten",
+    "recently_added": "Kürzlich hinzugefügt",
+    "section_wishlists": "Wunschlisten",
+    "rename": "Umbenennen",
+    "delete": "Löschen",
+    "share_link": "Link teilen",
+    "share_public_label": "Öffentlicher Link (nur Lesen)",
+    "copy": "Kopieren",
+    "close": "Schließen",
+    "section_items": "Einträge",
+    "edit": "Bearbeiten",
+    "view": "Ansehen",
+    "action_desired": "Gewünscht",
+    "action_maybe": "Vielleicht",
+    "action_got_it": "Erledigt",
+    "no_items_filter": "Keine Einträge passen zu den Filtern.",
+    "add_item_this_list": "Eintrag zu dieser Liste hinzufügen",
+    "pick_wishlist_hint": "Wählen Sie eine bestimmte Wunschliste, um Einträge hinzuzufügen, oder nutzen Sie die Chips oben.",
+    "editor_new": "Neuer Eintrag",
+    "editor_edit": "Eintrag bearbeiten",
+    "label_title": "Titel",
+    "label_description": "Beschreibung",
+    "label_image_url": "Bild-URL",
+    "label_external_link": "Externer Link",
+    "fill_from_link": "Von Link ausfüllen",
+    "label_notes": "Notizen",
+    "label_status": "Status",
+    "label_price": "Preis (optional)",
+    "label_tags": "Tags (kommagetrennt)",
+    "favorite": "Favorit",
+    "archived": "Archiviert",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "confirm_delete_item": "Diesen Eintrag dauerhaft löschen?",
+    "prompt_wishlist_name": "Name der Wunschliste?",
+    "default_new_wishlist": "Neue Wunschliste",
+    "prompt_rename_wishlist": "Wunschliste umbenennen",
+    "confirm_delete_wishlist": "Wunschliste „{name}“ und alle Einträge löschen?",
+    "error_add_link_first": "Zuerst einen Link eintragen.",
+    "status_desired": "Gewünscht",
+    "status_maybe": "Vielleicht",
+    "status_purchased": "Gekauft",
+    "dash": "—"
+  }
+}

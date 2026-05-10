@@ -14,6 +14,17 @@ Production-oriented custom integration and sidebar panel to manage **multiple wi
 - **Backend**: Config flow, `.storage` persistence, WebSocket commands, REST routes, typed Python models.
 - **Home Assistant**: statistic sensors, documented services, bus events for automations.
 
+## Translations (multi-language)
+
+Home Assistant picks strings from the signed-in **user profile language** (Settings → Profile → Language). The integration ships:
+
+- `translations/en.json` — full strings (config flow, entities, services, **panel** UI).
+- `translations/de.json` — example German (title, config, entity names, panel). Add more files using the same structure, e.g. `es.json`, `fr.json`, `pt-BR.json` (locale codes must match Home Assistant).
+
+**Backend** (config flow, sensors, services) uses the standard `translations/*.json` tree automatically.
+
+**Sidebar panel** (Lit) resolves labels with `hass.localize("component.wishlist_manager.panel.<key>")` via `frontend/src/i18n.ts`. Rebuild after editing strings: `cd frontend && npm run build`.
+
 ## Requirements
 
 - Home Assistant **2024.6** or newer (uses `StaticPathConfig`, `SupportsResponse`, modern HTTP stack).
