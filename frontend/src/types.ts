@@ -8,6 +8,10 @@ export interface HomeAssistant {
   connection: HassConnection;
   /** Home Assistant UI translations (user profile language). */
   localize?(key: string, ...args: unknown[]): string;
+  /** Authenticated fetch for REST calls from custom panels. */
+  auth?: {
+    fetchWithAuth(input: string | URL, init?: RequestInit): Promise<Response>;
+  };
   themes?: Record<
     string,
     { dark?: boolean; modes?: { dark?: Record<string, string> } }

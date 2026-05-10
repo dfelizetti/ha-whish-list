@@ -1,15 +1,17 @@
 # Wishlist Manager for Home Assistant
 
+**Current version: 1.3.0** (see `manifest.json` and `INTEGRATION_VERSION` in `const.py`).
+
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/hacs/integration)
 
-Production-oriented custom integration and sidebar panel to manage **multiple wishlists** with rich items (title, description, image, external link, notes, status, price, tags, favorites, archive), **drag-and-drop** ordering, **REST + WebSocket APIs**, **automations** (sensors, services, events), and optional **public share links**.
+Production-oriented custom integration and sidebar panel to manage **multiple wishlists** with rich items (title, description, image URL or **uploaded image**, external link, notes, status, price, tags, favorites, archive), **drag-and-drop** ordering, **REST + WebSocket APIs**, **automations** (sensors, services, events), and optional **public share links**.
 
 ![Dashboard mockup](docs/images/wishlist-dashboard-mockup.png)
 
 ## Features
 
 - **Wishlists**: create, rename, delete, reorder, icon/color metadata, share token for read-only JSON.
-- **Items**: desired / maybe / purchased, image URL, product link, notes, price, tags, favorite, archived.
+- **Items**: desired / maybe / purchased, **image URL or file upload** (JPEG/PNG/GIF/WebP, max 5 MB → `config/www/wishlist_manager/`, URL `/local/wishlist_manager/…`), product link, notes, price, tags, favorite, archived.
 - **UI** (Lit + Home Assistant theme variables): responsive grid, filters (status, list, search), sorting (newest, oldest, A–Z, status), recent strip, modal editor, “fill from link” metadata scrape.
 - **Backend**: Config flow, `.storage` persistence, WebSocket commands, REST routes, typed Python models.
 - **Home Assistant**: statistic sensors, documented services, bus events for automations.
@@ -107,8 +109,9 @@ Authenticated (Home Assistant login session or long-lived token):
 - `POST /api/wishlist_manager/wishlists/{wishlist_id}/items/reorder` — body `{"item_ids":["..."]}`
 - `PATCH/DELETE /api/wishlist_manager/wishlists/{wishlist_id}/items/{item_id}`
 - `GET /api/wishlist_manager/metadata?url=https://...`
+- `POST /api/wishlist_manager/upload_image` — `multipart/form-data` field **`file`** (admin only). Response: `{"image_url":"/local/wishlist_manager/<id>.<ext>"}`.
 
-**Public** (no auth): `GET /api/wishlist_manager/public/{share_token}` returns a redacted snapshot. Generate a token from the panel (**Share link** on a wishlist chip) or via WebSocket `wishlist_manager/wishlists/regenerate_share`.
+**Public** (no auth): `GET /api/wishlist_manager/public/{share_token}` returns a redacted snapshot. Generate a token from the panel (**Share link** on a wishlist chip) or via WebSocket `wishlist_manager/wishlists/regenerate_share`. Images stored as `/local/…` usually require a logged-in session to view in a browser; anonymous viewers of the public JSON may not see those thumbnails unless the file is otherwise world-readable (same as normal Home Assistant `/local/` behavior).
 
 ## WebSocket API
 

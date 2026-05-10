@@ -5,8 +5,12 @@ from __future__ import annotations
 from typing import Final
 
 DOMAIN: Final = "wishlist_manager"
+INTEGRATION_VERSION: Final = "1.3.0"
 STORAGE_KEY: Final = f"{DOMAIN}"
 STORAGE_VERSION: Final = 1
+
+# Uploaded item images: <config>/www/<subdir>/ (HTTP path /local/<subdir>/)
+WWW_UPLOAD_SUBDIR: Final = "wishlist_manager"
 
 SIGNAL_DATA_UPDATED: Final = f"{DOMAIN}_data_updated"
 

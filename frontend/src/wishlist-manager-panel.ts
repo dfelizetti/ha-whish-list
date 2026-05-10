@@ -815,6 +815,52 @@ export class WishlistManagerPanel extends LitElement {
     );
   }
 
+  private async _uploadItemImage(ev: Event): Promise<void> {
+    const input = ev.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file || !this.hass) {
+      input.value = "";
+      return;
+    }
+    const auth = this.hass.auth;
+    if (!auth?.fetchWithAuth) {
+      this._error = this._t(
+        "upload_no_auth",
+        "Upload requires Home Assistant sign-in (admin)."
+      );
+      input.value = "";
+      return;
+    }
+    this._error = null;
+    const fd = new FormData();
+    fd.append("file", file);
+    try {
+      const res = await auth.fetchWithAuth(
+        "/api/wishlist_manager/upload_image",
+        {
+          method: "POST",
+          body: fd,
+        }
+      );
+      const data = (await res.json()) as { image_url?: string; error?: string };
+      if (!res.ok) {
+        throw new Error(data.error || res.statusText);
+      }
+      const form = this.shadowRoot?.querySelector(
+        "form#editor-form"
+      ) as HTMLFormElement | null;
+      const img = form?.querySelector<HTMLInputElement>('[name="image_url"]');
+      if (img && data.image_url) {
+        img.value = data.image_url;
+      }
+      this.requestUpdate();
+    } catch (e) {
+      this._error = e instanceof Error ? e.message : String(e);
+    } finally {
+      input.value = "";
+    }
+  }
+
   private async _fetchMetadata(): Promise<void> {
     if (!this.hass) return;
     const form = this.shadowRoot?.querySelector(
@@ -1261,6 +1307,31 @@ ${this._editingItem?.description ?? ""}</textarea>
                       .value=${this._editingItem?.image_url ?? ""}
                     />
                   </div>
+                  ${admin
+                    ? html`
+                        <div class="field">
+                          <label
+                            >${this._t(
+                              "label_upload_image",
+                              "Upload image"
+                            )}</label
+                          >
+                          <input
+                            type="file"
+                            accept="image/jpeg,image/png,image/gif,image/webp"
+                            @change=${(e: Event) => this._uploadItemImage(e)}
+                          />
+                          <div
+                            style="font-size:0.8rem;color:var(--wm-muted);margin-top:4px"
+                          >
+                            ${this._t(
+                              "upload_hint",
+                              "JPEG, PNG, GIF or WebP, max 5 MB. Files are stored under /config/www/wishlist_manager/ and shown as /local/…"
+                            )}
+                          </div>
+                        </div>
+                      `
+                    : nothing}
                   <div class="field">
                     <label>${this._t("label_external_link", "External link")}</label>
                     <input

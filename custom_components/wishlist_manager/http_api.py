@@ -2,15 +2,17 @@
 
 from __future__ import annotations
 
-from typing import Any, cast
+from typing import cast
 
 from aiohttp import web
 
 from homeassistant.components.http import HomeAssistantView
+from homeassistant.components.http.const import KEY_HASS_USER
 from homeassistant.core import HomeAssistant
 
 from .api import WishlistApi
 from .const import DOMAIN
+from .upload import MAX_IMAGE_BYTES, async_save_uploaded_image
 
 
 def _api(hass: HomeAssistant) -> WishlistApi | None:
@@ -18,15 +20,6 @@ def _api(hass: HomeAssistant) -> WishlistApi | None:
     if not block:
         return None
     return cast(WishlistApi | None, block.get("api"))
-
-
-def _json_body(request: web.Request) -> dict[str, Any]:
-    try:
-        if not request.can_read_body:
-            return {}
-        return cast(dict[str, Any], json.loads(request.content.read_nowait()))
-    except (json.JSONDecodeError, TypeError, ValueError):
-        return {}
 
 
 class WishlistsRootView(HomeAssistantView):
@@ -246,6 +239,57 @@ class MetadataView(HomeAssistantView):
         return web.json_response(result)
 
 
+class UploadImageView(HomeAssistantView):
+    """POST multipart image → stored under /config/www/wishlist_manager/."""
+
+    url = "/api/wishlist_manager/upload_image"
+    name = "api:wishlist_manager:upload_image"
+    requires_auth = True
+
+    async def post(self, request: web.Request) -> web.Response:
+        hass = request.app["hass"]
+        if _api(hass) is None:
+            return web.json_response({"error": "not_loaded"}, status=503)
+        user = request.get(KEY_HASS_USER)
+        if user is None or not user.is_admin:
+            return web.json_response({"error": "admin_required"}, status=403)
+
+        try:
+            reader = await request.multipart()
+        except (ValueError, TypeError, AssertionError):
+            return web.json_response({"error": "invalid_multipart"}, status=400)
+
+        file_bytes: bytes | None = None
+        orig_name: str | None = None
+        while True:
+            part = await reader.next()
+            if part is None:
+                break
+            if part.name != "file":
+                continue
+            orig_name = part.filename
+            file_bytes = await part.read(decode=False)
+            break
+
+        if not file_bytes:
+            return web.json_response({"error": "missing_file"}, status=400)
+
+        if len(file_bytes) > MAX_IMAGE_BYTES:
+            return web.json_response({"error": "file_too_large"}, status=413)
+
+        try:
+            image_url = await async_save_uploaded_image(hass, file_bytes, orig_name)
+        except ValueError as err:
+            err_code = str(err)
+            if err_code == "unsupported_image_type":
+                return web.json_response({"error": err_code}, status=415)
+            if err_code == "file_too_large":
+                return web.json_response({"error": err_code}, status=413)
+            return web.json_response({"error": err_code}, status=400)
+
+        return web.json_response({"image_url": image_url})
+
+
 class PublicWishlistView(HomeAssistantView):
     """Unauthenticated read-only share."""
 
@@ -267,6 +311,7 @@ class PublicWishlistView(HomeAssistantView):
 
 def register_http_views(hass: HomeAssistant) -> None:
     """Register REST views."""
+    hass.http.register_view(UploadImageView())
     hass.http.register_view(WishlistsRootView())
     hass.http.register_view(WishlistsReorderView())
     hass.http.register_view(WishlistDetailView())
