@@ -70,6 +70,7 @@
     "label_description": "Descrição",
     "label_image_url": "URL da imagem",
     "label_upload_image": "Enviar imagem",
+    "choose_image_file": "Escolher arquivo de imagem",
     "upload_hint": "JPEG, PNG, GIF ou WebP, máx. 5 MB. Salvo em /config/www/wishlist_manager/ como /local/…",
     "upload_no_auth": "O envio exige login no Home Assistant (administrador).",
     "label_external_link": "Link externo",
@@ -91,6 +92,7 @@
     "status_desired": "Desejado",
     "status_maybe": "Talvez",
     "status_purchased": "Comprado",
+    "open_item_link": "Abrir link do produto",
     "dash": "—"
   }
 }

@@ -70,6 +70,7 @@
     "label_description": "Beschreibung",
     "label_image_url": "Bild-URL",
     "label_upload_image": "Bild hochladen",
+    "choose_image_file": "Bilddatei wählen",
     "upload_hint": "JPEG, PNG, GIF oder WebP, max. 5 MB. Gespeichert unter /config/www/wishlist_manager/ als /local/…",
     "upload_no_auth": "Upload erfordert eine Home-Assistant-Anmeldung (Administrator).",
     "label_external_link": "Externer Link",
@@ -91,6 +92,7 @@
     "status_desired": "Gewünscht",
     "status_maybe": "Vielleicht",
     "status_purchased": "Gekauft",
+    "open_item_link": "Produktlink öffnen",
     "dash": "—"
   }
 }

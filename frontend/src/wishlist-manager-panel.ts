@@ -36,8 +36,10 @@ async function callWs(
 }
 
 function isAdmin(hass: HomeAssistant): boolean {
-  const u = (hass as unknown as { user?: { is_admin?: boolean } }).user;
-  return Boolean(u?.is_admin);
+  const u = (hass as unknown as {
+    user?: { is_admin?: boolean; is_owner?: boolean };
+  }).user;
+  return Boolean(u?.is_admin || u?.is_owner);
 }
 
 function statusOrder(s: string): number {
@@ -353,6 +355,37 @@ export class WishlistManagerPanel extends LitElement {
       overflow: hidden;
     }
 
+    .item-desc.item-desc-link {
+      color: var(--wm-accent);
+      cursor: pointer;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+    }
+
+    .item-desc.item-desc-link:hover {
+      filter: brightness(1.08);
+    }
+
+    .wm-file-upload {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .wm-file-upload input[type="file"] {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
     .item-meta {
       display: flex;
       flex-wrap: wrap;
@@ -445,7 +478,8 @@ export class WishlistManagerPanel extends LitElement {
       gap: 6px;
     }
 
-    .field label {
+    .field label,
+    .field .field-label-like {
       font-size: 0.82rem;
       color: var(--wm-muted);
       font-weight: 600;
@@ -891,6 +925,20 @@ export class WishlistManagerPanel extends LitElement {
     );
   }
 
+  private _openExternalLink(url: string): void {
+    const u = url.trim();
+    if (!u || !/^https?:\/\//i.test(u)) return;
+    window.open(u, "_blank", "noopener,noreferrer");
+  }
+
+  private _onItemDescriptionClick(ev: Event, externalUrl: string): void {
+    const u = String(externalUrl || "").trim();
+    if (!u) return;
+    ev.preventDefault();
+    ev.stopPropagation();
+    this._openExternalLink(u);
+  }
+
   private async _uploadItemImage(ev: Event): Promise<void> {
     const input = ev.target as HTMLInputElement;
     const file = input.files?.[0];
@@ -1292,7 +1340,14 @@ export class WishlistManagerPanel extends LitElement {
                 <div class="item-title">
                   ${it.favorite ? html`<span class="fav">★</span> ` : nothing}${it.title}
                 </div>
-                <div class="item-desc">
+                <div
+                  class="item-desc ${it.external_url ? "item-desc-link" : ""}"
+                  title=${it.external_url
+                    ? this._t("open_item_link", "Open product link")
+                    : ""}
+                  @click=${(e: Event) =>
+                    this._onItemDescriptionClick(e, it.external_url)}
+                >
                   ${it.description || this._t("dash", "—")}
                 </div>
                 ${it.price != null
@@ -1420,17 +1475,36 @@ ${this._editingItem?.description ?? ""}</textarea>
                   ${admin
                     ? html`
                         <div class="field">
-                          <label
+                          <span class="field-label-like"
                             >${this._t(
                               "label_upload_image",
                               "Upload image"
-                            )}</label
+                            )}</span
                           >
-                          <input
-                            type="file"
-                            accept="image/jpeg,image/png,image/gif,image/webp"
-                            @change=${(e: Event) => this._uploadItemImage(e)}
-                          />
+                          <div class="wm-file-upload">
+                            <button
+                              type="button"
+                              class="btn btn-ghost"
+                              @click=${(e: Event) => {
+                                const root = (e.currentTarget as HTMLElement)
+                                  .closest(".wm-file-upload")
+                                  ?.querySelector<HTMLInputElement>(
+                                    'input[type="file"]'
+                                  );
+                                root?.click();
+                              }}
+                            >
+                              ${this._t(
+                                "choose_image_file",
+                                "Choose image file"
+                              )}
+                            </button>
+                            <input
+                              type="file"
+                              accept="image/jpeg,image/png,image/gif,image/webp"
+                              @change=${(e: Event) => this._uploadItemImage(e)}
+                            />
+                          </div>
                           <div
                             style="font-size:0.8rem;color:var(--wm-muted);margin-top:4px"
                           >

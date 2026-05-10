@@ -251,7 +251,8 @@ class UploadImageView(HomeAssistantView):
         if _api(hass) is None:
             return web.json_response({"error": "not_loaded"}, status=503)
         user = request.get(KEY_HASS_USER)
-        if user is None or not user.is_admin:
+        is_owner = bool(getattr(user, "is_owner", False)) if user else False
+        if user is None or not (user.is_admin or is_owner):
             return web.json_response({"error": "admin_required"}, status=403)
 
         try:
