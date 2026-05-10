@@ -21,7 +21,9 @@ export function wmLoc(
   if (typeof hass.localize === "function") {
     try {
       const out = hass.localize(fullKey);
-      if (typeof out === "string" && out !== fullKey) {
+      // Companion app / mobile WebView may return "" for custom component keys if
+      // resources are not merged yet. Never treat blank as a valid translation.
+      if (typeof out === "string" && out.trim() !== "" && out !== fullKey) {
         text = out;
       }
     } catch {

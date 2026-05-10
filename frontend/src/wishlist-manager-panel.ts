@@ -509,6 +509,13 @@ export class WishlistManagerPanel extends LitElement {
     super.updated(changed);
     if (changed.has("hass") && this.hass) {
       void this._refresh();
+      // Home Assistant Companion often finishes wiring `localize` / resources
+      // one tick after the panel first paints — re-render so labels are not blank.
+      queueMicrotask(() => {
+        if (this.isConnected) {
+          this.requestUpdate();
+        }
+      });
     }
   }
 

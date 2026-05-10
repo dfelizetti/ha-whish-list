@@ -1,0 +1,93 @@
+{
+  "title": "Gerenciador de listas de desejos",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Gerenciador de listas de desejos",
+        "description": "Organize ideias de presentes e compras com várias listas, itens detalhados e automações.",
+        "data": {
+          "title": "Nome da integração"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Já configurado. Só é permitida uma instância."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "total_items": { "name": "Itens no total" },
+      "purchased_items": { "name": "Comprados" },
+      "desired_items": { "name": "Desejados" },
+      "maybe_items": { "name": "Talvez" },
+      "wishlist_count": { "name": "Listas" },
+      "favorite_items": { "name": "Favoritos" }
+    }
+  },
+  "panel": {
+    "waiting_ha": "Aguardando o Home Assistant…",
+    "loading": "Carregando listas…",
+    "search_placeholder": "Buscar título, notas, tags…",
+    "filter_all_status": "Todos os status",
+    "filter_desired": "Desejado",
+    "filter_maybe": "Talvez",
+    "filter_purchased": "Comprado",
+    "filter_archived_only": "Só arquivados",
+    "filter_all_lists": "Todas as listas",
+    "sort_newest": "Mais recentes",
+    "sort_oldest": "Mais antigos",
+    "sort_alpha": "A–Z",
+    "sort_status": "Status",
+    "new_wishlist": "Nova lista",
+    "refresh": "Atualizar",
+    "stat_total": "Itens no total",
+    "stat_purchased": "Comprados",
+    "stat_desired": "Desejados",
+    "stat_wishlists": "Listas",
+    "recently_added": "Adicionados recentemente",
+    "section_wishlists": "Listas de desejos",
+    "rename": "Renomear",
+    "delete": "Excluir",
+    "share_link": "Link público",
+    "share_public_label": "Link público (somente leitura)",
+    "copy": "Copiar",
+    "close": "Fechar",
+    "section_items": "Itens",
+    "edit": "Editar",
+    "view": "Ver",
+    "action_desired": "Desejado",
+    "action_maybe": "Talvez",
+    "action_got_it": "Consegui",
+    "no_items_filter": "Nenhum item corresponde aos filtros.",
+    "add_item_this_list": "Adicionar item a esta lista",
+    "pick_wishlist_hint": "Selecione uma lista específica para adicionar itens ou use as etiquetas acima.",
+    "editor_new": "Novo item",
+    "editor_edit": "Editar item",
+    "label_title": "Título",
+    "label_description": "Descrição",
+    "label_image_url": "URL da imagem",
+    "label_upload_image": "Enviar imagem",
+    "upload_hint": "JPEG, PNG, GIF ou WebP, máx. 5 MB. Salvo em /config/www/wishlist_manager/ como /local/…",
+    "upload_no_auth": "O envio exige login no Home Assistant (administrador).",
+    "label_external_link": "Link externo",
+    "fill_from_link": "Preencher pelo link",
+    "label_notes": "Notas",
+    "label_status": "Status",
+    "label_price": "Preço (opcional)",
+    "label_tags": "Tags (separadas por vírgula)",
+    "favorite": "Favorito",
+    "archived": "Arquivado",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "confirm_delete_item": "Excluir este item permanentemente?",
+    "prompt_wishlist_name": "Nome da lista?",
+    "default_new_wishlist": "Nova lista",
+    "prompt_rename_wishlist": "Renomear lista",
+    "confirm_delete_wishlist": "Excluir a lista \"{name}\" e todos os itens?",
+    "error_add_link_first": "Adicione um link primeiro.",
+    "status_desired": "Desejado",
+    "status_maybe": "Talvez",
+    "status_purchased": "Comprado",
+    "dash": "—"
+  }
+}

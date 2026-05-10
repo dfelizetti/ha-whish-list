@@ -1,6 +1,6 @@
 # Wishlist Manager for Home Assistant
 
-**Current version: 1.3.0** (see `manifest.json` and `INTEGRATION_VERSION` in `const.py`).
+**Current version: 1.3.1** (see `manifest.json` and `INTEGRATION_VERSION` in `const.py`).
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/hacs/integration)
 
@@ -15,6 +15,10 @@ Production-oriented custom integration and sidebar panel to manage **multiple wi
 - **UI** (Lit + Home Assistant theme variables): responsive grid, filters (status, list, search), sorting (newest, oldest, A–Z, status), recent strip, modal editor, “fill from link” metadata scrape.
 - **Backend**: Config flow, `.storage` persistence, WebSocket commands, REST routes, typed Python models.
 - **Home Assistant**: statistic sensors, documented services, bus events for automations.
+
+## Mobile app (Companion) — blank labels
+
+If numbers and list names show but **titles, placeholders, and button labels are empty**, the app’s WebView was often returning **empty strings** from `hass.localize()` for custom integration keys. **v1.3.1+** treats those as missing and falls back to the built-in English strings, adds a follow-up re-render when `hass` attaches, and ships **`translations/pt-BR.json`** so Portuguese (Brazil) profiles get full panel text when translations load normally.
 
 ## Translations (multi-language)
 
