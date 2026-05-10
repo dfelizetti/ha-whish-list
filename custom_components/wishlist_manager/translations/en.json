@@ -1,0 +1,113 @@
+{
+  "title": "Wishlist Manager",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Wishlist Manager",
+        "description": "Organize gift ideas and purchases with multiple lists, rich items, and automations.",
+        "data": {
+          "title": "Integration title"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Already configured. Only one instance is supported."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "total_items": {
+        "name": "Total items"
+      },
+      "purchased_items": {
+        "name": "Purchased items"
+      },
+      "desired_items": {
+        "name": "Desired items"
+      },
+      "maybe_items": {
+        "name": "Maybe items"
+      },
+      "wishlist_count": {
+        "name": "Wishlist count"
+      },
+      "favorite_items": {
+        "name": "Favorite items"
+      }
+    }
+  },
+  "services": {
+    "add_item": {
+      "name": "Add item",
+      "description": "Adds an item to a wishlist.",
+      "fields": {
+        "wishlist_id": { "name": "Wishlist", "description": "Target wishlist id." },
+        "title": { "name": "Title", "description": "Item title." },
+        "description": { "name": "Description", "description": "Longer description." },
+        "image_url": { "name": "Image URL", "description": "Image shown on cards." },
+        "external_url": { "name": "External URL", "description": "Product or reference link." },
+        "notes": { "name": "Notes", "description": "Private notes." },
+        "status": { "name": "Status", "description": "desired, maybe, or purchased." },
+        "price": { "name": "Price", "description": "Optional numeric price." },
+        "tags": { "name": "Tags", "description": "List of tag strings." },
+        "favorite": { "name": "Favorite", "description": "Mark as favorite." },
+        "archived": { "name": "Archived", "description": "Archive the item." }
+      }
+    },
+    "update_item": {
+      "name": "Update item",
+      "description": "Updates fields on an existing item. Omitted fields are left unchanged.",
+      "fields": {
+        "wishlist_id": { "name": "Wishlist", "description": "Wishlist id." },
+        "item_id": { "name": "Item", "description": "Item id." }
+      }
+    },
+    "remove_item": {
+      "name": "Remove item",
+      "description": "Deletes an item from a wishlist.",
+      "fields": {
+        "wishlist_id": { "name": "Wishlist", "description": "Wishlist id." },
+        "item_id": { "name": "Item", "description": "Item id." }
+      }
+    },
+    "set_status": {
+      "name": "Set item status",
+      "description": "Sets desired / maybe / purchased on an item.",
+      "fields": {
+        "wishlist_id": { "name": "Wishlist", "description": "Wishlist id." },
+        "item_id": { "name": "Item", "description": "Item id." },
+        "status": { "name": "Status", "description": "desired, maybe, or purchased." }
+      }
+    },
+    "create_wishlist": {
+      "name": "Create wishlist",
+      "description": "Creates a new wishlist.",
+      "fields": {
+        "name": { "name": "Name", "description": "Wishlist name." },
+        "icon": { "name": "Icon", "description": "Material Design Icon name." },
+        "color": { "name": "Color", "description": "Optional hex color." }
+      }
+    },
+    "update_wishlist": {
+      "name": "Update wishlist",
+      "description": "Updates wishlist metadata.",
+      "fields": {
+        "wishlist_id": { "name": "Wishlist", "description": "Wishlist id." }
+      }
+    },
+    "delete_wishlist": {
+      "name": "Delete wishlist",
+      "description": "Permanently removes a wishlist and all items.",
+      "fields": {
+        "wishlist_id": { "name": "Wishlist", "description": "Wishlist id." }
+      }
+    },
+    "fetch_metadata": {
+      "name": "Fetch link metadata",
+      "description": "Downloads a URL and extracts title, description, and preview image when available.",
+      "fields": {
+        "url": { "name": "URL", "description": "Page to fetch." }
+      }
+    }
+  }
+}

@@ -1,0 +1,187 @@
+# https://www.home-assistant.io/docs/scripts/service-calls/
+add_item:
+  name: Add item
+  description: Adds an item to a wishlist.
+  fields:
+    wishlist_id:
+      required: true
+      example: "550e8400-e29b-41d4-a716-446655440000"
+      selector:
+        text:
+    title:
+      required: true
+      example: "Noise-cancelling headphones"
+      selector:
+        text:
+    description:
+      example: "USB-C, over-ear"
+      selector:
+        text:
+    image_url:
+      example: "https://example.com/image.jpg"
+      selector:
+        text:
+    external_url:
+      example: "https://example.com/product"
+      selector:
+        text:
+    notes:
+      example: "On sale during holidays"
+      selector:
+        text:
+    status:
+      example: "desired"
+      default: "desired"
+      selector:
+        select:
+          options:
+            - desired
+            - maybe
+            - purchased
+    price:
+      example: 199.99
+      selector:
+        number:
+          min: 0
+          max: 1000000
+          step: 0.01
+          mode: box
+    favorite:
+      default: false
+      selector:
+        boolean:
+    archived:
+      default: false
+      selector:
+        boolean:
+
+update_item:
+  name: Update item
+  description: Updates an item; only provided fields are changed.
+  fields:
+    wishlist_id:
+      required: true
+      selector:
+        text:
+    item_id:
+      required: true
+      selector:
+        text:
+    title:
+      selector:
+        text:
+    description:
+      selector:
+        text:
+    image_url:
+      selector:
+        text:
+    external_url:
+      selector:
+        text:
+    notes:
+      selector:
+        text:
+    status:
+      selector:
+        select:
+          options:
+            - desired
+            - maybe
+            - purchased
+    price:
+      selector:
+        number:
+          min: 0
+          max: 1000000
+          step: 0.01
+          mode: box
+    favorite:
+      selector:
+        boolean:
+    archived:
+      selector:
+        boolean:
+
+remove_item:
+  name: Remove item
+  fields:
+    wishlist_id:
+      required: true
+      selector:
+        text:
+    item_id:
+      required: true
+      selector:
+        text:
+
+set_status:
+  name: Set item status
+  fields:
+    wishlist_id:
+      required: true
+      selector:
+        text:
+    item_id:
+      required: true
+      selector:
+        text:
+    status:
+      required: true
+      selector:
+        select:
+          options:
+            - desired
+            - maybe
+            - purchased
+
+create_wishlist:
+  name: Create wishlist
+  fields:
+    name:
+      required: true
+      example: "Holiday gifts"
+      selector:
+        text:
+    icon:
+      default: "mdi:gift-outline"
+      selector:
+        icon:
+    color:
+      example: "#6C63FF"
+      selector:
+        text:
+
+update_wishlist:
+  name: Update wishlist
+  fields:
+    wishlist_id:
+      required: true
+      selector:
+        text:
+    name:
+      selector:
+        text:
+    icon:
+      selector:
+        icon:
+    color:
+      selector:
+        text:
+
+delete_wishlist:
+  name: Delete wishlist
+  fields:
+    wishlist_id:
+      required: true
+      selector:
+        text:
+
+fetch_metadata:
+  name: Fetch link metadata
+  fields:
+    url:
+      required: true
+      example: "https://www.example.com/product"
+      selector:
+        text:

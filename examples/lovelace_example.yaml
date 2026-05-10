@@ -1,0 +1,38 @@
+# Wishlist Manager registers a sidebar panel automatically at /wishlist-manager.
+# Use this Lovelace example to surface sensors on your default dashboard.
+
+title: Home
+views:
+  - title: Wishlist overview
+    path: wishlist
+    icon: mdi:gift-outline
+    cards:
+      - type: markdown
+        title: Wishlist Manager
+        content: >
+          Open **Wishlist Manager** from the sidebar (gift icon) for the full
+          Pinterest-style experience — lists, cards, filters, drag-and-drop, and
+          share links.
+
+      - type: entities
+        title: Wishlist sensors
+        entities:
+          - entity: sensor.wishlist_manager_total_items
+            name: Total items
+          - entity: sensor.wishlist_manager_purchased_items
+            name: Purchased
+          - entity: sensor.wishlist_manager_desired_items
+            name: Desired
+          - entity: sensor.wishlist_manager_maybe_items
+            name: Maybe
+          - entity: sensor.wishlist_manager_wishlist_count
+            name: Wishlists
+          - entity: sensor.wishlist_manager_favorite_items
+            name: Favorites
+
+      - type: glance
+        title: Quick stats
+        entities:
+          - sensor.wishlist_manager_total_items
+          - sensor.wishlist_manager_purchased_items
+          - sensor.wishlist_manager_wishlist_count

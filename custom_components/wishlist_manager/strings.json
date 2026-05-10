@@ -1,0 +1,17 @@
+{
+  "title": "Wishlist Manager",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Wishlist Manager",
+        "description": "Create Pinterest-style wishlists with items, images, links, and purchase status — all inside Home Assistant.",
+        "data": {
+          "title": "Integration title"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Only one Wishlist Manager instance is allowed."
+    }
+  }
+}
