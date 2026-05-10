@@ -221,7 +221,6 @@ async def handle_regenerate_share(
     )
 
 
-@websocket_api.require_admin
 @websocket_api.websocket_command(
     {
         vol.Required("type"): WS_TYPE_CREATE_ITEM,
@@ -270,7 +269,6 @@ async def handle_create_item(
     connection.send_result(msg["id"], {"item": item.to_dict()})
 
 
-@websocket_api.require_admin
 @websocket_api.websocket_command(
     {
         vol.Required("type"): WS_TYPE_UPDATE_ITEM,
@@ -312,7 +310,6 @@ async def handle_update_item(
     connection.send_result(msg["id"], {"item": item.to_dict()})
 
 
-@websocket_api.require_admin
 @websocket_api.websocket_command(
     {
         vol.Required("type"): WS_TYPE_DELETE_ITEM,
@@ -337,7 +334,6 @@ async def handle_delete_item(
     connection.send_result(msg["id"], {"success": True})
 
 
-@websocket_api.require_admin
 @websocket_api.websocket_command(
     {
         vol.Required("type"): WS_TYPE_REORDER_ITEMS,
@@ -363,7 +359,6 @@ async def handle_reorder_items(
     connection.send_result(msg["id"], api.serialize_store())
 
 
-@websocket_api.require_admin
 @websocket_api.websocket_command(
     {
         vol.Required("type"): WS_TYPE_SET_STATUS,
@@ -391,7 +386,6 @@ async def handle_set_status(
     connection.send_result(msg["id"], {"item": item.to_dict()})
 
 
-@websocket_api.require_admin
 @websocket_api.websocket_command(
     {
         vol.Required("type"): WS_TYPE_FETCH_METADATA,

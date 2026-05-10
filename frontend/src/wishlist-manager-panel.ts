@@ -751,7 +751,7 @@ export class WishlistManagerPanel extends LitElement {
 
   private async _saveEditor(ev: Event): Promise<void> {
     ev.preventDefault();
-    if (!this.hass || !this._editingWishlistId || !isAdmin(this.hass)) return;
+    if (!this.hass || !this._editingWishlistId) return;
     const form = ev.target as HTMLFormElement;
     const fd = new FormData(form);
     const title = String(fd.get("title") || "").trim();
@@ -886,7 +886,14 @@ export class WishlistManagerPanel extends LitElement {
   private async _onDropWishlist(ev: DragEvent, targetId: string): Promise<void> {
     ev.preventDefault();
     const src = ev.dataTransfer?.getData("text/wishlist-id");
-    if (!src || src === targetId || !this.hass || !this._snapshot) return;
+    if (
+      !src ||
+      src === targetId ||
+      !this.hass ||
+      !this._snapshot ||
+      !isAdmin(this.hass)
+    )
+      return;
     const order = this._wishlistsSorted().map((w) => w.id);
     const fi = order.indexOf(src);
     const ti = order.indexOf(targetId);
@@ -1233,7 +1240,7 @@ export class WishlistManagerPanel extends LitElement {
           (wl) => html`
             <div
               class="chip ${this._selectedWishlistId === wl.id ? "active" : ""}"
-              draggable="true"
+              draggable=${admin}
               @dragstart=${(e: DragEvent) => {
                 e.dataTransfer?.setData("text/wishlist-id", wl.id);
               }}
@@ -1362,41 +1369,31 @@ export class WishlistManagerPanel extends LitElement {
                   ${it.tags.map((t) => html`<span class="tag">${t}</span>`)}
                 </div>
                 <div class="actions">
-                  ${admin
-                    ? html`
-                        <button
-                          class="btn"
-                          @click=${() => this._openEditItem(wl.id, it)}
-                        >
-                          ${this._t("edit", "Edit")}
-                        </button>
-                        <button
-                          class="btn btn-ghost"
-                          @click=${() =>
-                            this._quickSetStatus(wl.id, it, "desired")}
-                        >
-                          ${this._t("action_desired", "Desired")}
-                        </button>
-                        <button
-                          class="btn btn-ghost"
-                          @click=${() => this._quickSetStatus(wl.id, it, "maybe")}
-                        >
-                          ${this._t("action_maybe", "Maybe")}
-                        </button>
-                        <button
-                          class="btn btn-ghost"
-                          @click=${() =>
-                            this._quickSetStatus(wl.id, it, "purchased")}
-                        >
-                          ${this._t("action_got_it", "Got it")}
-                        </button>
-                      `
-                    : html`<button
-                        class="btn"
-                        @click=${() => this._openEditItem(wl.id, it)}
-                      >
-                        ${this._t("view", "View")}
-                      </button>`}
+                  <button
+                    class="btn"
+                    @click=${() => this._openEditItem(wl.id, it)}
+                  >
+                    ${this._t("edit", "Edit")}
+                  </button>
+                  <button
+                    class="btn btn-ghost"
+                    @click=${() => this._quickSetStatus(wl.id, it, "desired")}
+                  >
+                    ${this._t("action_desired", "Desired")}
+                  </button>
+                  <button
+                    class="btn btn-ghost"
+                    @click=${() => this._quickSetStatus(wl.id, it, "maybe")}
+                  >
+                    ${this._t("action_maybe", "Maybe")}
+                  </button>
+                  <button
+                    class="btn btn-ghost"
+                    @click=${() =>
+                      this._quickSetStatus(wl.id, it, "purchased")}
+                  >
+                    ${this._t("action_got_it", "Got it")}
+                  </button>
                 </div>
               </div>
             </div>
@@ -1410,7 +1407,7 @@ export class WishlistManagerPanel extends LitElement {
           </div>`
         : nothing}
 
-      ${admin && this._selectedWishlistId !== "all"
+      ${this._selectedWishlistId !== "all"
         ? html`
             <div style="margin-top:20px">
               <button
@@ -1422,16 +1419,14 @@ export class WishlistManagerPanel extends LitElement {
               </button>
             </div>
           `
-        : admin
-          ? html`
-              <div class="empty">
-                ${this._t(
-                  "pick_wishlist_hint",
-                  "Select a specific wishlist to add items, or use the wishlist chips above."
-                )}
-              </div>
-            `
-          : nothing}
+        : html`
+            <div class="empty">
+              ${this._t(
+                "pick_wishlist_hint",
+                "Select a specific wishlist to add items, or use the wishlist chips above."
+              )}
+            </div>
+          `}
 
       ${this._editorOpen
         ? html`
@@ -1453,20 +1448,18 @@ export class WishlistManagerPanel extends LitElement {
                     <input
                       name="title"
                       required
-                      ?disabled=${!admin}
                       .value=${this._editingItem?.title ?? ""}
                     />
                   </div>
                   <div class="field">
                     <label>${this._t("label_description", "Description")}</label>
-                    <textarea name="description" ?disabled=${!admin}>
+                    <textarea name="description">
 ${this._editingItem?.description ?? ""}</textarea>
                   </div>
                   <div class="field">
                     <label>${this._t("label_image_url", "Image URL")}</label>
                     <input
                       name="image_url"
-                      ?disabled=${!admin}
                       .value=${this._editingItem?.image_url ?? ""}
                     />
                   </div>
@@ -1518,31 +1511,26 @@ ${this._editingItem?.description ?? ""}</textarea>
                     <label>${this._t("label_external_link", "External link")}</label>
                     <input
                       name="external_url"
-                      ?disabled=${!admin}
                       .value=${this._editingItem?.external_url ?? ""}
                     />
                   </div>
                   <div class="row">
-                    ${admin
-                      ? html`
-                          <button
-                            type="button"
-                            class="btn btn-ghost"
-                            @click=${() => this._fetchMetadata()}
-                          >
-                            ${this._t("fill_from_link", "Fill from link")}
-                          </button>
-                        `
-                      : nothing}
+                    <button
+                      type="button"
+                      class="btn btn-ghost"
+                      @click=${() => this._fetchMetadata()}
+                    >
+                      ${this._t("fill_from_link", "Fill from link")}
+                    </button>
                   </div>
                   <div class="field">
                     <label>${this._t("label_notes", "Notes")}</label>
-                    <textarea name="notes" ?disabled=${!admin}>
+                    <textarea name="notes">
 ${this._editingItem?.notes ?? ""}</textarea>
                   </div>
                   <div class="field">
                     <label>${this._t("label_status", "Status")}</label>
-                    <select name="status" ?disabled=${!admin}>
+                    <select name="status">
                       <option
                         value="desired"
                         ?selected=${(this._editingItem?.status ?? "desired") ===
@@ -1570,7 +1558,6 @@ ${this._editingItem?.notes ?? ""}</textarea>
                       name="price"
                       type="number"
                       step="0.01"
-                      ?disabled=${!admin}
                       .value=${this._editingItem?.price != null
                         ? String(this._editingItem.price)
                         : ""}
@@ -1580,7 +1567,6 @@ ${this._editingItem?.notes ?? ""}</textarea>
                     <label>${this._t("label_tags", "Tags (comma separated)")}</label>
                     <input
                       name="tags"
-                      ?disabled=${!admin}
                       .value=${(this._editingItem?.tags ?? []).join(", ")}
                     />
                   </div>
@@ -1589,7 +1575,6 @@ ${this._editingItem?.notes ?? ""}</textarea>
                       ><input
                         type="checkbox"
                         name="favorite"
-                        ?disabled=${!admin}
                         ?checked=${this._editingItem?.favorite}
                       />
                       ${this._t("favorite", "Favorite")}</label
@@ -1598,30 +1583,23 @@ ${this._editingItem?.notes ?? ""}</textarea>
                       ><input
                         type="checkbox"
                         name="archived"
-                        ?disabled=${!admin}
                         ?checked=${this._editingItem?.archived}
                       />
                       ${this._t("archived", "Archived")}</label
                     >
                   </div>
                   <div class="row" style="margin-top:16px">
-                    ${admin
-                      ? html`
-                          <button class="btn btn-primary" type="submit">
-                            ${this._t("save", "Save")}
-                          </button>
-                        `
-                      : nothing}
+                    <button class="btn btn-primary" type="submit">
+                      ${this._t("save", "Save")}
+                    </button>
                     <button
                       type="button"
                       class="btn btn-ghost"
                       @click=${this._closeEditor}
                     >
-                      ${admin
-                        ? this._t("cancel", "Cancel")
-                        : this._t("close", "Close")}
+                      ${this._t("cancel", "Cancel")}
                     </button>
-                    ${admin && !this._isNewItem
+                    ${!this._isNewItem
                       ? html`
                           <button
                             type="button"

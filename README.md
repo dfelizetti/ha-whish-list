@@ -139,7 +139,7 @@ Types are namespaced, for example:
 - `wishlist_manager/items/create`
 - `wishlist_manager/metadata/fetch`
 
-Mutating commands require **admin** privileges (matching Home Assistant conventions). Listing is allowed for any authenticated user.
+Wishlist-structure commands (**create/update/delete/reorder** wishlists, **regenerate share**) require **admin** privileges. **Item** mutations (**create/update/delete**, **reorder**, **set_status**) and **metadata fetch** over WebSocket are allowed for any authenticated user (same behavior as the REST item endpoints). **Listing** is allowed for any authenticated user.
 
 ## Storage
 

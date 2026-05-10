@@ -284,22 +284,22 @@ U.elementStyles = [], U.shadowRootOptions = { mode: "open" }, U[M("elementProper
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const R = globalThis, dt = (i) => i, V = R.trustedTypes, ht = V ? V.createPolicy("lit-html", { createHTML: (i) => i }) : void 0, yt = "$lit$", A = `lit$${Math.random().toFixed(9).slice(2)}$`, wt = "?" + A, Wt = `<${wt}>`, T = document, z = () => T.createComment(""), H = (i) => i === null || typeof i != "object" && typeof i != "function", et = Array.isArray, Mt = (i) => et(i) || typeof (i == null ? void 0 : i[Symbol.iterator]) == "function", Z = `[ 	
+const R = globalThis, ht = (i) => i, V = R.trustedTypes, dt = V ? V.createPolicy("lit-html", { createHTML: (i) => i }) : void 0, yt = "$lit$", A = `lit$${Math.random().toFixed(9).slice(2)}$`, wt = "?" + A, Wt = `<${wt}>`, T = document, z = () => T.createComment(""), H = (i) => i === null || typeof i != "object" && typeof i != "function", et = Array.isArray, Mt = (i) => et(i) || typeof (i == null ? void 0 : i[Symbol.iterator]) == "function", Z = `[ 	
 \f\r]`, W = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, ct = /-->/g, pt = />/g, I = RegExp(`>|${Z}(?:([^\\s"'>=/]+)(${Z}*=${Z}*(?:[^ 	
-\f\r"'\`<>=]|("|')|))|$)`, "g"), ut = /'/g, mt = /"/g, xt = /^(?:script|style|textarea|title)$/i, Rt = (i) => (t, ...e) => ({ _$litType$: i, strings: t, values: e }), u = Rt(1), O = Symbol.for("lit-noChange"), h = Symbol.for("lit-nothing"), _t = /* @__PURE__ */ new WeakMap(), C = T.createTreeWalker(T, 129);
+\f\r"'\`<>=]|("|')|))|$)`, "g"), ut = /'/g, mt = /"/g, xt = /^(?:script|style|textarea|title)$/i, Rt = (i) => (t, ...e) => ({ _$litType$: i, strings: t, values: e }), m = Rt(1), O = Symbol.for("lit-noChange"), d = Symbol.for("lit-nothing"), _t = /* @__PURE__ */ new WeakMap(), C = T.createTreeWalker(T, 129);
 function Et(i, t) {
   if (!et(i) || !i.hasOwnProperty("raw")) throw Error("invalid template strings array");
-  return ht !== void 0 ? ht.createHTML(t) : t;
+  return dt !== void 0 ? dt.createHTML(t) : t;
 }
 const Nt = (i, t) => {
   const e = i.length - 1, s = [];
   let r, a = t === 2 ? "<svg>" : t === 3 ? "<math>" : "", o = W;
   for (let l = 0; l < e; l++) {
     const n = i[l];
-    let c, m, p = -1, b = 0;
-    for (; b < n.length && (o.lastIndex = b, m = o.exec(n), m !== null); ) b = o.lastIndex, o === W ? m[1] === "!--" ? o = ct : m[1] !== void 0 ? o = pt : m[2] !== void 0 ? (xt.test(m[2]) && (r = RegExp("</" + m[2], "g")), o = I) : m[3] !== void 0 && (o = I) : o === I ? m[0] === ">" ? (o = r ?? W, p = -1) : m[1] === void 0 ? p = -2 : (p = o.lastIndex - m[2].length, c = m[1], o = m[3] === void 0 ? I : m[3] === '"' ? mt : ut) : o === mt || o === ut ? o = I : o === ct || o === pt ? o = W : (o = I, r = void 0);
-    const x = o === I && i[l + 1].startsWith("/>") ? " " : "";
-    a += o === W ? n + Wt : p >= 0 ? (s.push(c), n.slice(0, p) + yt + n.slice(p) + A + x) : n + A + (p === -2 ? l : x);
+    let c, u, p = -1, b = 0;
+    for (; b < n.length && (o.lastIndex = b, u = o.exec(n), u !== null); ) b = o.lastIndex, o === W ? u[1] === "!--" ? o = ct : u[1] !== void 0 ? o = pt : u[2] !== void 0 ? (xt.test(u[2]) && (r = RegExp("</" + u[2], "g")), o = I) : u[3] !== void 0 && (o = I) : o === I ? u[0] === ">" ? (o = r ?? W, p = -1) : u[1] === void 0 ? p = -2 : (p = o.lastIndex - u[2].length, c = u[1], o = u[3] === void 0 ? I : u[3] === '"' ? mt : ut) : o === mt || o === ut ? o = I : o === ct || o === pt ? o = W : (o = I, r = void 0);
+    const w = o === I && i[l + 1].startsWith("/>") ? " " : "";
+    a += o === W ? n + Wt : p >= 0 ? (s.push(c), n.slice(0, p) + yt + n.slice(p) + A + w) : n + A + (p === -2 ? l : w);
   }
   return [Et(i, a + (i[e] || "<?>") + (t === 2 ? "</svg>" : t === 3 ? "</math>" : "")), s];
 };
@@ -308,7 +308,7 @@ class L {
     let r;
     this.parts = [];
     let a = 0, o = 0;
-    const l = t.length - 1, n = this.parts, [c, m] = Nt(t, e);
+    const l = t.length - 1, n = this.parts, [c, u] = Nt(t, e);
     if (this.el = L.createElement(c, s), C.currentNode = this.el.content, e === 2 || e === 3) {
       const p = this.el.content.firstChild;
       p.replaceWith(...p.childNodes);
@@ -316,14 +316,14 @@ class L {
     for (; (r = C.nextNode()) !== null && n.length < l; ) {
       if (r.nodeType === 1) {
         if (r.hasAttributes()) for (const p of r.getAttributeNames()) if (p.endsWith(yt)) {
-          const b = m[o++], x = r.getAttribute(p).split(A), k = /([.?@])?(.*)/.exec(b);
-          n.push({ type: 1, index: a, name: k[2], strings: x, ctor: k[1] === "." ? Ht : k[1] === "?" ? Lt : k[1] === "@" ? jt : G }), r.removeAttribute(p);
+          const b = u[o++], w = r.getAttribute(p).split(A), k = /([.?@])?(.*)/.exec(b);
+          n.push({ type: 1, index: a, name: k[2], strings: w, ctor: k[1] === "." ? Ht : k[1] === "?" ? Lt : k[1] === "@" ? jt : G }), r.removeAttribute(p);
         } else p.startsWith(A) && (n.push({ type: 6, index: a }), r.removeAttribute(p));
         if (xt.test(r.tagName)) {
           const p = r.textContent.split(A), b = p.length - 1;
           if (b > 0) {
             r.textContent = V ? V.emptyScript : "";
-            for (let x = 0; x < b; x++) r.append(p[x], z()), C.nextNode(), n.push({ type: 2, index: ++a });
+            for (let w = 0; w < b; w++) r.append(p[w], z()), C.nextNode(), n.push({ type: 2, index: ++a });
             r.append(p[b], z());
           }
         }
@@ -381,7 +381,7 @@ class j {
     return ((t = this._$AM) == null ? void 0 : t._$AU) ?? this._$Cv;
   }
   constructor(t, e, s, r) {
-    this.type = 2, this._$AH = h, this._$AN = void 0, this._$AA = t, this._$AB = e, this._$AM = s, this.options = r, this._$Cv = (r == null ? void 0 : r.isConnected) ?? !0;
+    this.type = 2, this._$AH = d, this._$AN = void 0, this._$AA = t, this._$AB = e, this._$AM = s, this.options = r, this._$Cv = (r == null ? void 0 : r.isConnected) ?? !0;
   }
   get parentNode() {
     let t = this._$AA.parentNode;
@@ -395,7 +395,7 @@ class j {
     return this._$AB;
   }
   _$AI(t, e = this) {
-    t = D(this, t, e), H(t) ? t === h || t == null || t === "" ? (this._$AH !== h && this._$AR(), this._$AH = h) : t !== this._$AH && t !== O && this._(t) : t._$litType$ !== void 0 ? this.$(t) : t.nodeType !== void 0 ? this.T(t) : Mt(t) ? this.k(t) : this._(t);
+    t = D(this, t, e), H(t) ? t === d || t == null || t === "" ? (this._$AH !== d && this._$AR(), this._$AH = d) : t !== this._$AH && t !== O && this._(t) : t._$litType$ !== void 0 ? this.$(t) : t.nodeType !== void 0 ? this.T(t) : Mt(t) ? this.k(t) : this._(t);
   }
   O(t) {
     return this._$AA.parentNode.insertBefore(t, this._$AB);
@@ -404,7 +404,7 @@ class j {
     this._$AH !== t && (this._$AR(), this._$AH = this.O(t));
   }
   _(t) {
-    this._$AH !== h && H(this._$AH) ? this._$AA.nextSibling.data = t : this.T(T.createTextNode(t)), this._$AH = t;
+    this._$AH !== d && H(this._$AH) ? this._$AA.nextSibling.data = t : this.T(T.createTextNode(t)), this._$AH = t;
   }
   $(t) {
     var a;
@@ -429,8 +429,8 @@ class j {
   _$AR(t = this._$AA.nextSibling, e) {
     var s;
     for ((s = this._$AP) == null ? void 0 : s.call(this, !1, !0, e); t !== this._$AB; ) {
-      const r = dt(t).nextSibling;
-      dt(t).remove(), t = r;
+      const r = ht(t).nextSibling;
+      ht(t).remove(), t = r;
     }
   }
   setConnected(t) {
@@ -446,7 +446,7 @@ class G {
     return this._$AM._$AU;
   }
   constructor(t, e, s, r, a) {
-    this.type = 1, this._$AH = h, this._$AN = void 0, this.element = t, this.name = e, this._$AM = r, this.options = a, s.length > 2 || s[0] !== "" || s[1] !== "" ? (this._$AH = Array(s.length - 1).fill(new String()), this.strings = s) : this._$AH = h;
+    this.type = 1, this._$AH = d, this._$AN = void 0, this.element = t, this.name = e, this._$AM = r, this.options = a, s.length > 2 || s[0] !== "" || s[1] !== "" ? (this._$AH = Array(s.length - 1).fill(new String()), this.strings = s) : this._$AH = d;
   }
   _$AI(t, e = this, s, r) {
     const a = this.strings;
@@ -455,12 +455,12 @@ class G {
     else {
       const l = t;
       let n, c;
-      for (t = a[0], n = 0; n < a.length - 1; n++) c = D(this, l[s + n], e, n), c === O && (c = this._$AH[n]), o || (o = !H(c) || c !== this._$AH[n]), c === h ? t = h : t !== h && (t += (c ?? "") + a[n + 1]), this._$AH[n] = c;
+      for (t = a[0], n = 0; n < a.length - 1; n++) c = D(this, l[s + n], e, n), c === O && (c = this._$AH[n]), o || (o = !H(c) || c !== this._$AH[n]), c === d ? t = d : t !== d && (t += (c ?? "") + a[n + 1]), this._$AH[n] = c;
     }
     o && !r && this.j(t);
   }
   j(t) {
-    t === h ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, t ?? "");
+    t === d ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, t ?? "");
   }
 }
 class Ht extends G {
@@ -468,7 +468,7 @@ class Ht extends G {
     super(...arguments), this.type = 3;
   }
   j(t) {
-    this.element[this.name] = t === h ? void 0 : t;
+    this.element[this.name] = t === d ? void 0 : t;
   }
 }
 class Lt extends G {
@@ -476,7 +476,7 @@ class Lt extends G {
     super(...arguments), this.type = 4;
   }
   j(t) {
-    this.element.toggleAttribute(this.name, !!t && t !== h);
+    this.element.toggleAttribute(this.name, !!t && t !== d);
   }
 }
 class jt extends G {
@@ -484,8 +484,8 @@ class jt extends G {
     super(t, e, s, r, a), this.type = 5;
   }
   _$AI(t, e = this) {
-    if ((t = D(this, t, e, 0) ?? h) === O) return;
-    const s = this._$AH, r = t === h && s !== h || t.capture !== s.capture || t.once !== s.once || t.passive !== s.passive, a = t !== h && (s === h || r);
+    if ((t = D(this, t, e, 0) ?? d) === O) return;
+    const s = this._$AH, r = t === d && s !== d || t.capture !== s.capture || t.once !== s.once || t.passive !== s.passive, a = t !== d && (s === d || r);
     r && this.element.removeEventListener(this.name, this, s), a && this.element.addEventListener(this.name, this, t), this._$AH = t;
   }
   handleEvent(t) {
@@ -598,7 +598,7 @@ function q(i) {
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-function w(i) {
+function y(i) {
   return q({ ...i, state: !0, attribute: !1 });
 }
 const Yt = "wishlist_manager";
@@ -626,7 +626,7 @@ var Jt = Object.defineProperty, Kt = Object.getOwnPropertyDescriptor, g = (i, t,
     (o = i[a]) && (r = (s ? o(t, e, r) : o(r)) || r);
   return s && r && Jt(t, e, r), r;
 };
-const v = {
+const $ = {
   LIST: "wishlist_manager/wishlists/list",
   CREATE_WL: "wishlist_manager/wishlists/create",
   UPDATE_WL: "wishlist_manager/wishlists/update",
@@ -640,7 +640,7 @@ const v = {
   SET_STATUS: "wishlist_manager/items/set_status",
   FETCH_META: "wishlist_manager/metadata/fetch"
 };
-async function y(i, t) {
+async function v(i, t) {
   return typeof i.callWS == "function" ? i.callWS(t) : i.connection.sendMessagePromise(t);
 }
 function gt(i) {
@@ -688,7 +688,7 @@ let f = class extends N {
     if (this.hass) {
       this._loading = !0, this._error = null;
       try {
-        const i = await y(this.hass, { type: v.LIST });
+        const i = await v(this.hass, { type: $.LIST });
         this._snapshot = i;
       } catch (i) {
         this._error = i instanceof Error ? i.message : String(i);
@@ -752,7 +752,7 @@ let f = class extends N {
     this._editorOpen = !1, this._editingItem = null, this._editingWishlistId = null;
   }
   async _saveEditor(i) {
-    if (i.preventDefault(), !this.hass || !this._editingWishlistId || !gt(this.hass)) return;
+    if (i.preventDefault(), !this.hass || !this._editingWishlistId) return;
     const t = i.target, e = new FormData(t), s = String(e.get("title") || "").trim();
     if (!s) return;
     const r = {
@@ -773,14 +773,14 @@ let f = class extends N {
       archived: e.get("archived") === "on"
     };
     this._isNewItem ? await this._mutate(
-      () => y(this.hass, {
-        type: v.CREATE_ITEM,
+      () => v(this.hass, {
+        type: $.CREATE_ITEM,
         wishlist_id: this._editingWishlistId,
         ...r
       })
     ) : this._editingItem && await this._mutate(
-      () => y(this.hass, {
-        type: v.UPDATE_ITEM,
+      () => v(this.hass, {
+        type: $.UPDATE_ITEM,
         wishlist_id: this._editingWishlistId,
         item_id: this._editingItem.id,
         ...r
@@ -789,8 +789,8 @@ let f = class extends N {
   }
   async _deleteCurrentItem() {
     !this.hass || !this._editingWishlistId || !this._editingItem || this._isNewItem || confirm(this._t("confirm_delete_item", "Delete this item permanently?")) && (await this._mutate(
-      () => y(this.hass, {
-        type: v.DELETE_ITEM,
+      () => v(this.hass, {
+        type: $.DELETE_ITEM,
         wishlist_id: this._editingWishlistId,
         item_id: this._editingItem.id
       })
@@ -798,8 +798,8 @@ let f = class extends N {
   }
   async _quickSetStatus(i, t, e) {
     this.hass && await this._mutate(
-      () => y(this.hass, {
-        type: v.SET_STATUS,
+      () => v(this.hass, {
+        type: $.SET_STATUS,
         wishlist_id: i,
         item_id: t.id,
         status: e
@@ -812,8 +812,8 @@ let f = class extends N {
       this._t("default_new_wishlist", "New wishlist")
     );
     !i || !this.hass || await this._mutate(
-      () => y(this.hass, {
-        type: v.CREATE_WL,
+      () => v(this.hass, {
+        type: $.CREATE_WL,
         name: i.trim(),
         icon: "mdi:gift-outline"
       })
@@ -822,8 +822,8 @@ let f = class extends N {
   async _renameWishlist(i) {
     const t = prompt(this._t("prompt_rename_wishlist", "Rename wishlist"), i.name);
     !t || !this.hass || await this._mutate(
-      () => y(this.hass, {
-        type: v.UPDATE_WL,
+      () => v(this.hass, {
+        type: $.UPDATE_WL,
         wishlist_id: i.id,
         name: t.trim()
       })
@@ -837,8 +837,8 @@ let f = class extends N {
         { name: i.name }
       )
     ) && this.hass && (await this._mutate(
-      () => y(this.hass, {
-        type: v.DELETE_WL,
+      () => v(this.hass, {
+        type: $.DELETE_WL,
         wishlist_id: i.id
       })
     ), this._selectedWishlistId === i.id && (this._selectedWishlistId = "all"));
@@ -847,10 +847,11 @@ let f = class extends N {
     var o;
     i.preventDefault();
     const e = (o = i.dataTransfer) == null ? void 0 : o.getData("text/wishlist-id");
-    if (!e || e === t || !this.hass || !this._snapshot) return;
+    if (!e || e === t || !this.hass || !this._snapshot || !gt(this.hass))
+      return;
     const s = this._wishlistsSorted().map((l) => l.id), r = s.indexOf(e), a = s.indexOf(t);
     r < 0 || a < 0 || (s.splice(r, 1), s.splice(a, 0, e), await this._mutate(
-      () => y(this.hass, { type: v.REORDER_WL, wishlist_ids: s })
+      () => v(this.hass, { type: $.REORDER_WL, wishlist_ids: s })
     ));
   }
   async _onDropItem(i, t, e) {
@@ -858,12 +859,12 @@ let f = class extends N {
     i.preventDefault();
     const s = (n = i.dataTransfer) == null ? void 0 : n.getData("text/item-id");
     if (!s || s === e || !this.hass) return;
-    const r = (c = this._snapshot) == null ? void 0 : c.wishlists.find((m) => m.id === t);
+    const r = (c = this._snapshot) == null ? void 0 : c.wishlists.find((u) => u.id === t);
     if (!r) return;
-    const a = [...r.items].sort((m, p) => m.sort_order - p.sort_order).map((m) => m.id), o = a.indexOf(s), l = a.indexOf(e);
+    const a = [...r.items].sort((u, p) => u.sort_order - p.sort_order).map((u) => u.id), o = a.indexOf(s), l = a.indexOf(e);
     o < 0 || l < 0 || (a.splice(o, 1), a.splice(l, 0, s), await this._mutate(
-      () => y(this.hass, {
-        type: v.REORDER_ITEMS,
+      () => v(this.hass, {
+        type: $.REORDER_ITEMS,
         wishlist_id: t,
         item_ids: a
       })
@@ -903,9 +904,9 @@ let f = class extends N {
       }), c = await n.json();
       if (!n.ok)
         throw new Error(c.error || n.statusText);
-      const m = (l = this.shadowRoot) == null ? void 0 : l.querySelector(
+      const u = (l = this.shadowRoot) == null ? void 0 : l.querySelector(
         "form#editor-form"
-      ), p = m == null ? void 0 : m.querySelector('[name="image_url"]');
+      ), p = u == null ? void 0 : u.querySelector('[name="image_url"]');
       p && c.image_url && (p.value = c.image_url), this.requestUpdate();
     } catch (n) {
       this._error = n instanceof Error ? n.message : String(n);
@@ -924,8 +925,8 @@ let f = class extends N {
       return;
     }
     try {
-      const r = await y(this.hass, {
-        type: v.FETCH_META,
+      const r = await v(this.hass, {
+        type: $.FETCH_META,
         url: t
       });
       if (!i) return;
@@ -940,8 +941,8 @@ let f = class extends N {
   async _enableShare(i) {
     if (this.hass)
       try {
-        const t = await y(this.hass, {
-          type: v.REGEN_SHARE,
+        const t = await v(this.hass, {
+          type: $.REGEN_SHARE,
           wishlist_id: i.id
         }), e = window.location.origin;
         this._shareUrl = `${e}/api/wishlist_manager/public/${t.share_token}`, await this._refresh();
@@ -953,18 +954,18 @@ let f = class extends N {
     this._shareUrl && navigator.clipboard.writeText(this._shareUrl);
   }
   render() {
-    var e, s, r, a, o, l, n, c, m, p, b, x, k;
+    var e, s, r, a, o, l, n, c, u, p, b, w, k;
     if (!this.hass)
-      return u`<div class="empty">
+      return m`<div class="empty">
         ${this._t("waiting_ha", "Waiting for Home Assistant…")}
       </div>`;
     if (this._loading && !this._snapshot)
-      return u`<div class="empty">${this._t("loading", "Loading wishlists…")}</div>`;
+      return m`<div class="empty">${this._t("loading", "Loading wishlists…")}</div>`;
     const i = (e = this._snapshot) == null ? void 0 : e.stats, t = gt(this.hass);
-    return u`
-      ${this._error ? u`<div class="error">${this._error}</div>` : h}
+    return m`
+      ${this._error ? m`<div class="error">${this._error}</div>` : d}
 
-      ${this.narrow ? u`
+      ${this.narrow ? m`
             <div class="mobile-topbar">
               <button
                 type="button"
@@ -985,7 +986,7 @@ let f = class extends N {
                 ${this._t("back", "Back")}
               </button>
             </div>
-          ` : h}
+          ` : d}
 
       <div class="toolbar">
         <input
@@ -995,13 +996,13 @@ let f = class extends N {
       "Search title, notes, tags…"
     )}
           .value=${this._search}
-          @input=${(d) => {
-      this._search = d.target.value;
+          @input=${(h) => {
+      this._search = h.target.value;
     }}
         />
         <select
-          @change=${(d) => {
-      this._filterStatus = d.target.value;
+          @change=${(h) => {
+      this._filterStatus = h.target.value;
     }}
         >
           <option value="all" ?selected=${this._filterStatus === "all"}>
@@ -1027,24 +1028,24 @@ let f = class extends N {
           </option>
         </select>
         <select
-          @change=${(d) => {
-      this._selectedWishlistId = d.target.value;
+          @change=${(h) => {
+      this._selectedWishlistId = h.target.value;
     }}
         >
           <option value="all" ?selected=${this._selectedWishlistId === "all"}>
             ${this._t("filter_all_lists", "All wishlists")}
           </option>
           ${this._wishlistsSorted().map(
-      (d) => u`
-              <option value=${d.id} ?selected=${this._selectedWishlistId === d.id}>
-                ${d.name}
+      (h) => m`
+              <option value=${h.id} ?selected=${this._selectedWishlistId === h.id}>
+                ${h.name}
               </option>
             `
     )}
         </select>
         <select
-          @change=${(d) => {
-      this._sort = d.target.value;
+          @change=${(h) => {
+      this._sort = h.target.value;
     }}
         >
           <option value="newest" ?selected=${this._sort === "newest"}>
@@ -1060,15 +1061,15 @@ let f = class extends N {
             ${this._t("sort_status", "Status")}
           </option>
         </select>
-        ${t ? u`<button class="btn btn-primary" @click=${this._createWishlist}>
+        ${t ? m`<button class="btn btn-primary" @click=${this._createWishlist}>
               ${this._t("new_wishlist", "New wishlist")}
-            </button>` : h}
+            </button>` : d}
         <button class="btn btn-ghost" @click=${() => this._refresh()}>
           ${this._t("refresh", "Refresh")}
         </button>
       </div>
 
-      ${!this.narrow && i ? u`
+      ${!this.narrow && i ? m`
             <div class="stats">
               <div class="stat-card" style="animation-delay:0ms">
                 <b>${i.total_items}</b
@@ -1087,29 +1088,29 @@ let f = class extends N {
                 ><span>${this._t("stat_wishlists", "Wishlists")}</span>
               </div>
             </div>
-          ` : h}
+          ` : d}
 
-      ${this.narrow ? h : u`
+      ${this.narrow ? d : m`
             <div class="section-title">
               ${this._t("recently_added", "Recently added")}
             </div>
             <div class="recent">
               ${this._recentItems().map(
-      (d) => u`
+      (h) => m`
                   <div
                     class="recent-card"
                     @click=${() => {
-        const _ = this._contextForItem(d.id);
+        const _ = this._contextForItem(h.id);
         _ && this._openEditItem(_.wishlist.id, _.item);
       }}
                   >
-                    ${d.image_url ? u`<img src=${d.image_url} alt="" loading="lazy" />` : u`<div
+                    ${h.image_url ? m`<img src=${h.image_url} alt="" loading="lazy" />` : m`<div
                           style="height:120px;background:var(--divider-color)"
                         ></div>`}
                     <div class="meta">
-                      <strong>${d.title}</strong>
+                      <strong>${h.title}</strong>
                       <div style="font-size:0.8rem;color:var(--wm-muted)">
-                        ${this._statusLabel(d.status)}
+                        ${this._statusLabel(h.status)}
                       </div>
                     </div>
                   </div>
@@ -1123,27 +1124,27 @@ let f = class extends N {
       </div>
       <div class="wishlists-row">
         ${this._wishlistsSorted().map(
-      (d) => u`
+      (h) => m`
             <div
-              class="chip ${this._selectedWishlistId === d.id ? "active" : ""}"
-              draggable="true"
+              class="chip ${this._selectedWishlistId === h.id ? "active" : ""}"
+              draggable=${t}
               @dragstart=${(_) => {
-        var $;
-        ($ = _.dataTransfer) == null || $.setData("text/wishlist-id", d.id);
+        var x;
+        (x = _.dataTransfer) == null || x.setData("text/wishlist-id", h.id);
       }}
               @dragover=${(_) => _.preventDefault()}
-              @drop=${(_) => this._onDropWishlist(_, d.id)}
+              @drop=${(_) => this._onDropWishlist(_, h.id)}
               @click=${() => {
-        this._selectedWishlistId = d.id;
+        this._selectedWishlistId = h.id;
       }}
             >
-              <span>${d.name}</span>
-              ${t ? u`
+              <span>${h.name}</span>
+              ${t ? m`
                     <button
                       class="btn btn-ghost"
                       style="padding:2px 8px;font-size:0.7rem"
                       @click=${(_) => {
-        _.stopPropagation(), this._renameWishlist(d);
+        _.stopPropagation(), this._renameWishlist(h);
       }}
                     >
                       ${this._t("rename", "Rename")}
@@ -1152,7 +1153,7 @@ let f = class extends N {
                       class="btn btn-ghost"
                       style="padding:2px 8px;font-size:0.7rem"
                       @click=${(_) => {
-        _.stopPropagation(), this._deleteWishlist(d);
+        _.stopPropagation(), this._deleteWishlist(h);
       }}
                     >
                       ${this._t("delete", "Delete")}
@@ -1161,18 +1162,18 @@ let f = class extends N {
                       class="btn btn-ghost"
                       style="padding:2px 8px;font-size:0.7rem"
                       @click=${(_) => {
-        _.stopPropagation(), this._enableShare(d);
+        _.stopPropagation(), this._enableShare(h);
       }}
                     >
                       ${this._t("share_link", "Share link")}
                     </button>
-                  ` : h}
+                  ` : d}
             </div>
           `
     )}
       </div>
 
-      ${this._shareUrl ? u`
+      ${this._shareUrl ? m`
             <div class="field">
               <label>${this._t("share_public_label", "Public link (read-only)")}</label>
               <div class="row">
@@ -1195,84 +1196,77 @@ let f = class extends N {
                 </button>
               </div>
             </div>
-          ` : h}
+          ` : d}
 
       <div class="section-title">${this._t("section_items", "Items")}</div>
       <div class="grid">
-        ${this._filteredItems().map((d) => {
+        ${this._filteredItems().map((h) => {
       var it, st;
-      const _ = this._contextForItem(d.id);
-      if (!_) return h;
-      const { wishlist: $ } = _;
-      return u`
+      const _ = this._contextForItem(h.id);
+      if (!_) return d;
+      const { wishlist: x } = _;
+      return m`
             <div
               class="item-card"
               draggable="true"
               @dragstart=${(E) => {
         var rt;
-        (rt = E.dataTransfer) == null || rt.setData("text/item-id", d.id);
+        (rt = E.dataTransfer) == null || rt.setData("text/item-id", h.id);
       }}
               @dragover=${(E) => E.preventDefault()}
-              @drop=${(E) => this._onDropItem(E, $.id, d.id)}
+              @drop=${(E) => this._onDropItem(E, x.id, h.id)}
             >
               <div class="hero">
-                ${d.image_url ? u`<img src=${d.image_url} alt="" loading="lazy" />` : h}
-                <span class="badge ${d.status}"
-                  >${this._statusLabel(d.status)}</span
+                ${h.image_url ? m`<img src=${h.image_url} alt="" loading="lazy" />` : d}
+                <span class="badge ${h.status}"
+                  >${this._statusLabel(h.status)}</span
                 >
               </div>
               <div class="item-body">
                 <div class="item-title">
-                  ${d.favorite ? u`<span class="fav">★</span> ` : h}${d.title}
+                  ${h.favorite ? m`<span class="fav">★</span> ` : d}${h.title}
                 </div>
                 <div
-                  class="item-desc ${d.external_url ? "item-desc-link" : ""}"
-                  title=${d.external_url ? this._t("open_item_link", "Open product link") : ""}
-                  @click=${(E) => this._onItemDescriptionClick(E, d.external_url)}
+                  class="item-desc ${h.external_url ? "item-desc-link" : ""}"
+                  title=${h.external_url ? this._t("open_item_link", "Open product link") : ""}
+                  @click=${(E) => this._onItemDescriptionClick(E, h.external_url)}
                 >
-                  ${d.description || this._t("dash", "—")}
+                  ${h.description || this._t("dash", "—")}
                 </div>
-                ${d.price != null ? u`<div style="font-weight:600">
+                ${h.price != null ? m`<div style="font-weight:600">
                       ${(st = (it = this.hass) == null ? void 0 : it.locale) != null && st.language ? new Intl.NumberFormat(this.hass.locale.language, {
         style: "currency",
         currency: "USD"
-      }).format(d.price) : d.price}
-                    </div>` : h}
+      }).format(h.price) : h.price}
+                    </div>` : d}
                 <div class="item-meta">
-                  ${d.tags.map((E) => u`<span class="tag">${E}</span>`)}
+                  ${h.tags.map((E) => m`<span class="tag">${E}</span>`)}
                 </div>
                 <div class="actions">
-                  ${t ? u`
-                        <button
-                          class="btn"
-                          @click=${() => this._openEditItem($.id, d)}
-                        >
-                          ${this._t("edit", "Edit")}
-                        </button>
-                        <button
-                          class="btn btn-ghost"
-                          @click=${() => this._quickSetStatus($.id, d, "desired")}
-                        >
-                          ${this._t("action_desired", "Desired")}
-                        </button>
-                        <button
-                          class="btn btn-ghost"
-                          @click=${() => this._quickSetStatus($.id, d, "maybe")}
-                        >
-                          ${this._t("action_maybe", "Maybe")}
-                        </button>
-                        <button
-                          class="btn btn-ghost"
-                          @click=${() => this._quickSetStatus($.id, d, "purchased")}
-                        >
-                          ${this._t("action_got_it", "Got it")}
-                        </button>
-                      ` : u`<button
-                        class="btn"
-                        @click=${() => this._openEditItem($.id, d)}
-                      >
-                        ${this._t("view", "View")}
-                      </button>`}
+                  <button
+                    class="btn"
+                    @click=${() => this._openEditItem(x.id, h)}
+                  >
+                    ${this._t("edit", "Edit")}
+                  </button>
+                  <button
+                    class="btn btn-ghost"
+                    @click=${() => this._quickSetStatus(x.id, h, "desired")}
+                  >
+                    ${this._t("action_desired", "Desired")}
+                  </button>
+                  <button
+                    class="btn btn-ghost"
+                    @click=${() => this._quickSetStatus(x.id, h, "maybe")}
+                  >
+                    ${this._t("action_maybe", "Maybe")}
+                  </button>
+                  <button
+                    class="btn btn-ghost"
+                    @click=${() => this._quickSetStatus(x.id, h, "purchased")}
+                  >
+                    ${this._t("action_got_it", "Got it")}
+                  </button>
                 </div>
               </div>
             </div>
@@ -1280,11 +1274,11 @@ let f = class extends N {
     })}
       </div>
 
-      ${this._filteredItems().length === 0 ? u`<div class="empty">
+      ${this._filteredItems().length === 0 ? m`<div class="empty">
             ${this._t("no_items_filter", "No items match your filters.")}
-          </div>` : h}
+          </div>` : d}
 
-      ${t && this._selectedWishlistId !== "all" ? u`
+      ${this._selectedWishlistId !== "all" ? m`
             <div style="margin-top:20px">
               <button
                 class="btn btn-primary"
@@ -1293,23 +1287,23 @@ let f = class extends N {
                 ${this._t("add_item_this_list", "Add item to this list")}
               </button>
             </div>
-          ` : t ? u`
-              <div class="empty">
-                ${this._t(
+          ` : m`
+            <div class="empty">
+              ${this._t(
       "pick_wishlist_hint",
       "Select a specific wishlist to add items, or use the wishlist chips above."
     )}
-              </div>
-            ` : h}
+            </div>
+          `}
 
-      ${this._editorOpen ? u`
+      ${this._editorOpen ? m`
             <div
               class="modal-backdrop"
-              @click=${(d) => {
-      d.target === d.currentTarget && this._closeEditor();
+              @click=${(h) => {
+      h.target === h.currentTarget && this._closeEditor();
     }}
             >
-              <div class="modal" @click=${(d) => d.stopPropagation()}>
+              <div class="modal" @click=${(h) => h.stopPropagation()}>
                 <h2>
                   ${this._isNewItem ? this._t("editor_new", "New item") : this._t("editor_edit", "Edit item")}
                 </h2>
@@ -1319,24 +1313,22 @@ let f = class extends N {
                     <input
                       name="title"
                       required
-                      ?disabled=${!t}
                       .value=${((s = this._editingItem) == null ? void 0 : s.title) ?? ""}
                     />
                   </div>
                   <div class="field">
                     <label>${this._t("label_description", "Description")}</label>
-                    <textarea name="description" ?disabled=${!t}>
+                    <textarea name="description">
 ${((r = this._editingItem) == null ? void 0 : r.description) ?? ""}</textarea>
                   </div>
                   <div class="field">
                     <label>${this._t("label_image_url", "Image URL")}</label>
                     <input
                       name="image_url"
-                      ?disabled=${!t}
                       .value=${((a = this._editingItem) == null ? void 0 : a.image_url) ?? ""}
                     />
                   </div>
-                  ${t ? u`
+                  ${t ? m`
                         <div class="field">
                           <span class="field-label-like"
                             >${this._t(
@@ -1348,9 +1340,9 @@ ${((r = this._editingItem) == null ? void 0 : r.description) ?? ""}</textarea>
                             <button
                               type="button"
                               class="btn btn-ghost"
-                              @click=${(d) => {
-      var $;
-      const _ = ($ = d.currentTarget.closest(".wm-file-upload")) == null ? void 0 : $.querySelector(
+                              @click=${(h) => {
+      var x;
+      const _ = (x = h.currentTarget.closest(".wm-file-upload")) == null ? void 0 : x.querySelector(
         'input[type="file"]'
       );
       _ == null || _.click();
@@ -1364,7 +1356,7 @@ ${((r = this._editingItem) == null ? void 0 : r.description) ?? ""}</textarea>
                             <input
                               type="file"
                               accept="image/jpeg,image/png,image/gif,image/webp"
-                              @change=${(d) => this._uploadItemImage(d)}
+                              @change=${(h) => this._uploadItemImage(h)}
                             />
                           </div>
                           <div
@@ -1376,34 +1368,31 @@ ${((r = this._editingItem) == null ? void 0 : r.description) ?? ""}</textarea>
     )}
                           </div>
                         </div>
-                      ` : h}
+                      ` : d}
                   <div class="field">
                     <label>${this._t("label_external_link", "External link")}</label>
                     <input
                       name="external_url"
-                      ?disabled=${!t}
                       .value=${((o = this._editingItem) == null ? void 0 : o.external_url) ?? ""}
                     />
                   </div>
                   <div class="row">
-                    ${t ? u`
-                          <button
-                            type="button"
-                            class="btn btn-ghost"
-                            @click=${() => this._fetchMetadata()}
-                          >
-                            ${this._t("fill_from_link", "Fill from link")}
-                          </button>
-                        ` : h}
+                    <button
+                      type="button"
+                      class="btn btn-ghost"
+                      @click=${() => this._fetchMetadata()}
+                    >
+                      ${this._t("fill_from_link", "Fill from link")}
+                    </button>
                   </div>
                   <div class="field">
                     <label>${this._t("label_notes", "Notes")}</label>
-                    <textarea name="notes" ?disabled=${!t}>
+                    <textarea name="notes">
 ${((l = this._editingItem) == null ? void 0 : l.notes) ?? ""}</textarea>
                   </div>
                   <div class="field">
                     <label>${this._t("label_status", "Status")}</label>
-                    <select name="status" ?disabled=${!t}>
+                    <select name="status">
                       <option
                         value="desired"
                         ?selected=${(((n = this._editingItem) == null ? void 0 : n.status) ?? "desired") === "desired"}
@@ -1418,7 +1407,7 @@ ${((l = this._editingItem) == null ? void 0 : l.notes) ?? ""}</textarea>
                       </option>
                       <option
                         value="purchased"
-                        ?selected=${((m = this._editingItem) == null ? void 0 : m.status) === "purchased"}
+                        ?selected=${((u = this._editingItem) == null ? void 0 : u.status) === "purchased"}
                       >
                         ${this._t("filter_purchased", "Purchased")}
                       </option>
@@ -1430,7 +1419,6 @@ ${((l = this._editingItem) == null ? void 0 : l.notes) ?? ""}</textarea>
                       name="price"
                       type="number"
                       step="0.01"
-                      ?disabled=${!t}
                       .value=${((p = this._editingItem) == null ? void 0 : p.price) != null ? String(this._editingItem.price) : ""}
                     />
                   </div>
@@ -1438,7 +1426,6 @@ ${((l = this._editingItem) == null ? void 0 : l.notes) ?? ""}</textarea>
                     <label>${this._t("label_tags", "Tags (comma separated)")}</label>
                     <input
                       name="tags"
-                      ?disabled=${!t}
                       .value=${(((b = this._editingItem) == null ? void 0 : b.tags) ?? []).join(", ")}
                     />
                   </div>
@@ -1447,8 +1434,7 @@ ${((l = this._editingItem) == null ? void 0 : l.notes) ?? ""}</textarea>
                       ><input
                         type="checkbox"
                         name="favorite"
-                        ?disabled=${!t}
-                        ?checked=${(x = this._editingItem) == null ? void 0 : x.favorite}
+                        ?checked=${(w = this._editingItem) == null ? void 0 : w.favorite}
                       />
                       ${this._t("favorite", "Favorite")}</label
                     >
@@ -1456,26 +1442,23 @@ ${((l = this._editingItem) == null ? void 0 : l.notes) ?? ""}</textarea>
                       ><input
                         type="checkbox"
                         name="archived"
-                        ?disabled=${!t}
                         ?checked=${(k = this._editingItem) == null ? void 0 : k.archived}
                       />
                       ${this._t("archived", "Archived")}</label
                     >
                   </div>
                   <div class="row" style="margin-top:16px">
-                    ${t ? u`
-                          <button class="btn btn-primary" type="submit">
-                            ${this._t("save", "Save")}
-                          </button>
-                        ` : h}
+                    <button class="btn btn-primary" type="submit">
+                      ${this._t("save", "Save")}
+                    </button>
                     <button
                       type="button"
                       class="btn btn-ghost"
                       @click=${this._closeEditor}
                     >
-                      ${t ? this._t("cancel", "Cancel") : this._t("close", "Close")}
+                      ${this._t("cancel", "Cancel")}
                     </button>
-                    ${t && !this._isNewItem ? u`
+                    ${this._isNewItem ? d : m`
                           <button
                             type="button"
                             class="btn"
@@ -1484,12 +1467,12 @@ ${((l = this._editingItem) == null ? void 0 : l.notes) ?? ""}</textarea>
                           >
                             ${this._t("delete", "Delete")}
                           </button>
-                        ` : h}
+                        `}
                   </div>
                 </form>
               </div>
             </div>
-          ` : h}
+          ` : d}
     `;
   }
 };
@@ -1993,40 +1976,40 @@ g([
   q({ attribute: !1 })
 ], f.prototype, "panel", 2);
 g([
-  w()
+  y()
 ], f.prototype, "_snapshot", 2);
 g([
-  w()
+  y()
 ], f.prototype, "_loading", 2);
 g([
-  w()
+  y()
 ], f.prototype, "_error", 2);
 g([
-  w()
+  y()
 ], f.prototype, "_selectedWishlistId", 2);
 g([
-  w()
+  y()
 ], f.prototype, "_filterStatus", 2);
 g([
-  w()
+  y()
 ], f.prototype, "_search", 2);
 g([
-  w()
+  y()
 ], f.prototype, "_sort", 2);
 g([
-  w()
+  y()
 ], f.prototype, "_editorOpen", 2);
 g([
-  w()
+  y()
 ], f.prototype, "_editingWishlistId", 2);
 g([
-  w()
+  y()
 ], f.prototype, "_editingItem", 2);
 g([
-  w()
+  y()
 ], f.prototype, "_isNewItem", 2);
 g([
-  w()
+  y()
 ], f.prototype, "_shareUrl", 2);
 f = g([
   Ft("wishlist-manager-panel")
