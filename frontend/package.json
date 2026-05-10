@@ -2,6 +2,7 @@
   "name": "wishlist-manager-frontend",
   "private": true,
   "version": "1.3.0",
+  "author": "dfelizetti",
   "type": "module",
   "scripts": {
     "build": "vite build",
